@@ -1,4 +1,6 @@
-# springboot2-webapp-jsp
+# ELEC5619
+springboot2-webapp-jsp
+
 Spring mvc web application using Spring Boot 2 JSP JPA/Hibernate 5 MySQL example
 
 Explaination of this source code available on below article 
