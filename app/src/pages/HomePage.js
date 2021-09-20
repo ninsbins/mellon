@@ -1,16 +1,19 @@
 import Header from "../components/Header";
-import {Link} from "react-router-dom";
-import {Container} from "reactstrap";
+import {Container} from "react-bootstrap";
 
-const HomePage = () => {
-    return (
-        <div>
-            <Header/>
-            <Container>
-                <Link to="/signup">Sign up</Link>
-            </Container>
-        </div>
-    );
+import "../styles/Home.css"
+import {Component} from "react";
+
+class HomePage extends Component {
+
+    render() {
+        return (
+            <div>
+                <Header/>
+                <Container>Introducing Mellon</Container>
+            </div>
+        );
+    }
 }
 
 export default HomePage;
