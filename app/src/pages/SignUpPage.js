@@ -1,29 +1,33 @@
 import Header from "../components/Header";
-import {Button, Card, Col, Container, Row} from "react-bootstrap";
-import {Component} from "react";
+import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
-class SignUpPage extends Component {
-    render() {
-        return (
-            <div className={"content-body"}>
-                <Header/>
+const SignUpPage = () => {
+    return (
+        <div className={"content-body"}>
+            <Header/>
 
-                <Container fluid>
-                    <Row>
-                        <Col>
-                            <Container className={"rounded-card"}>
-                                <Button>Sign up</Button>
-                            </Container>
-                        </Col>
-                        <Col>
-                            <span className={"title"}>Sign up now!</span>
-                        </Col>
-                    </Row>
-                </Container>
+            <Container fluid>
+                <Row>
+                    <Col>
+                        <Container className={"rounded-card"}>
+                            <Form>
+                                <Form.Group>
 
-            </div>
-        );
-    }
+                                </Form.Group>
+                            </Form>
+
+                        </Container>
+                    </Col>
+                    <Col>
+                        <h2 className={"primary-text"}>Sign up now!</h2>
+                        <p>Already a member? <Link to={'/login'}>Log in</Link></p>
+                    </Col>
+                </Row>
+            </Container>
+
+        </div>
+    );
 }
 
 export default SignUpPage;

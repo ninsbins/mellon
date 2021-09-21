@@ -1,11 +1,9 @@
-import {Component} from "react";
-
-class SettingsPage extends Component {
-    render() {
-        return (
-            <div>Settings</div>
-        );
-    }
+const SettingsPage = () => {
+    return (
+        <div>
+            <h2>Settings</h2>
+        </div>
+    );
 }
 
 export default SettingsPage;

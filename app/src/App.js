@@ -6,6 +6,7 @@ import SignUpPage from "./pages/SignUpPage";
 import AboutPage from "./pages/AboutPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
+import LoginPage from "./pages/LoginPage";
 
 class App extends Component {
 
@@ -16,6 +17,10 @@ class App extends Component {
                     <Route path={'/signup'}>
                         <SignUpPage/>
                     </Route>
+                    <Route path={'/login'}>
+                        <LoginPage/>
+                    </Route>
+
                     <Route path={'/about'}>
                         <AboutPage/>
                     </Route>

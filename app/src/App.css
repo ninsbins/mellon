@@ -38,41 +38,23 @@
 }
 
 body {
-  height:100%;
   background-color: #efefef;
 }
 
-div {
-  height: 100%;
+.primary-text {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #471a66;
 }
 
 .content-body {
-  height: 100%;
   background-color: #efefef;
-}
-
-.content-right {
-
 }
 
 .rounded-card {
   border-radius: 20px;
-  width: 600px;
   background-color: white;
   padding: 40px;
   margin: 20px;
-}
-
-.title {
-  color: #471a66;
-  font-weight: bold;
-  font-size: 1.5rem;
-}
-
-.content-column-left {
-  padding: 50px;
-}
-
-.content-column-right {
-
+  max-width: 150px;
 }

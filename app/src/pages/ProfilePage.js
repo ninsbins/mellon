@@ -1,11 +1,9 @@
-import {Component} from "react";
-
-class ProfilePage extends Component {
-    render() {
-        return (
-            <div>Profile page</div>
-        )
-    };
+const ProfilePage = () => {
+    return (
+        <div>
+            <h2>Profile page</h2>
+        </div>
+    );
 }
 
 export default ProfilePage;
