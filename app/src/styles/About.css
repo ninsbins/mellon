@@ -1,0 +1,9 @@
+.col-left {
+    padding: 50px;
+    align-content: end;
+    text-align: right;
+}
+
+.col-right {
+    margin: 50px;
+}
