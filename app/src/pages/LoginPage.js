@@ -7,29 +7,30 @@ const LoginPage = () => {
         <div>
             <Header/>
             <Container fluid className={"content-body"}>
-                <Row>
-                    <Col>
-                        <Container fluid className={"rounded-card"}>
+                <Row className={"justify-content-center"}>
+                    <Col></Col>
+                    <Col sm={2}>
+                        <Container className={"rounded-card"}>
                             <Form>
                                 <Form.Group>
                                     <Col>
-                                        {/*email*/}
-                                        <Form.Label
-                                            controlId={"floatingInput"}
-                                            label={"Email"}
-                                        > Email<Form.Control
-                                            type={"email"}
-                                            placeholder={"Enter your email"}
-                                        /></Form.Label>
+                                    {/*email*/}
+                                    <Form.Label
+                                        controlId={"floatingInput"}
+                                        label={"Email"}
+                                    > Email<Form.Control
+                                        type={"email"}
+                                        placeholder={"Enter your email"}
+                                    /></Form.Label>
 
-                                        {/*password*/}
-                                        <Form.Label
-                                            controlId={"floatingPassword"}
-                                            label={"Password"}
-                                        > Password <Form.Control
-                                            type={"password"}
-                                            placeholder={"Password"}
-                                        /></Form.Label>
+                                    {/*password*/}
+                                    <Form.Label
+                                        controlId={"floatingPassword"}
+                                        label={"Password"}
+                                    > Password <Form.Control
+                                        type={"password"}
+                                        placeholder={"Password"}
+                                    /></Form.Label>
                                     </Col>
                                 </Form.Group>
                                 <Button
@@ -40,10 +41,19 @@ const LoginPage = () => {
                             </Form>
                         </Container>
                     </Col>
-                    <Col>
-                        <h2 className={"primary-text"}>Log in to Mellon</h2>
-                        <p>Not a member? <Link to={'/signup'}>Sign up now</Link></p>
+                    <Col sm={4}>
+                        <Row className={"justify-content-center"}>
+                            <Col></Col>
+                            <Col>
+                                <h2 className={"primary-text"}>Log in to Mellon</h2>
+                                <p>Not a member? <Link to={'/signup'}>Sign up now</Link></p>
+                            </Col>
+                            <Col></Col>
+                        </Row>
+
                     </Col>
+                    <Col></Col>
+
 
                 </Row>
             </Container>

@@ -8,8 +8,8 @@ const SettingsPage = () => {
             <Container fluid className={"content-body"}>
 
                 <Tab.Container defaultActiveKey={"settings"}>
-                    <Row>
-                        <Col sm={3} className={"justify-content-end"}>
+                    <Row className={"justify-content-center"}>
+                        <Col className={"justify-content-end"}>
                             <Nav variant={"pills"} className={"flex-column"}>
                                 <Nav.Item>
                                     <Nav.Link eventKey={"settings"}>
@@ -23,7 +23,7 @@ const SettingsPage = () => {
                                 </Nav.Item>
                             </Nav>
                         </Col>
-                        <Col sm={9}>
+                        <Col sm={6}>
                             <Tab.Content>
                                 <Tab.Pane eventKey={"settings"}>
                                     <Container className={"rounded-card"}>
@@ -78,6 +78,7 @@ const SettingsPage = () => {
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>
+                        <Col></Col>
                     </Row>
                 </Tab.Container>
             </Container>

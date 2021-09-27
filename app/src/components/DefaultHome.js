@@ -17,21 +17,23 @@ const DefaultHome = () => {
     }, []);
 
     return (
-        <div>
             <Container fluid className={"content-body"}>
                 <Row className={"justify-content-center"}>
-                    <Col>
+                    <Col className={"justify-content-end"}>
                         <h2 className={"primary-text"}> News Feed</h2>
+                    </Col>
+                    <Col sm={6}>
+                        <Container className={"rounded-card"}>
+                            Users: {users}
+                        </Container>
 
-                        Users: {users}
 
                     </Col>
+                    <Col></Col>
 
                 </Row>
 
             </Container>
-        </div>
-
     )
 }
 

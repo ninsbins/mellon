@@ -7,9 +7,10 @@ const SignUpPage = () => {
         <div>
             <Header/>
             <Container fluid className={"content-body"}>
-                <Row>
-                    <Col>
-                        <Container fluid className={"rounded-card"}>
+                <Row className={"justify-content-center"}>
+                    <Col></Col>
+                    <Col sm={2}>
+                        <Container className={"justify-content-center rounded-card"}>
                             <Form>
                                 <Form.Group>
                                     <Col className={"justify-content-md-center"}>
@@ -56,13 +57,22 @@ const SignUpPage = () => {
                                 </Form.Group>
                                 <Button>Sign up</Button>
                             </Form>
-
                         </Container>
                     </Col>
-                    <Col>
-                        <h2 className={"primary-text"}>Sign up now!</h2>
-                        <p>Already a member? <Link to={'/login'}>Log in</Link></p>
+                    <Col sm={4}>
+                        <Row className={"justify-content-center"}>
+                            <Col></Col>
+                            <Col className={"align-content-center"}>
+                                <h2 className={"primary-text"}>Sign up now!</h2>
+                                <p>Already a member? <Link to={'/login'}>Log in</Link></p>
+                            </Col>
+                            <Col></Col>
+                        </Row>
+
                     </Col>
+                    <Col></Col>
+
+
                 </Row>
             </Container>
         </div>

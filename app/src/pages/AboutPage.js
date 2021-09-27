@@ -8,11 +8,11 @@ const AboutPage = () => {
         <div>
             <Header/>
             <Container fluid className={"content-body"}>
-                <Row xs={4}>
-                    <Col className={"col-left"}>
+                <Row className={"justify-content-center"}>
+                    <Col>
                         <h2 className={"primary-text"}>About us</h2>
                     </Col>
-                    <Col xs={8} className={"col-right"}>
+                    <Col xs={6}>
                         <Container className={"rounded-card"}>
                             <span>Mellon as this is the elvish name for ‘friend’. We believed this to be a simple
                                 representation of the purpose of our site – to connect with others and make friends.</span>
@@ -21,7 +21,9 @@ const AboutPage = () => {
                                 interests. Get recommendations, chat with friends, meeting people with the same
                                 interests!</span>
                         </Container>
-                    </Col></Row>
+                    </Col>
+                    <Col></Col>
+                </Row>
             </Container>
 
         </div>

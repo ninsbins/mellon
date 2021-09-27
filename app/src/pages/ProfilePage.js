@@ -26,8 +26,8 @@ const ProfilePage = () => {
                 </div>
                 <div className={"profile-body"}>
                     <Tab.Container defaultActiveKey={"recent"}>
-                        <Row>
-                            <Col sm={3} className={"justify-content-end"}>
+                        <Row className={"justify-content-center"}>
+                            <Col className={"justify-content-end"}>
                                 <Nav variant={"pills"} className={"flex-column"}>
                                     <Nav.Item>
                                         <Nav.Link eventKey={"recent"}>
@@ -41,7 +41,7 @@ const ProfilePage = () => {
                                     </Nav.Item>
                                 </Nav>
                             </Col>
-                            <Col sm={9}>
+                            <Col sm={6}>
 
                                 <Tab.Content>
                                     <Tab.Pane eventKey={"recent"}>
@@ -53,6 +53,7 @@ const ProfilePage = () => {
                                 </Tab.Content>
 
                             </Col>
+                            <Col></Col>
                         </Row>
                     </Tab.Container>
                 </div>
