@@ -26,19 +26,17 @@ const HomePage = () => {
         // }
     }
 
-    // const handleSearchKeyUp = event => {
-    //     event.preventDefault();
-    //     if (event.key === 'Enter' && event.keyCode === 13) {
-    //         this.search();
-    //     }
+    // function updateSearchTerm(term) {
+    //     console.log(term);
+    //     setSearchTerm(term);
     // }
 
     return (
         <div>
             <Header
                 search={search}
-                searchTerm={searchTerm}
-                // handleSearchKeyUp={handleSearchKeyUp}
+                // searchTerm={searchTerm}
+                // updateSearchTerm={updateSearchTerm}
             />
             <Switch>
                 <Route path={'/search'}>

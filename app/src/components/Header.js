@@ -8,6 +8,15 @@ import {useState} from "react";
 const Header = (props) => {
     let [searchTerm, setSearchTerm] = useState("");
 
+    const handleSearchKeyUp = event => {
+        event.preventDefault();
+        if (event.key === 'Enter' && event.keyCode === 13) {
+            props.search(searchTerm);
+        }
+    }
+
+    const handleFormSubmit = e => e.preventDefault();
+
     return (
         <Navbar variant={"dark"} className={"bg-gradient"} expand={"lg"}>
             <Container fluid>
@@ -19,17 +28,17 @@ const Header = (props) => {
 
                 <Nav className={"ml-auto"}>
                     {/*change so search bar is only shown when logged in*/}
-                    <Form className={"mr-5 d-flex"}>
+                    <Form className={"mr-5 d-flex"} onSubmit={handleFormSubmit}>
                         <Form.Control
                             type={"search"}
                             placeholder={"Search"}
                             className={"me-2"}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            // onKeyUp={props.search(searchTerm)}
+                            onKeyUp={handleSearchKeyUp}
                         />
-                        <Button variant={"outline-light"}
-                                onClick={() => props.search(searchTerm)}>
-                            Search</Button>
+                        {/*<Button variant={"outline-light"}*/}
+                        {/*        onClick={() => props.search(props.searchTerm)}>*/}
+                        {/*    Search</Button>*/}
                     </Form>
 
                     <Nav.Link>

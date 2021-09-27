@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './custom.scss';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import HomePage from "./pages/HomePage";
@@ -7,8 +8,6 @@ import AboutPage from "./pages/AboutPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
-import EditProfilePage from "./pages/EditProfilePage";
-import SearchResults from "./components/SearchResults";
 
 class App extends Component {
 
@@ -28,9 +27,6 @@ class App extends Component {
                     </Route>
                     <Route path={'/settings'}>
                         <SettingsPage/>
-                    </Route>
-                    <Route path={'/edit-profile'}>
-                        <EditProfilePage/>
                     </Route>
                     <Route path={'/profile'}>
                         <ProfilePage/>
