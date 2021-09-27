@@ -1,7 +1,14 @@
+import Header from "../components/Header";
+import {Container} from "react-bootstrap";
+
 const SettingsPage = () => {
     return (
-        <div>
-            <h2>Settings</h2>
+        <div className={"content-body"}>
+            <Header/>
+            <Container fluid>
+                <h2 className={"primary-text"}>Settings</h2>
+            </Container>
+
         </div>
     );
 }

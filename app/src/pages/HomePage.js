@@ -22,7 +22,10 @@ const HomePage = () => {
     return (
         <div>
             <Header/>
-            <Container>Users: {users}</Container>
+            <Container>
+                <h2 className={"primary-text"}>News feed</h2>
+                <p>Users: {users}</p>
+            </Container>
         </div>
     );
 }

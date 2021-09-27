@@ -8,31 +8,34 @@ const LoginPage = () => {
             <Header/>
             <Row>
                 <Col>
-                    <Container className={"rounded-card"}>
+                    <Container fluid className={"rounded-card"}>
                         <Form>
                             <Form.Group>
-
                                 <Col>
                                     {/*email*/}
                                     <Form.Label
                                     controlId={"floatingInput"}
                                     label={"Email"}
-                                    > <Form.Control
+                                    > Email<Form.Control
                                         type={"email"}
-                                        placeholder={"Email"}
+                                        placeholder={"Enter your email"}
                                     /></Form.Label>
 
                                     {/*password*/}
                                     <Form.Label
                                         controlId={"floatingPassword"}
                                         label={"Password"}
-                                    > <Form.Control
+                                    > Password <Form.Control
                                         type={"password"}
                                         placeholder={"Password"}
                                     /></Form.Label>
                                 </Col>
                             </Form.Group>
-                            <Button>Log in</Button>
+                            <Button
+                                onClick={
+                                    console.log("login")
+                                }
+                            >Log in</Button>
                         </Form>
                     </Container>
                 </Col>
