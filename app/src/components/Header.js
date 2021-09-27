@@ -5,8 +5,8 @@ import "../styles/Header.css"
 import "../styles/Home.css"
 import {useState} from "react";
 
-const Header = () => {
-    let [searchTerm, setSearchTerm] = useState(null);
+const Header = (props) => {
+    let [searchTerm, setSearchTerm] = useState("");
 
     return (
         <Navbar variant={"dark"} className={"bg-gradient"} expand={"lg"}>
@@ -24,7 +24,12 @@ const Header = () => {
                             type={"search"}
                             placeholder={"Search"}
                             className={"me-2"}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            // onKeyUp={props.search(searchTerm)}
                         />
+                        <Button variant={"outline-light"}
+                                onClick={() => props.search(searchTerm)}>
+                            Search</Button>
                     </Form>
 
                     <Nav.Link>
@@ -54,7 +59,7 @@ const Header = () => {
                 </Nav>
             </Container>
         </Navbar>
-);
+    );
 }
 
 export default Header;

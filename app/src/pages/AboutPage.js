@@ -5,9 +5,9 @@ import "../styles/About.css"
 
 const AboutPage = () => {
     return (
-        <div className={"content-body"}>
+        <div>
             <Header/>
-            <Container fluid>
+            <Container fluid className={"content-body"}>
                 <Row xs={4}>
                     <Col className={"col-left"}>
                         <h2 className={"primary-text"}>About us</h2>

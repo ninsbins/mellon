@@ -7,6 +7,8 @@ import AboutPage from "./pages/AboutPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import EditProfilePage from "./pages/EditProfilePage";
+import SearchResults from "./components/SearchResults";
 
 class App extends Component {
 
@@ -26,6 +28,9 @@ class App extends Component {
                     </Route>
                     <Route path={'/settings'}>
                         <SettingsPage/>
+                    </Route>
+                    <Route path={'/edit-profile'}>
+                        <EditProfilePage/>
                     </Route>
                     <Route path={'/profile'}>
                         <ProfilePage/>

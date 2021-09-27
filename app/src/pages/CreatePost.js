@@ -1,13 +1,20 @@
 import Header from "../components/Header";
-import {Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 
 const CreatePost = () => {
     return (
-        <div class={"content-body"}>
+        <div>
             <Header/>
-            <Row>
+            <Container fluid className={"content-body"}>
+                <Row>
+                    <Col>
+                        <h2 className={"primary-text"}>Create a post</h2>
+                    </Col>
+                    <Col xs={8}>
 
-            </Row>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     )
 }

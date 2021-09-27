@@ -1,13 +1,22 @@
 import Header from "../components/Header";
-import {Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const ProfilePage = () => {
     return (
-        <div className={"content-body"}>
+        <div>
             <Header/>
-            <Container fluid>
+            <Container fluid className={"content-body"}>
                 <Row>
-                    <h2 className={"primary-text"}>Profile page</h2>
+                    <Col>
+                        <h2 className={"primary-text"}>Profile page</h2>
+
+                    </Col>
+                    <Col>
+                        <Button>
+                            <Link to={"/edit-profile"}>Edit profile</Link>
+                        </Button>
+                    </Col>
                 </Row>
             </Container>
 
