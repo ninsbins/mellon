@@ -145,7 +145,7 @@ const FoodPage= () => {
 
         const mealInfo =
             `
-        <div onclick= details(${meal.idMeal}) class="card"  style="width:400px">
+        <div onclick= ${details(meal.idMeal)} class="card"  style="width:400px">
           <img class="card-img-top" src="${mealPhoto}" alt="Card image">
           <div class="card-body">
             <h4 class="card-title">${mealName}</h4>
