@@ -22,12 +22,25 @@ const SettingsPage = () => {
                                     </Nav.Link>
                                 </Nav.Item>
                             </Nav>
+
                         </Col>
                         <Col sm={6}>
                             <Tab.Content>
                                 <Tab.Pane eventKey={"settings"}>
                                     <Container className={"rounded-card"}>
                                         <h2 className={"primary-text"}>Settings</h2>
+                                        Email
+
+                                        Change email
+                                        <Form>
+                                            <Form.Group>
+                                                <Form.Label>
+
+                                                </Form.Label>
+                                            </Form.Group>
+                                        </Form>
+
+                                        Change password
                                         <Form>
                                             <Form.Group>
                                                 <Form.Label>Old Password</Form.Label>
@@ -44,7 +57,7 @@ const SettingsPage = () => {
                                                 />
                                             </Form.Group>
                                             <Form.Group>
-                                                <Form.Label>Repeat New Password</Form.Label>
+                                                <Form.Label>Re-enter New Password</Form.Label>
                                                 <Form.Control
                                                     type="password"
                                                     // onChange={(e) => setNewPassword2(e.target.value)}

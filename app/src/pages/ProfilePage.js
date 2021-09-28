@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import {Button, Col, Container, Nav, Row, Tab} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import PostCard from "../components/PostCard";
+import ItemCard from "../components/ItemCard";
 
 const ProfilePage = () => {
     return (
@@ -41,19 +42,30 @@ const ProfilePage = () => {
                                     </Nav.Item>
                                 </Nav>
                             </Col>
-                            <Col sm={6}>
+                            <Col sm={9}>
 
                                 <Tab.Content>
                                     <Tab.Pane eventKey={"recent"}>
-                                        <Container className={"rounded-card"}>Recent</Container>
+                                        <Container className={"rounded-card"}>
+                                            {/*map card grid*/}
+                                            Recent
+                                            <PostCard>
+
+                                            </PostCard>
+                                        </Container>
                                     </Tab.Pane>
                                     <Tab.Pane eventKey={"music"}>
-                                        <Container className={"rounded-card"}>Music</Container>
+                                        <Container className={"rounded-card"}>
+                                            {/*map card grid*/}
+                                            Music
+                                            <ItemCard>
+
+                                            </ItemCard>
+                                        </Container>
                                     </Tab.Pane>
                                 </Tab.Content>
 
                             </Col>
-                            <Col></Col>
                         </Row>
                     </Tab.Container>
                 </div>

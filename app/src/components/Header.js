@@ -18,7 +18,7 @@ const Header = (props) => {
     const handleFormSubmit = e => e.preventDefault();
 
     return (
-        <Navbar variant={"dark"} className={"bg-gradient"} expand={"lg"}>
+        <Navbar variant={"dark"} className={"bg-gradient"} expand={"lg"} fixed={"top"}>
             <Container fluid>
                 <Link to="/">
                     <Navbar.Brand>

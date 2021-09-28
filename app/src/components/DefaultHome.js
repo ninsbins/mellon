@@ -19,8 +19,11 @@ const DefaultHome = () => {
     return (
             <Container fluid className={"content-body"}>
                 <Row className={"justify-content-center"}>
-                    <Col className={"justify-content-end"}>
-                        <h2 className={"primary-text"}> News Feed</h2>
+                    <Col>
+                        <Row className={"justify-content-end"}>
+                            <h2 className={"primary-text"}> News Feed</h2>
+                        </Row>
+
                     </Col>
                     <Col sm={6}>
                         <Container className={"rounded-card"}>

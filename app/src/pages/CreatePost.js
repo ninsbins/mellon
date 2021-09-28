@@ -1,18 +1,46 @@
 import Header from "../components/Header";
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
 
 const CreatePost = () => {
     return (
         <div>
             <Header/>
             <Container fluid className={"content-body"}>
-                <Row>
+                <Row className={"justify-content-center"}>
                     <Col>
-                        <h2 className={"primary-text"}>Create a post</h2>
+                        <Row className={"justify-content-end"}>
+                            <h2 className={"primary-text"}>Create a post</h2>
+                        </Row>
                     </Col>
-                    <Col xs={8}>
-
+                    <Col sm={6}>
+                        <Container className={"rounded-card"}>
+                            <Form>
+                                <Col>
+                                    {/*<Form.Group>*/}
+                                    {/*    <Form.Label>*/}
+                                    {/*        Post type*/}
+                                    {/*        <Form.Select>*/}
+                                    {/*            <option>Post type</option>*/}
+                                    {/*            <option value={"1"}>Spotify</option>*/}
+                                    {/*        </Form.Select>*/}
+                                    {/*    </Form.Label>*/}
+                                    {/*</Form.Group>*/}
+                                    <Form.Group>
+                                        <Form.Label>
+                                            Description
+                                            <Form.Control
+                                                type={"textarea"}
+                                                placeholder={"Describe this post"}
+                                                rows={3}
+                                            />
+                                        </Form.Label>
+                                    </Form.Group>
+                                    <Button>Post!</Button>
+                                </Col>
+                            </Form>
+                        </Container>
                     </Col>
+                    <Col></Col>
                 </Row>
             </Container>
         </div>

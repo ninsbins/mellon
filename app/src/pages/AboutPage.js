@@ -10,7 +10,9 @@ const AboutPage = () => {
             <Container fluid className={"content-body"}>
                 <Row className={"justify-content-center"}>
                     <Col>
-                        <h2 className={"primary-text"}>About us</h2>
+                        <Row className={"justify-content-end"}>
+                            <h2 className={"primary-text"}>About us</h2>
+                        </Row>
                     </Col>
                     <Col xs={6}>
                         <Container className={"rounded-card"}>

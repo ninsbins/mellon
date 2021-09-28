@@ -8,6 +8,9 @@ import AboutPage from "./pages/AboutPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import PostPage from "./pages/PostPage";
+import CreatePost from "./pages/CreatePost";
+import ItemPage from "./pages/ItemPage";
 
 class App extends Component {
 
@@ -30,6 +33,17 @@ class App extends Component {
                     </Route>
                     <Route path={'/profile'}>
                         <ProfilePage/>
+                    </Route>
+                    <Route path={'/post'}>
+                        <PostPage/>
+                    </Route>
+
+                    <Route path={'/item'}>
+                        <ItemPage/>
+                    </Route>
+
+                    <Route path={'/create'}>
+                        <CreatePost/>
                     </Route>
 
                     <Route path={'/'}>
