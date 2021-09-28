@@ -8,6 +8,7 @@ import AboutPage from "./pages/AboutPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import FoodPage from "./pages/Food";
 
 class App extends Component {
 
@@ -17,6 +18,9 @@ class App extends Component {
                 <Switch>
                     <Route path={'/signup'}>
                         <SignUpPage/>
+                    </Route>
+                    <Route path={'/food'}>
+                        <FoodPage/>
                     </Route>
                     <Route path={'/login'}>
                         <LoginPage/>

@@ -41,9 +41,16 @@ const Header = (props) => {
                         {/*    Search</Button>*/}
                     </Form>
 
+
                     <Nav.Link>
                         <Link to={"/about"} className={"nav-links"}>
                             About
+                        </Link>
+                    </Nav.Link>
+
+                    <Nav.Link>
+                        <Link to={"/food"} className={"nav-links"}>
+                            Food
                         </Link>
                     </Nav.Link>
                     {/*    add in auth check when implemented*/}
