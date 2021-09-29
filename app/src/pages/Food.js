@@ -6,62 +6,19 @@ import DefaultHome from "../components/DefaultHome";
 import "../styles/Food.css"
 import $ from "jquery"
 // Getting all the food belonging to the category
-const details = mealID => {
-    const settings = {
-        "url": `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`,
-        "method": "GET",
-        "timeout": 0,
-    };
-    $.ajax(settings).done(function (response) {
-        console.log(response);
-        mealInformation(response)
-    });
-}
+
 const FoodPage= () => {
-    return (
-        <div>
-            <Header/>
-            <main className="container">
-
-                <section className="mt-5 mb-5">
-                    <form className="col-md-6 mx-auto">
-                        <div className="input-group">
-                            <input
-                                id="input"
-                                type="text"
-                                className="form-control bg-light"
-                                placeholder="Recipe"
-                                aria-label="Search"
-                            />
-                            <div className="input-group-append">
-                                <button id="submit" className="btn" type="button" onClick={search}>Search</button>
-                            </div>
-                        </div>
-                    </form>
-                    <h4 id="noinfo" className="text-center mt-5"></h4>
-                </section>
-
-
-
-                <section
-                    id="meal-details-section"
-                    className="row my-5 d-flex justify-content-center p-3"
-                ></section>
-
-
-                <section id="meal-info-section" className="row"></section>
-            </main>
-
-
-        </div>
-
-
-
-    );
-
-}
-
-// Details for each meal
+    const details =  mealID => {
+        const settings = {
+            "url":  `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`,
+            "method": "GET",
+            "timeout": 0,
+        };
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            mealInformation(response)
+        });
+    }
     const mealInformation = info => {
         const details = document.getElementById('meal-details-section');
 
@@ -138,6 +95,8 @@ const FoodPage= () => {
 
 
     }
+    // Details for each meal
+
     const createMealInfoDiv = (meal) => {
         const mealPhoto = meal.strMealThumb;
         const mealName = meal.strMeal;
@@ -162,7 +121,6 @@ const FoodPage= () => {
         mealInfoDiv.innerHTML = mealInfo;
         mealInfoSection.appendChild(mealInfoDiv);
     }
-
     const showMealInfoDiv = (data, mealInput) => {
         const meal = data.meals;
 
@@ -175,8 +133,7 @@ const FoodPage= () => {
             noMealFound.innerText = `No Recipe Found S${mealInput}!`;
         }
     }
-
-    const search = () => {
+    const search =  () => {
         const mealInput = document.getElementById('input').value;
         if (mealInput) {
             const noMealFound = document.getElementById('noinfo');
@@ -203,9 +160,51 @@ const FoodPage= () => {
             noMealFound.innerText = `You haven't entered anything`;
         }
 
+    }
 
+    return (
+        <div>
+            <Header/>
+            <main className="container">
+                <section className="mt-5 mb-5">
+                    <form className="col-md-6 mx-auto">
+                        <div className="input-group">
+                            <input
+                                id="input"
+                                type="text"
+                                className="form-control bg-light"
+                                placeholder="Recipe"
+                                aria-label="Search"
+                            />
+                            <div className="input-group-append">
+                                <button id="submit" className="btn" type="button" onClick={search}>Search</button>
+                            </div>
+                        </div>
+                    </form>
+                    <h4 id="noinfo" className="text-center mt-5"></h4>
+                </section>
+                <section
+                    id="meal-details-section"
+                    className="row my-5 d-flex justify-content-center p-3"
+                ></section>
+                <section id="meal-info-section" className="row">
+
+
+
+                </section>
+            </main>
+
+
+        </div>
+    );
 
 }
+
+
+
+
+
+
 
 
 export default FoodPage;
