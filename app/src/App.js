@@ -8,9 +8,6 @@ import AboutPage from "./pages/AboutPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
-import PostPage from "./pages/PostPage";
-import CreatePost from "./pages/CreatePost";
-import ItemPage from "./pages/ItemPage";
 
 class App extends Component {
 
