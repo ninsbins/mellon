@@ -5,6 +5,9 @@ import React, {useState} from "react";
 import SearchResults from "../components/SearchResults";
 import {Route, useHistory, useRouteMatch, Switch} from "react-router-dom";
 import DefaultHome from "../components/DefaultHome";
+import $ from "jquery";
+import axiosConfig from "../services/axiosConfig";
+import axios from "axios";
 
 const HomePage = () => {
     const [searchState, setSearchState] = useState(false);
@@ -21,8 +24,10 @@ const HomePage = () => {
         setSearchTerm(term);
         //check whether there is any input in search bar
         // if (term) {
-        setSearchResults(term);
         setSearchState(true);
+
+        await foodSearch(term)
+
         history.push(`/search`);
         // }
     }
@@ -31,6 +36,23 @@ const HomePage = () => {
     //     console.log(term);
     //     setSearchTerm(term);
     // }
+
+    const foodSearch = async (input) => {
+        if (input) {
+            await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
+                .then((res) => {
+                    if (res.status == 200) {
+                        console.log(res);
+                        setSearchResults(res.data.meals);
+                    }
+                }).catch(err => console.log(err));
+
+        } else {
+
+        }
+
+    }
+
 
     return (
         <div>

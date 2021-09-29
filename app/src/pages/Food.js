@@ -57,14 +57,7 @@ const FoodPage= () => {
         const mealIngredients = document.getElementById('meal-ingredients');
 
         // Set Contents of Each Paragraph Inside Meal Details Div Structure
-        for (let i = 1; meal[`strIngredient${i}`]; i++) {
-            const ingredients = `
-        - ${meal[`strMeasure${i}`]} ${meal[`strIngredient${i}`]}`
-            const mealDetailsP = document.createElement('p');
-            mealDetailsP.className = 'card-text';
-            mealDetailsP.innerText = ingredients + "\n";
-            mealIngredients.appendChild(mealDetailsP);
-        }
+
 
         //Meal Instructions
         const mealInstructions = document.getElementById('meal-instructions');

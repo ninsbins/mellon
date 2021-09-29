@@ -54,11 +54,11 @@ const Header = (props) => {
                 <Container fluid>
                     <Link to="/">
                         <Navbar.Brand>
-                            <Image
-                                src={"./images/logo.png"}
-                                width={"30"}
-                                height={"30"}
-                            />
+                            {/*<Image*/}
+                            {/*    src={"./images/logo.png"}*/}
+                            {/*    width={"30"}*/}
+                            {/*    height={"30"}*/}
+                            {/*/>*/}
                             mellon
                         </Navbar.Brand>
                     </Link>

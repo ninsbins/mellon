@@ -1,22 +1,29 @@
-import {useHistory} from "react-router-dom";
+import {Link, Route, Switch, useHistory} from "react-router-dom";
 import {Card, Container} from "react-bootstrap";
 
 import "../styles/Post.css"
+import FoodPage from "../pages/RecipePage";
+import React from "react";
 
-const ItemCard = () => {
+const ItemCard = (props) => {
     let history = useHistory();
 
-    function redirectToItem() {
-        //replace with post url
-        history.push('/item');
+    function redirectToRecipe() {
+        console.log(props);
+        history.push({
+            pathname: '/item/recipe',
+            state: {
+                data: props.d
+            }
+        })
     }
 
     return (
-        <Container tag="a" onClick={redirectToItem}>
+        <Container tag="a" onClick={redirectToRecipe}>
             <Card className={"postcard"}>
-                <Card.Img variant="top" src="holder.js/100px160" />
+                <Card.Img variant="top" src={props.image}/>
                 <Card.Body>
-                    Item title
+                    <p>{props.title}</p>
                 </Card.Body>
             </Card>
         </Container>

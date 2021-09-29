@@ -21,7 +21,6 @@ public class FoodController {
 
         String callUrl = "https://themealdb.com/api/json/v1/1/search.php?s="+recipe;
 
-
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -31,9 +30,7 @@ public class FoodController {
         Response response = client.newCall(request).execute();
         System.out.println(Objects.requireNonNull(response.body()).string());
 
-
         return Objects.requireNonNull(response.body()).string();
-
 
     }
 
