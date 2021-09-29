@@ -1,5 +1,5 @@
-import {Link, useHistory} from "react-router-dom";
-import {Button, Card, Container} from "react-bootstrap";
+import {useHistory} from "react-router-dom";
+import {Card, Container} from "react-bootstrap";
 
 import "../styles/Post.css"
 
@@ -12,8 +12,8 @@ const ItemCard = () => {
     }
 
     return (
-        <Container tag="a" onClick={redirectToItem} className={"postcard"}>
-            <Card>
+        <Container tag="a" onClick={redirectToItem}>
+            <Card className={"postcard"}>
                 <Card.Img variant="top" src="holder.js/100px160" />
                 <Card.Body>
                     Item title

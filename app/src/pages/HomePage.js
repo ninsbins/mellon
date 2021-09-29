@@ -1,11 +1,9 @@
 import Header from "../components/Header";
-import {Container} from "react-bootstrap";
 
 import "../styles/Home.css"
-import axiosConfig from "../services/axiosConfig";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import SearchResults from "../components/SearchResults";
-import {Route, Redirect, useHistory, useRouteMatch, Switch} from "react-router-dom";
+import {Route, useHistory, useRouteMatch, Switch} from "react-router-dom";
 import DefaultHome from "../components/DefaultHome";
 
 const HomePage = () => {
@@ -15,8 +13,11 @@ const HomePage = () => {
     let {path, url} = useRouteMatch();
     let history = useHistory();
 
-    const search = async (term) => {
-        console.log('searching for ' + term);
+    //dictionary of content types in application
+    const contentTypes = ['Music', 'Books', 'Videos', 'Recipes'];
+
+    const search = async (term, filter) => {
+        console.log('searching for ' + term + ' in ' + contentTypes[filter]);
         setSearchTerm(term);
         //check whether there is any input in search bar
         // if (term) {

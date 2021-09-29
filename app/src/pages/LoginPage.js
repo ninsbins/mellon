@@ -10,7 +10,7 @@ const LoginPage = () => {
                 <Row className={"justify-content-center"}>
                     <Col></Col>
                     <Col sm={2}>
-                        <Container className={"rounded-card"}>
+                        <Container className={"blob"}>
                             <Form>
                                 <Form.Group>
                                     <Col>

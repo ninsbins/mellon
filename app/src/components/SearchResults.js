@@ -1,4 +1,5 @@
 import {Container} from "react-bootstrap";
+import ItemCard from "./ItemCard";
 
 const SearchResults = (props) => {
     console.log(props);
@@ -14,8 +15,11 @@ const SearchResults = (props) => {
                         <Container>
                             <h2 className={"primary-text"}>Results for '{searchTerm}'</h2>
                             {searchResults}
+                            <ItemCard>
+
+                            </ItemCard>
                         </Container>) : (
-                        <div>No results</div>
+                        <div>No results for '{searchTerm}'</div>
                     )
                 }
             </Container>

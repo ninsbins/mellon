@@ -63,3 +63,7 @@ body {
 Link {
   color: white;
 }
+
+.blob {
+  background-image: url(./images/container_bg.png);
+}
