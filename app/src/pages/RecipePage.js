@@ -1,7 +1,7 @@
 import Header from "../components/Header";
-import {Button, Col, Container, Image, Row} from "react-bootstrap";
-import {Link, useLocation} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import {Col, Container, Image, Row} from "react-bootstrap";
+import {useLocation} from "react-router-dom";
+import React, {useEffect} from "react";
 
 const RecipePage = (props) => {
     //these are items that represent things retrieved from apis
@@ -29,6 +29,13 @@ const RecipePage = (props) => {
     }
 
     function getVideo() {
+        const video = `${info[`strYoutube`]}`
+        const val = video.split("=")
+
+        const watch = val[1]
+        return "https://www.youtube.com/embed/" + watch;
+
+
 
     }
 
@@ -61,6 +68,10 @@ const RecipePage = (props) => {
 
                                 <p>Instructions</p>
                                 <p>{getInstructions()}</p>
+
+                                <p>Demo</p>
+                                <iframe width= "420" height="315" src= {(getVideo())}> </iframe>
+
                                 {/*<Container>*/}
                                 {/*    <Image src={info.img}/>*/}
                                 {/*</Container>*/}
