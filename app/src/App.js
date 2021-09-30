@@ -16,42 +16,44 @@ class App extends Component {
 
     render() {
         return (
-            <Router>
-                <Switch>
-                    <Route path={'/signup'}>
-                        <SignUpPage/>
-                    </Route>
-                    <Route path={'/login'}>
-                        <LoginPage/>
-                    </Route>
+            <div className={"app-bg"}>
+                <Router>
+                    <Switch>
+                        <Route path={'/signup'}>
+                            <SignUpPage/>
+                        </Route>
+                        <Route path={'/login'}>
+                            <LoginPage/>
+                        </Route>
 
-                    <Route path={'/about'}>
-                        <AboutPage/>
-                    </Route>
-                    <Route path={'/settings'}>
-                        <SettingsPage/>
-                    </Route>
-                    <Route path={'/profile'}>
-                        <ProfilePage/>
-                    </Route>
+                        <Route path={'/about'}>
+                            <AboutPage/>
+                        </Route>
+                        <Route path={'/settings'}>
+                            <SettingsPage/>
+                        </Route>
+                        <Route path={'/profile'}>
+                            <ProfilePage/>
+                        </Route>
 
-                    <Route path={'/post'}>
-                        <PostPage/>
-                    </Route>
+                        <Route path={'/post'}>
+                            <PostPage/>
+                        </Route>
 
-                    <Route path={'/item/recipe'}>
-                        <RecipePage/>
-                    </Route>
+                        <Route path={'/item/recipe'}>
+                            <RecipePage/>
+                        </Route>
 
-                    <Route path={'/create'}>
-                        <CreatePost/>
-                    </Route>
+                        <Route path={'/create'}>
+                            <CreatePost/>
+                        </Route>
 
-                    <Route path={'/'}>
-                        <HomePage/>
-                    </Route>
-                </Switch>
-            </Router>
+                        <Route path={'/'}>
+                            <HomePage/>
+                        </Route>
+                    </Switch>
+                </Router>
+            </div>
         )
     }
 }
