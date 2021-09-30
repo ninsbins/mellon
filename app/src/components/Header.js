@@ -25,7 +25,7 @@ const Header = (props) => {
     let [searchFilter, setSearchFilter] = useState(null);
 
     //dictionary of content types in application
-    const contentTypes = ['Music', 'Books', 'Videos', 'Recipes'];
+    const contentTypes = ['Music', 'Books', 'Movies', 'Recipes'];
 
     const handleSearchKeyUp = event => {
         event.preventDefault();

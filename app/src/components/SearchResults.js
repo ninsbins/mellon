@@ -2,7 +2,7 @@ import {CardDeck, Col, Container, Row} from "react-bootstrap";
 import ItemCard from "./ItemCard";
 import {useEffect} from "react";
 
-// 0 = music, 1 = books, 2 = videos, 3 = recipes
+// 0 = music, 1 = books, 2 = video, 3 = recipes
 
 const SearchResults = (props) => {
     console.log(props);
@@ -18,7 +18,7 @@ const SearchResults = (props) => {
                 //music search
                 return (
                     <ItemCard
-                        type={0}
+                        type={"0"}
                         d={props.data}
                     />
                 );
@@ -26,22 +26,25 @@ const SearchResults = (props) => {
                 //book search
                 return (
                     <ItemCard
-                        type={1}
+                        type={"1"}
                         d={props.data}
                     />
                 );
             case "2":
-                //video search
+                //movie search
                 return (
                     <ItemCard
-                        type={2}
+                        type={"2"}
                         d={props.data}
+                        id={props.data.imdbID}
+                        title={props.data.Title}
+                        image={props.data.Poster}
                     />
                 );
             case "3":
                 //food search
                 return (<ItemCard
-                    type={3}
+                    type={"3"}
                     d={props.data}
                     id={props.data.idMeal}
                     title={props.data.strMeal}

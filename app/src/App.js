@@ -39,13 +39,16 @@ class App extends Component {
                         <Route path={'/post'}>
                             <PostPage/>
                         </Route>
+                        <Route path={'/create'}>
+                            <CreatePost/>
+                        </Route>
 
+                        {/*item pages*/}
                         <Route path={'/item/recipe'}>
                             <RecipePage/>
                         </Route>
-
-                        <Route path={'/create'}>
-                            <CreatePost/>
+                        <Route path = "/item/movie">
+                            <MoviePage/>
                         </Route>
 
                         <Route path={'/'}>

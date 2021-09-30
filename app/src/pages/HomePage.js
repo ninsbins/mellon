@@ -17,7 +17,7 @@ const HomePage = () => {
     let history = useHistory();
 
     //dictionary of content types in application
-    const contentTypes = ['Music', 'Books', 'Videos', 'Recipes'];
+    const contentTypes = ['Music', 'Books', 'Movies', 'Recipes'];
 
     const search = async (term, filter) => {
         console.log('searching for ' + term + ' in ' + contentTypes[filter]);
@@ -27,10 +27,23 @@ const HomePage = () => {
         // if (term) {
         setSearchState(true);
 
-        await foodSearch(term)
-
+        switch(filter) {
+            case "0":
+                // music search
+                break;
+            case "1":
+                // book search
+                break;
+            case "2":
+                // movie search
+                await movieSearch(term);
+                break;
+            case "3":
+                // recipe search
+                await recipeSearch(term);
+                break;
+        }
         history.push(`/search`);
-        // }
     }
 
     // function updateSearchTerm(term) {
@@ -38,7 +51,19 @@ const HomePage = () => {
     //     setSearchTerm(term);
     // }
 
-    const foodSearch = async (input) => {
+    const movieSearch = async (input) => {
+        if (input) {
+            await axios.get(`http://www.omdbapi.com?apikey=78f2db02&s=${input}`)
+                .then((res) => {
+                    if (res.status == 200) {
+                        console.log(res);
+                        setSearchResults(res.data.Search);
+                    }
+                }).catch(err => console.log(err));
+        }
+    }
+
+    const recipeSearch = async (input) => {
         if (input) {
             await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
                 .then((res) => {
