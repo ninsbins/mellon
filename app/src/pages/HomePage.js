@@ -6,12 +6,12 @@ import SearchResults from "../components/SearchResults";
 import {Route, useHistory, useRouteMatch, Switch} from "react-router-dom";
 import DefaultHome from "../components/DefaultHome";
 import $ from "jquery";
-import axiosConfig from "../services/axiosConfig";
 import axios from "axios";
 
 const HomePage = () => {
     const [searchState, setSearchState] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [searchFilter, setSearchFilter] = useState("");
     const [searchResults, setSearchResults] = useState(null);
     let {path, url} = useRouteMatch();
     let history = useHistory();
@@ -22,6 +22,7 @@ const HomePage = () => {
     const search = async (term, filter) => {
         console.log('searching for ' + term + ' in ' + contentTypes[filter]);
         setSearchTerm(term);
+        setSearchFilter(filter);
         //check whether there is any input in search bar
         // if (term) {
         setSearchState(true);
@@ -64,6 +65,7 @@ const HomePage = () => {
             <Switch>
                 <Route path={'/search'}>
                     <SearchResults
+                        searchFilter={searchFilter}
                         searchTerm={searchTerm}
                         searchResults={searchResults}/>
                 </Route>

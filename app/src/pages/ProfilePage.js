@@ -58,9 +58,7 @@ const ProfilePage = () => {
                                         <Container className={"rounded-card"}>
                                             {/*map card grid*/}
                                             Music
-                                            <ItemCard>
-
-                                            </ItemCard>
+                                            <ItemCard/>
                                         </Container>
                                     </Tab.Pane>
                                 </Tab.Content>

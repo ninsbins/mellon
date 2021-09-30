@@ -8,25 +8,29 @@ import React from "react";
 const ItemCard = (props) => {
     let history = useHistory();
 
-    function redirectToRecipe() {
-        console.log(props);
-        history.push({
-            pathname: '/item/recipe',
-            state: {
-                data: props.d
-            }
-        })
+    let itemType = props.type;
+
+    function redirectToPage() {
+        switch (itemType) {
+            //add cases and pathname: '/item/music' or '/item/movie' etc
+            case 3:
+                history.push({
+                    pathname: '/item/recipe',
+                    state: {
+                        data: props.d
+                    }
+                })
+        }
+
     }
 
     return (
-        <Container tag="a" onClick={redirectToRecipe}>
-            <Card className={"postcard"}>
-                <Card.Img variant="top" src={props.image}/>
-                <Card.Body>
-                    <p>{props.title}</p>
-                </Card.Body>
-            </Card>
-        </Container>
+        <Card tag="a" onClick={redirectToPage} className={"postcard"}>
+            <Card.Img variant="top" src={props.image}/>
+            <Card.Body>
+                <Card.Text>{props.title}</Card.Text>
+            </Card.Body>
+        </Card>
     )
 }
 
