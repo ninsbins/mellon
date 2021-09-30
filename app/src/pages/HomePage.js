@@ -28,7 +28,7 @@ const HomePage = () => {
         // if (term) {
         setSearchState(true);
 
-        await foodSearch(term)
+        await musicSearch(term)
 
         history.push(`/search`);
         // }
