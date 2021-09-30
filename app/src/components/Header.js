@@ -66,7 +66,7 @@ const Header = (props) => {
 
                     <Nav className={"ml-auto"}>
                         <div className={"d-flex"}>
-                            <Container className={"mr-2"}>
+                            <Container className={"mr-5"}>
                                 {/*change so search bar is only shown when logged in*/}
                                 {/*filter search area*/}
                                 <Row>
@@ -138,7 +138,7 @@ const Header = (props) => {
 
                             <Nav.Link>
                                 <Link to={"/login"} className={"nav-links"}>
-                                    Log in
+                                    Login
                                 </Link>
                             </Nav.Link>
                         </div>
