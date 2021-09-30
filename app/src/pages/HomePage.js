@@ -7,6 +7,7 @@ import {Route, useHistory, useRouteMatch, Switch} from "react-router-dom";
 import DefaultHome from "../components/DefaultHome";
 import $ from "jquery";
 import axios from "axios";
+import axiosConfig from "../services/axiosConfig";
 
 const HomePage = () => {
     const [searchState, setSearchState] = useState(false);
@@ -53,6 +54,29 @@ const HomePage = () => {
         }
 
     }
+
+    const musicSearch = async (input) => {
+        if (input) {
+            axiosConfig
+                .get(`/spotify/search?item=${input}`)
+                .then((result) => {
+                    if(result.status==200) {
+                        console.log(result);
+                        // Change later
+                        console.log(result.data.albums);
+                        setSearchResults(result.data.albums.items);
+                    }
+                }).catch((err) => {
+                console.log(err)
+            })
+        }
+
+        else {
+
+        }
+    }
+
+
 
 
     return (

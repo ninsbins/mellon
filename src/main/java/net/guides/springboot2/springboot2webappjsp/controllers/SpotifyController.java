@@ -64,13 +64,14 @@ public class SpotifyController {
             spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
 
 
+
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (SpotifyWebApiException e) {
             e.printStackTrace();
         }
 
-        response.sendRedirect("http://localhost:3000/search-results");
+        //response.sendRedirect("http://localhost:3000/search-results");
         return spotifyApi.getAccessToken();
 
     }
@@ -104,7 +105,7 @@ public class SpotifyController {
     public SearchResult search(String item) {
         String type = "album,artist,playlist,track";
 
-        String accessToken = "BQCT4RJY2cVdPPhTivAFSdl5yZj3_rqK-kMRHUPK9q51z1_Gmnt1x9O5j93pjStFDKAVrva9_YXZ8-a8qxDYl4P4ZG4E2Z8uaufUqJsTYLZkoCgf6pL6xYB0EIYGV3G_7fACKHFzERSOmV1blQ";
+        String accessToken = "BQCbtQHUb25hghrGQETmoD5w7NtUWKeEBjY4u9zvGNm-QMDAuJxDj-XFp41K45EKLrPoxhkX4SY-7qpDL7aDqb5mrmdrp203VK04c4lyw9_cpkyRYQ5Q1cf2jZCOpmQxvSk8vivrh1r6pW_-Qg";
 
         final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
 
