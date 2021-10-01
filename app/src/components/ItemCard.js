@@ -3,12 +3,17 @@ import {Card, Container} from "react-bootstrap";
 
 import "../styles/Post.css"
 import FoodPage from "../pages/RecipePage";
-import React from "react";
+import React, {useEffect} from "react";
 
 const ItemCard = (props) => {
     let history = useHistory();
 
     let itemType = props.type;
+
+    useEffect(() => {
+        console.log(props.d);
+        console.log(props.title)
+    }, [])
 
     function redirectToPage() {
         switch (itemType) {

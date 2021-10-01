@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import PostPage from "./pages/PostPage";
 import CreatePost from "./pages/CreatePost";
 import RecipePage from "./pages/RecipePage";
+import MoviePage from "./pages/MoviePage";
 
 class App extends Component {
 

@@ -2,7 +2,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
 
-const DefaultHome = () => {
+const Feed = () => {
     const [users, setUsers] = useState(null);
 
     useEffect(() => {
@@ -40,4 +40,4 @@ const DefaultHome = () => {
     )
 }
 
-export default DefaultHome;
+export default Feed;

@@ -1,25 +1,32 @@
 import {CardDeck, Col, Container, Row} from "react-bootstrap";
 import ItemCard from "./ItemCard";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 
 // 0 = music, 1 = books, 2 = video, 3 = recipes
 
-const SearchResults = (props) => {
-    console.log(props);
+const SearchResults = () => {
+    let location = useLocation();
+    let searchTerm = location.state.searchTerm;
+    let searchFilter = location.state.searchFilter;
+    let searchResults = location.state.searchResults;
 
-    let searchTerm = props.searchTerm || null;
-    let searchResults = props.searchResults || null;
-    let searchFilter = props.searchFilter || null;
+    useEffect(() => {
+        // console.log(searchResults);
+    }, [location]);
 
-    function SwitchCase(props) {
-        switch(props.option) {
+    function SwitchCase(arr) {
+        let data = JSON.parse(JSON.stringify(arr)).arr;
+        console.log(data.arr);
+
+        switch(searchFilter) {
             //type prop will help the item card know which page to redirect to
             case "0":
                 //music search
                 return (
                     <ItemCard
                         type={"0"}
-                        d={props.data}
+                        d={arr}
                     />
                 );
             case "1":
@@ -27,7 +34,7 @@ const SearchResults = (props) => {
                 return (
                     <ItemCard
                         type={"1"}
-                        d={props.data}
+                        d={arr}
                     />
                 );
             case "2":
@@ -35,20 +42,20 @@ const SearchResults = (props) => {
                 return (
                     <ItemCard
                         type={"2"}
-                        d={props.data}
-                        id={props.data.imdbID}
-                        title={props.data.Title}
-                        image={props.data.Poster}
+                        d={data}
+                        id={data.imdbID}
+                        title={data.Title}
+                        image={data.Poster}
                     />
                 );
             case "3":
                 //food search
                 return (<ItemCard
                     type={"3"}
-                    d={props.data}
-                    id={props.data.idMeal}
-                    title={props.data.strMeal}
-                    image={props.data.strMealThumb}
+                    d={data}
+                    id={data.idMeal}
+                    title={data.strMeal}
+                    image={data.strMealThumb}
                 />)
             default:
                 //default catchall case
@@ -64,12 +71,12 @@ const SearchResults = (props) => {
                         <Container className={"py-4 px-4"}>
                             <h2 className={"primary-text"}>Results for '{searchTerm}'</h2>
                             <Row xs={1} sm={2} md={4} className="grid">
-                                {searchResults.map((e) => (
+                                {searchResults.map((result) => (
                                     <Col>
-                                        <SwitchCase option={searchFilter}
-                                                    data={e}/>
+                                        <SwitchCase arr={result}/>
                                     </Col>
                                 ))}
+                                {/*<SwitchCase/>*/}
                             </Row>
                         </Container>) : (
                         <Row className={"justify-content-center"}>No results for '{searchTerm}'</Row>
