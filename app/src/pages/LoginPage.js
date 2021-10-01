@@ -1,6 +1,9 @@
 import {Link} from "react-router-dom";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import Header from "../components/Header";
+import React, { Component } from "react";
+
+
 
 const LoginPage = () => {
 

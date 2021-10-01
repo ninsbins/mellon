@@ -25,8 +25,11 @@ const SearchResults = () => {
                 //music search
                 return (
                     <ItemCard
-                        type={"0"}
-                        d={arr}
+                        type={0}
+                        d={props.data}
+                        id={props.data.id}
+                        title={props.data.name}
+                        image={props.data.images[0].url}
                     />
                 );
             case "1":
@@ -76,7 +79,6 @@ const SearchResults = () => {
                                         <SwitchCase arr={result}/>
                                     </Col>
                                 ))}
-                                {/*<SwitchCase/>*/}
                             </Row>
                         </Container>) : (
                         <Row className={"justify-content-center"}>No results for '{searchTerm}'</Row>
