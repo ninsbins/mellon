@@ -3,6 +3,11 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import Header from "../components/Header";
 
 const LoginPage = () => {
+
+    const handleSubmit = () => {
+    //     authenticate user
+    }
+
     return (
         <div>
             <Header/>
@@ -11,7 +16,7 @@ const LoginPage = () => {
                     <Col></Col>
                     <Col sm={2}>
                         <Container className={"blob"}>
-                            <Form>
+                            <Form onSubmit={handleSubmit}>
                                 <Form.Group>
                                     <Col>
                                     {/*email*/}
@@ -34,10 +39,11 @@ const LoginPage = () => {
                                     </Col>
                                 </Form.Group>
                                 <Button
+                                    type={"submit"}
                                     onClick={
                                         console.log("login")
                                     }
-                                >Log in</Button>
+                                >Login</Button>
                             </Form>
                         </Container>
                     </Col>

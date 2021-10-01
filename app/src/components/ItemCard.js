@@ -1,5 +1,5 @@
 import {Link, Route, Switch, useHistory} from "react-router-dom";
-import {Card, Container} from "react-bootstrap";
+import {Button, Card, Container} from "react-bootstrap";
 
 import "../styles/Post.css"
 import FoodPage from "../pages/RecipePage";

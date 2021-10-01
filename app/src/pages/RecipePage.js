@@ -1,11 +1,13 @@
 import Header from "../components/Header";
-import {Col, Container, Image, Row} from "react-bootstrap";
-import {useLocation} from "react-router-dom";
+import {Button, Col, Container, Image, Row} from "react-bootstrap";
+import {useHistory, useLocation} from "react-router-dom";
 import React, {useEffect} from "react";
 
 const RecipePage = (props) => {
     //this is important to ensure the response data gets passed down to the page
     let location = useLocation();
+    let history = useHistory();
+
     let info = location.state.data;
 
     useEffect(() => {
@@ -34,8 +36,17 @@ const RecipePage = (props) => {
         const watch = val[1]
         return "https://www.youtube.com/embed/" + watch;
 
+    }
 
-
+    function handleClick() {
+        history.push({
+            pathname: '/create',
+            state: {
+                type: 'Recipe',
+                title: info.strMeal,
+                image: info.strMealThumb
+            }
+        })
     }
 
     return (
@@ -60,7 +71,7 @@ const RecipePage = (props) => {
                             <Col>
                                 <h2 className={"primary-text"}>{info.strMeal}</h2>
                                 <Row className={"justify-content-center"}>
-                                <Image width="600px" src={info.strMealThumb}/>
+                                    <Image width="600px" src={info.strMealThumb}/>
                                 </Row>
                                 <p>Ingredients</p>
                                 <p>{getIngredients()}</p>
@@ -68,21 +79,16 @@ const RecipePage = (props) => {
                                 <p>Instructions</p>
                                 <p>{getInstructions()}</p>
 
-                                <p>Demo</p>
-                                <iframe width= "420" height="315" src= {(getVideo())}> </iframe>
+                                <p>Demo Video</p>
+                                <Row className={"justify-content-center"}>
+                                    <iframe width="420" height="315" src={(getVideo())}/>
+                                </Row>
 
-                                {/*<Container>*/}
-                                {/*    <Image src={info.img}/>*/}
-                                {/*</Container>*/}
-                                {/*<Container>*/}
-                                {/*    <p>{info.title}</p>*/}
-                                {/*    {ingredients}*/}
-                                {/*</Container>*/}
-                                {/*<Button variant={"primary-outline"}>*/}
-                                {/*    <Link to={"/create"}>*/}
-                                {/*        Share*/}
-                                {/*    </Link>*/}
-                                {/*</Button>*/}
+                                <Row className={"justify-content-center"}>
+                                    <Button onClick={handleClick}>
+                                        Share
+                                    </Button>
+                                </Row>
                             </Col>
 
                         </Container>

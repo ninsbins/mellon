@@ -1,18 +1,31 @@
 import Header from "../components/Header";
-import {Badge, Card, Col, Container, Image, Row} from "react-bootstrap";
+import {Badge, Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import React, {useEffect} from "react";
-import {useLocation} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 
 
 const MoviePage = () => {
     //this is important to ensure the response data gets passed down to the page
     let location = useLocation();
+    let history = useHistory();
+
     let info = location.state.data;
 
     useEffect(() => {
         console.log(location.state.data);
 
     }, [location]);
+
+    function handleClick() {
+        history.push({
+            pathname: '/create',
+            state: {
+                type: 'Movie',
+                title: info.Title,
+                image: info.Poster
+                }
+        })
+    }
 
     return (
         <div>
@@ -43,19 +56,12 @@ const MoviePage = () => {
                                         <p>Type: {info.Type}</p>
                                     </Col>
                                 </Row>
+                                <Row className={"justify-content-center"}>
+                                    <Button onClick={handleClick}>
+                                        Share
+                                    </Button>
+                                </Row>
 
-                                {/*<Container>*/}
-                                {/*    <Image src={info.img}/>*/}
-                                {/*</Container>*/}
-                                {/*<Container>*/}
-                                {/*    <p>{info.title}</p>*/}
-                                {/*    {ingredients}*/}
-                                {/*</Container>*/}
-                                {/*<Button variant={"primary-outline"}>*/}
-                                {/*    <Link to={"/create"}>*/}
-                                {/*        Share*/}
-                                {/*    </Link>*/}
-                                {/*</Button>*/}
                             </Col>
 
                         </Container>
