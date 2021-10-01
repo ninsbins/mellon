@@ -1,39 +1,112 @@
 import {
-    Button,
     Container,
     Dropdown,
     Form,
-    Image, Modal,
+    Modal,
     Nav,
     Navbar,
-    NavbarBrand,
-    NavDropdown,
-    NavLink,
     Row
 } from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, Route, Switch, useHistory, useRouteMatch} from "react-router-dom";
 
 import "../styles/Header.css"
 import "../styles/Home.css"
 
-import {useState} from "react";
+import React, {useState} from "react";
+import axios from "axios";
+import SearchResults from "./SearchResults";
 
 const Header = (props) => {
     const [show, setShow] = useState(false);
 
-    let [searchTerm, setSearchTerm] = useState("");
-    let [searchFilter, setSearchFilter] = useState(null);
+    const [searchTerm, setSearchTerm] = useState(null);
+    const [searchFilter, setSearchFilter] = useState(null);
+    const [searchResults, setSearchResults] = useState(null);
+
+    let history = useHistory();
 
     //dictionary of content types in application
-    const contentTypes = ['Music', 'Books', 'Videos', 'Recipes'];
+    const contentTypes = ['Music', 'Books', 'Movies', 'Recipes'];
 
-    const handleSearchKeyUp = event => {
+    //search functions
+    const search = async (term, filter) => {
+        console.log('searching for ' + term + ' in ' + contentTypes[filter]);
+
+        switch (filter) {
+            case "0":
+                // music search
+                break;
+            case "1":
+                // book search
+                break;
+            case "2":
+                // movie search
+                await movieSearch(term);
+                break;
+            case "3":
+                // recipe search
+                await recipeSearch(term);
+                break;
+        }
+        setSearchFilter(null);
+        setSearchTerm(null);
+        setSearchResults(null);
+    }
+
+    const movieSearch = async (input) => {
+        if (input) {
+            await axios.get(`http://www.omdbapi.com?apikey=78f2db02&s=${input}`)
+                .then((res) => {
+                    if (res.status == 200) {
+                        console.log(res);
+                        setSearchResults(res.data.Search)
+                        history.push({
+                            pathname: `/search`,
+                            state: {
+                                searchTerm: searchTerm,
+                                searchFilter: searchFilter,
+                                searchResults: res.data.Search
+                            }
+                        });
+                    }
+                }).catch(err => console.log(err));
+        } else {
+
+        }
+    }
+
+    const recipeSearch = async (input) => {
+        if (input) {
+            await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
+                .then((res) => {
+                    if (res.status == 200) {
+                        console.log(res);
+                        setSearchResults(res.data.meals)
+                        history.push({
+                            pathname: `/search`,
+                            state: {
+                                searchTerm: searchTerm,
+                                searchFilter: searchFilter,
+                                searchResults: res.data.meals
+                            }
+                        });
+                    }
+                }).catch(err => console.log(err));
+
+        } else {
+
+        }
+
+    }
+
+    //search bar functions
+    const handleSearchKeyUp = (event) => {
         event.preventDefault();
         if (event.key === 'Enter' && event.keyCode === 13) {
             if (searchFilter == null) {
                 setShow(true);
             } else {
-                props.search(searchTerm, searchFilter);
+                search(searchTerm, searchFilter);
             }
         }
 
@@ -46,6 +119,7 @@ const Header = (props) => {
         setSearchFilter(eventKey);
     };
 
+    //modal functions
     let handleClose = () => setShow(false);
 
     return (
@@ -74,6 +148,7 @@ const Header = (props) => {
                                         <Dropdown.Toggle
                                             variant="light"
                                             id="dropdown-basic"
+
                                         >
                                             {searchFilter == null
                                                 ? "Search filter"
@@ -89,19 +164,6 @@ const Header = (props) => {
                                                 </Dropdown.Item>
                                             ))}
                                         </Dropdown.Menu>
-                                        {/*<Dropdown.Menu>*/}
-                                        {/*    {brands == null ? (*/}
-                                        {/*        <Dropdown.ItemText>*/}
-                                        {/*            No brands to show*/}
-                                        {/*        </Dropdown.ItemText>*/}
-                                        {/*    ) : (*/}
-                                        {/*        brands.map((brand, index) => (*/}
-                                        {/*            <Dropdown.Item eventKey={index}>*/}
-                                        {/*                {brand}*/}
-                                        {/*            </Dropdown.Item>*/}
-                                        {/*        ))*/}
-                                        {/*    )}*/}
-                                        {/*</Dropdown.Menu>*/}
                                     </Dropdown>
                                     <Form onSubmit={handleFormSubmit}>
                                         <Form.Control
@@ -111,9 +173,6 @@ const Header = (props) => {
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                             onKeyUp={handleSearchKeyUp}
                                         />
-                                        {/*<Button variant={"outline-light"}*/}
-                                        {/*        onClick={() => props.search(props.searchTerm)}>*/}
-                                        {/*    Search</Button>*/}
                                     </Form>
                                 </Row>
                             </Container>
@@ -145,11 +204,21 @@ const Header = (props) => {
                     </Nav>
                 </Container>
             </Navbar>
+
             <Modal show={show} onHide={handleClose}>
                 <Modal.Body>
                     Please select a search filter and try again.
                 </Modal.Body>
             </Modal>
+
+            <Switch>
+                <Route path={'/search'}>
+                    <SearchResults
+                        searchFilter={searchFilter}
+                        searchTerm={searchTerm}
+                        searchResults={searchResults}/>
+                </Route>
+            </Switch>
         </>
     );
 }

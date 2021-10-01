@@ -3,6 +3,11 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 const SignUpPage = () => {
+
+    const handleSubmit = () => {
+        //    send user creation to database
+    }
+
     return (
         <div>
             <Header/>
@@ -11,7 +16,7 @@ const SignUpPage = () => {
                     <Col></Col>
                     <Col sm={2}>
                         <Container className={"justify-content-center rounded-card"}>
-                            <Form>
+                            <Form onSubmit={handleSubmit}>
                                 <Form.Group>
                                     <Col className={"justify-content-md-center"}>
                                         <Row>
@@ -55,7 +60,12 @@ const SignUpPage = () => {
                                         </Row>
                                     </Col>
                                 </Form.Group>
-                                <Button>Sign up</Button>
+                                <Button
+                                    type={"submit"}
+                                    onClick={
+                                        console.log("signup")
+                                    }
+                                >Login</Button>
                             </Form>
                         </Container>
                     </Col>

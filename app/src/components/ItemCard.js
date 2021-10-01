@@ -1,25 +1,41 @@
 import {Link, Route, Switch, useHistory} from "react-router-dom";
-import {Card, Container} from "react-bootstrap";
+import {Button, Card, Container} from "react-bootstrap";
 
 import "../styles/Post.css"
 import FoodPage from "../pages/RecipePage";
-import React from "react";
+import React, {useEffect} from "react";
 
 const ItemCard = (props) => {
     let history = useHistory();
 
     let itemType = props.type;
 
+    useEffect(() => {
+        console.log(props.d);
+        console.log(props.title)
+    }, [])
+
     function redirectToPage() {
         switch (itemType) {
             //add cases and pathname: '/item/music' or '/item/movie' etc
-            case 3:
+            case "2":
+                console.log('redirect to movie page');
+                history.push({
+                    pathname: '/item/movie',
+                    state: {
+                        data: props.d
+                    }
+                });
+                break;
+            case "3":
+                console.log('redirect to recipe page');
                 history.push({
                     pathname: '/item/recipe',
                     state: {
                         data: props.d
                     }
-                })
+                });
+                break;
         }
 
     }

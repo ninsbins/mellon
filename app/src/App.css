@@ -21,7 +21,6 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -60,10 +59,6 @@ body {
   padding: 40px;
 }
 
-Link {
-  color: white;
-}
-
 .blob {
   /*background-image: url(../../src/images/container_bg.png);*/
 }
@@ -71,4 +66,5 @@ Link {
 .app-bg {
   background-color: #efefef;
   height: 100vh;
+  color: black;
 }
