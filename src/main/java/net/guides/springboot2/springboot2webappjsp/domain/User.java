@@ -1,100 +1,78 @@
 package net.guides.springboot2.springboot2webappjsp.domain;
 
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
-import java.util.ArrayList;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "user")
-public class User
-{
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO)
+@Table(	name = "users",
+		uniqueConstraints = {
+				@UniqueConstraint(columnNames = "username"),
+				@UniqueConstraint(columnNames = "email")
+		})
+public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(nullable=false, unique=true, length=45)
-	private String email;
-
-	@Column(nullable=false, unique=true, length=45)
+	@NotBlank
+	@Size(max = 20)
 	private String username;
 
-	@Column(nullable=false, length=64)
+	@NotBlank
+	@Size(max = 50)
+	@Email
+	private String email;
+
+	@NotBlank
+	@Size(max = 120)
 	private String password;
 
-	@Column(name="first_name", nullable=false, length=20)
-	private String firstName;
 
-	@Column(name="last_name", nullable=false, length=20)
-	private String lastName;
+	public User() {
+	}
 
-
-	public User(String username, String email, String password)
-	{
-		this.username=username;
+	public User(String username, String email, String password) {
+		this.username = username;
 		this.email = email;
-		this.password=password;
-	}
-
-	public User() {}
-
-
-    public Integer getId()
-	{
-		return id;
-	}
-
-	public void setId(Integer id)
-	{
-		this.id = id;
-	}
-
-	public String getFirstName()
-	{
-		return firstName;
-	}
-
-	public void setFirstName(String name)
-	{
-		this.firstName = firstName;
-	}
-
-	public void setLastName(String name)
-	{
-		this.lastName = lastName;
-	}
-
-	public String getLastName()
-	{
-		return this.lastName;
-	}
-
-	public void setEmail(String email)
-	{
-		this.email = email;
-	}
-
-	public String getEmail()
-	{
-		return this.email;
-	}
-
-	public void setPassword(String password)
-	{
 		this.password = password;
 	}
 
-	public String getPassword()
-	{
-		return this.password;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setUsername(String username)
-	{
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
 		this.username = username;
 	}
 
-	public String getUsername()
-	{
-		return this.username;
+	public String getEmail() {
+		return email;
 	}
-	
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 }

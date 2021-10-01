@@ -21,6 +21,9 @@ public class Springboot2WebappJspApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/spotify/search").allowedOrigins("http://localhost:3000/search");
+				registry.addMapping("/api/auth/signup").allowedOrigins("http://localhost:3000/signup");
+				registry.addMapping("/api/auth").allowedOrigins("http://localhost:3000/signup");
+
 			}
 		};
 	}

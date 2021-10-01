@@ -26,10 +26,10 @@ const SearchResults = () => {
                 return (
                     <ItemCard
                         type={0}
-                        d={props.data}
-                        id={props.data.id}
-                        title={props.data.name}
-                        image={props.data.images[0].url}
+                        d={data}
+                        id={data.id}
+                        title={data.name}
+                        image={data.images[0].url}
                     />
                 );
             case "1":

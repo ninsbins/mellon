@@ -1,12 +1,42 @@
 import Header from "../components/Header";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {useState} from "react";
+import AuthService from "../services/auth.service";
+import axios from "axios";
 
 const SignUpPage = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+
+
+    /* const handleSubmit = () => {
+         //    send user creation to database
+         console.log("handlesubmit-signup");
+         AuthService.register(username, email, password)
+             .then(
+                 response => {
+                     console.log(response);
+                 },
+                 error => {
+                     const resMessage =
+                         (error.response &&
+                             error.response.data &&
+                             error.response.data.message) ||
+                         error.message ||
+                         error.toString();
+
+                     console.log(resMessage);
+                 }
+             );
+     }*/
 
     const handleSubmit = () => {
-        //    send user creation to database
+        console.log(username);
+        axios.post(`http://localhost:8080/api/auth/signup/`, {username, email,password});
     }
+
 
     return (
         <div>
@@ -27,6 +57,7 @@ const SignUpPage = () => {
                                             >Name <Form.Control
                                                 type={"text"}
                                                 placeholder={"Enter your name"}
+                                                onChange={(e) => (setUsername(e.target.value))}
                                             /></Form.Label>
                                         </Row>
                                         <Row>
@@ -37,6 +68,7 @@ const SignUpPage = () => {
                                             >Email <Form.Control
                                                 type={"email"}
                                                 placeholder={"Enter your Email"}
+                                                onChange={(e) => (setEmail(e.target.value))}
                                             /></Form.Label>
                                         </Row>
                                         <Row>
@@ -47,6 +79,7 @@ const SignUpPage = () => {
                                             >Password <Form.Control
                                                 type={"password"}
                                                 placeholder={"Enter a password"}
+                                                onChange={(e) => (setPassword(e.target.value))}
                                             /></Form.Label>
                                         </Row>
                                         <Row>
@@ -65,7 +98,7 @@ const SignUpPage = () => {
                                     onClick={
                                         console.log("signup")
                                     }
-                                >Login</Button>
+                                >Signup</Button>
                             </Form>
                         </Container>
                     </Col>

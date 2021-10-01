@@ -15,6 +15,7 @@ import "../styles/Home.css"
 import React, {useState} from "react";
 import axios from "axios";
 import SearchResults from "./SearchResults";
+import axiosConfig from "../services/axiosConfig";
 
 const Header = (props) => {
     const [show, setShow] = useState(false);
@@ -35,6 +36,7 @@ const Header = (props) => {
         switch (filter) {
             case "0":
                 // music search
+                await musicSearch(term);
                 break;
             case "1":
                 // book search
@@ -51,6 +53,27 @@ const Header = (props) => {
         setSearchFilter(null);
         setSearchTerm(null);
         setSearchResults(null);
+    }
+
+    const musicSearch = async (input) => {
+        if (input) {
+            axiosConfig
+                .get(`/spotify/search?item=${input}`)
+                .then((res) => {
+                    if(res.status==200) {
+                        console.log(res);
+                        // Change later
+                        console.log(res.data.albums);
+                        setSearchResults(res.data.albums.items);
+                    }
+                }).catch((err) => {
+                console.log(err)
+            })
+        }
+
+        else {
+
+        }
     }
 
     const movieSearch = async (input) => {
