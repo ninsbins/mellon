@@ -2,7 +2,8 @@ import Header from "../components/Header";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {useState} from "react";
-import AuthService from "../services/auth.service";
+import AuthService from "../services/authservice";
+
 import axios from "axios";
 
 const SignUpPage = () => {
@@ -32,9 +33,28 @@ const SignUpPage = () => {
              );
      }*/
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
         console.log(username);
-        axios.post(`http://localhost:8080/api/auth/signup/`, {username, email,password});
+        AuthService
+            .register(username, email, password)
+            .then(
+                response => {
+                    console.log(response);
+                    // this line is what i'm trying to fix
+                    window.location.replace(`http://localhost:3000/profile`);
+                },
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    console.log(resMessage);
+                }
+            );
+
     }
 
 

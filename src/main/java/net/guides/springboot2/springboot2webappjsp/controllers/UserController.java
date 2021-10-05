@@ -15,16 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
 	@Autowired
 	UserRepository userRepo;
 
-//	CORS
-	//@CrossOrigin(origins="http://localhost:8080")
-	///@GetMapping("/users")
-	 ///String home(Model model) {
-		//model.addAttribute("users", userRepo.findAll());
-		//return "users";
-	//}*/
 
     // When user clicks "Sign Up" navigate to sign up registration form
     @GetMapping("/list")
@@ -32,12 +26,5 @@ public class UserController {
         return userRepo.findAll();
     }
 
-
-
-
-
-
-
-	
 
 }

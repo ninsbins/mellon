@@ -1,0 +1,12 @@
+
+
+.SpotifyButton {
+    position: relative;
+    background-color: var(--background-base,#1ed760);
+    cursor: pointer;
+    --background-base: #1ED760 ;
+    border-top-left-radius: 500px;
+    border-top-right-radius: 500px;
+    border-bottom-right-radius: 500px;
+    border-bottom-left-radius: 500px;
+}

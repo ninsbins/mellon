@@ -16,6 +16,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import SearchResults from "./SearchResults";
 import axiosConfig from "../services/axiosConfig";
+import authHeader from '../services/authheader';
 
 const Header = (props) => {
     const [show, setShow] = useState(false);
@@ -58,7 +59,7 @@ const Header = (props) => {
     const musicSearch = async (input) => {
         if (input) {
             axiosConfig
-                .get(`/spotify/search?item=${input}`)
+                .get(`/spotify/search?item=${input}`, { headers: authHeader() })
                 .then((res) => {
                     if(res.status==200) {
                         console.log(res);

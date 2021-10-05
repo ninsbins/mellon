@@ -2,9 +2,10 @@ import {Link} from "react-router-dom";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import Header from "../components/Header";
 import React, {Component, useState} from "react";
+import AuthService from "../services/authservice";
 
-import AuthService from "../services/auth.service";
 import axios from "axios";
+import axiosConfig from "../services/axiosConfig";
 
 
 const LoginPage = () => {
@@ -12,9 +13,28 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
 
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
         console.log(username);
-        axios.post(`http://localhost:8080/api/auth/login/`, {username,password});
+        AuthService
+            .login(username, password)
+            .then(() => {
+                //history.push("/profile")
+                window.location.replace(`http://localhost:3000/profile`);
+            },
+            error => {
+            const resMessage =
+                (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString();
+            console.log(resMessage);
+
+            });
+
+
+
     }
 
     return (
