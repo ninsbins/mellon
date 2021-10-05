@@ -10,6 +10,17 @@ import {useState} from "react";
 const SettingsPage = () => {
     const [spotifyToken, setSpotifyToken] = useState(null);
 
+    const setToken = async () => {
+        axiosConfig
+            .get(`/spotify/get-token`)
+            .then(response => {
+                console.log(response.data);
+                setSpotifyToken(response.data);
+
+            })
+    }
+
+
 
 
     const connectToSpotify = async () => {
@@ -21,13 +32,8 @@ const SettingsPage = () => {
                 window.location.replace(response.data);
             });
 
+        setToken();
 
-        axiosConfig
-            .get(`/spotify/get-token`)
-            .then(response => {
-                console.log(response);
-                setSpotifyToken(response.data);
-            })
     }
 
     return (

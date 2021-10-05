@@ -33,6 +33,10 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
+	private String firstName;
+	private String lastName;
+	private String spotifyToken;
+
 
 	public User() {
 	}

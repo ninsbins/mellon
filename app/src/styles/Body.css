@@ -1,0 +1,66 @@
+.body {
+    flex: 0.9;
+    background: linear-gradient(rgb(91, 87, 115), black);
+    color: white;
+    height: 100vh;
+}
+
+.body_info {
+    display: flex;
+    align-items: flex-end;
+    padding: 10px;
+}
+
+.body_info > img{
+    height: 20vw;
+    margin: 20px 20px;
+    box-shadow: 0 4px 60px rgba(0,0,0,0.5);
+
+}
+
+.body_infoText {
+    flex: 1;
+
+}
+
+.body_infoText > h2 {
+    font-size: 48px;
+    margin-bottom: 10px;
+
+}
+
+.body_infoText > p {
+    font-size: 14px;
+
+
+}
+
+
+
+.body_icons {
+    display:flex;
+    align-items: center;
+}
+
+.body_icons .MuiSvgIcon-root {
+    margin-right: 20px;
+}
+
+.body__shuffle {
+    font-size: 80px !important;
+    margin-left: 90px;
+    margin-bottom: 20px;
+
+}
+
+.body__shuffle:hover {
+    transition: 100ms transform ease-in;
+    transform: scale(1.08);
+
+
+}
+
+.body_trackview {
+    margin: 20px -30px;
+}
+

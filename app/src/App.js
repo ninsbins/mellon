@@ -12,6 +12,7 @@ import PostPage from "./pages/PostPage";
 import CreatePost from "./pages/CreatePost";
 import RecipePage from "./pages/RecipePage";
 import MoviePage from "./pages/MoviePage";
+import MusicPage from "./pages/MusicPage";
 
 class App extends Component {
 
@@ -50,6 +51,9 @@ class App extends Component {
                         </Route>
                         <Route path = "/item/movie">
                             <MoviePage/>
+                        </Route>
+                        <Route path = "/item/music">
+                            <MusicPage/>
                         </Route>
 
                         <Route path={'/'}>

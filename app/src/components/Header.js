@@ -61,11 +61,17 @@ const Header = (props) => {
             axiosConfig
                 .get(`/spotify/search?item=${input}`, { headers: authHeader() })
                 .then((res) => {
-                    if(res.status==200) {
-                        console.log(res);
-                        // Change later
-                        console.log(res.data.albums);
-                        setSearchResults(res.data.albums.items);
+                    if (res.status == 200) {
+                        console.log(res.data.albums.items);
+                        setSearchResults(res.data.albums.items)
+                        history.push({
+                            pathname: `/search`,
+                            state: {
+                                searchTerm: searchTerm,
+                                searchFilter: searchFilter,
+                                searchResults: res.data.albums.items
+                            }
+                        });
                     }
                 }).catch((err) => {
                 console.log(err)
@@ -104,7 +110,7 @@ const Header = (props) => {
             await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
                 .then((res) => {
                     if (res.status == 200) {
-                        console.log(res);
+                        console.log(res.data.meals);
                         setSearchResults(res.data.meals)
                         history.push({
                             pathname: `/search`,

@@ -8,8 +8,10 @@ import com.wrapper.spotify.model_objects.special.SearchResult;
 import com.wrapper.spotify.model_objects.specification.Artist;
 import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.Recommendations;
+import com.wrapper.spotify.model_objects.specification.TrackSimplified;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
+import com.wrapper.spotify.requests.data.albums.GetAlbumsTracksRequest;
 import com.wrapper.spotify.requests.data.browse.GetRecommendationsRequest;
 import com.wrapper.spotify.requests.data.personalization.simplified.GetUsersTopArtistsRequest;
 import com.wrapper.spotify.requests.data.search.SearchItemRequest;
@@ -72,9 +74,10 @@ public class SpotifyController {
             e.printStackTrace();
         }
 
-        response.sendRedirect("http://localhost:3000/profile");
         accessToken = spotifyApi.getAccessToken();
+        response.sendRedirect("http://localhost:3000/profile");
 
+        System.out.println("callback " + accessToken);
         return accessToken;
 
 
@@ -83,6 +86,7 @@ public class SpotifyController {
     @GetMapping("/get-token")
     public String getToken() {
         //return spotifyApi.getAccessToken();
+        System.out.println("get-token "+ accessToken);
         return(accessToken);
     }
 
@@ -92,8 +96,7 @@ public class SpotifyController {
     public SearchResult search(String item) {
         String type = "album,artist,playlist,track";
 
-        String accessToken = "BQCiL1jZLUQ-uvMRTplR3EqXeCwiKi1hmcJUYTRw_qLz0sX2Wt_kJ92CVImojZspCjjQHGUpmMjJxjokeIExwmzTvDXtw7cyV2LwLU0VDVGZ3eXc7hMqbHMvldXvT91F0Tj2NSIWpOtm5XCLZw";
-
+       System.out.println("/search " + accessToken);
 
         final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
 
@@ -150,6 +153,27 @@ public class SpotifyController {
             System.out.println("Error: " + e.getMessage());
         }
         return artistPaging;
+
+    }
+
+    @GetMapping("/get-album-tracks")
+    public Paging<TrackSimplified> getAlbumTracks(String albumId) {
+        final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
+
+        final GetAlbumsTracksRequest getAlbumsTracksRequest = spotifyApi.getAlbumsTracks(albumId).build();
+
+        Paging<TrackSimplified> trackSimplifiedPaging = null;
+
+        try {
+            trackSimplifiedPaging = getAlbumsTracksRequest.execute();
+
+            System.out.println("Total: " + trackSimplifiedPaging.getTotal());
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+
+        return trackSimplifiedPaging;
 
     }
 

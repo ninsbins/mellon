@@ -25,7 +25,7 @@ const SearchResults = () => {
                 //music search
                 return (
                     <ItemCard
-                        type={0}
+                        type={"0"}
                         d={data}
                         id={data.id}
                         title={data.name}
