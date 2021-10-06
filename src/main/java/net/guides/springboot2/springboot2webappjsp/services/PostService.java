@@ -20,9 +20,9 @@ public class PostService {
     @Autowired
     UserRepository userRepository;
 
-    public Post savePost(User userDto, String content){
+    public Post savePost(String username, String content){
         Post post = new Post();
-        Optional<User> user = userRepository.findByUsername(userDto.getUsername());
+        Optional<User> user = userRepository.findByUsername(username);
         post.setUser(user.get());
         post.setContent(content);
         return postRepository.save(post);

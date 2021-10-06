@@ -20,11 +20,11 @@ public class User
 	@Column(nullable=false, length=64)
 	private String password;
 
-	@Column(name="first_name", nullable=false, length=20)
-	private String firstName;
-
-	@Column(name="last_name", nullable=false, length=20)
-	private String lastName;
+//	@Column(name="first_name", nullable=false, length=20)
+//	private String firstName;
+//
+//	@Column(name="last_name", nullable=false, length=20)
+//	private String lastName;
 
 
 	public User(String username, String email, String password)
@@ -47,25 +47,25 @@ public class User
 		this.id = id;
 	}
 
-	public String getFirstName()
-	{
-		return firstName;
-	}
-
-	public void setFirstName(String name)
-	{
-		this.firstName = firstName;
-	}
-
-	public void setLastName(String name)
-	{
-		this.lastName = lastName;
-	}
-
-	public String getLastName()
-	{
-		return this.lastName;
-	}
+//	public String getFirstName()
+//	{
+//		return firstName;
+//	}
+//
+//	public void setFirstName(String name)
+//	{
+//		this.firstName = firstName;
+//	}
+//
+//	public void setLastName(String name)
+//	{
+//		this.lastName = lastName;
+//	}
+//
+//	public String getLastName()
+//	{
+//		return this.lastName;
+//	}
 
 	public void setEmail(String email)
 	{

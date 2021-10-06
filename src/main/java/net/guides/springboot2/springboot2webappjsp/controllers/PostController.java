@@ -31,7 +31,8 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<?> submitPost(@Valid @RequestBody CreatePostRequest createPost) {
 
-        Post post = new Post(createPost.getContent(), createPost.getUser());
+        Post post = new Post(createPost.getContent(), createPost.getUser(), createPost.getImageUrl(),
+                createPost.getItemType(),createPost.getDateCreated(),createPost.getItemType());
 
         postRepository.save(post);
 
