@@ -100,12 +100,6 @@ const MusicPage = (props) => {
                                     <SongRow playSong={playSong} track={item} album={info} />
                                 ))) : <div>Loading</div>}
 
-
-
-
-
-
-
                             </div>
 
                         </Container>
