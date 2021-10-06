@@ -56,6 +56,8 @@ const Header = (props) => {
         setSearchResults(null);
     }
 
+
+
     const musicSearch = async (input) => {
         if (input) {
             axiosConfig

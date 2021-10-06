@@ -5,23 +5,21 @@ import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import com.wrapper.spotify.model_objects.special.SearchResult;
-import com.wrapper.spotify.model_objects.specification.Artist;
-import com.wrapper.spotify.model_objects.specification.Paging;
-import com.wrapper.spotify.model_objects.specification.Recommendations;
-import com.wrapper.spotify.model_objects.specification.TrackSimplified;
+import com.wrapper.spotify.model_objects.specification.*;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import com.wrapper.spotify.requests.data.albums.GetAlbumsTracksRequest;
 import com.wrapper.spotify.requests.data.browse.GetRecommendationsRequest;
 import com.wrapper.spotify.requests.data.personalization.simplified.GetUsersTopArtistsRequest;
 import com.wrapper.spotify.requests.data.search.SearchItemRequest;
-import com.wrapper.spotify.requests.data.search.simplified.SearchArtistsRequest;
+import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/spotify")
@@ -38,7 +36,10 @@ public class SpotifyController {
             .setRedirectUri(redirectUri)
             .build();
 
-    private static final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri().build();
+    private static final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
+            .scope("user-modify-playback-state, user-read-playback-state, user-read-private, user-read-currently-playing, user-library-read, user-read-email, streaming, user-library-modify")
+            .build();
+    private User user;
 
     // Authorization Code Flow works in 3 steps:
     // 1. Authorization code flow requires a code, which is part of the redirectUri's query parameters when the user has opened a custom URL in a browser.
@@ -174,6 +175,42 @@ public class SpotifyController {
 
 
         return trackSimplifiedPaging;
+
+    }
+
+    @GetMapping("/get-current-user-image")
+    public Object getCurrentUser() {
+        final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
+
+        final GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile()
+                .build();
+
+
+        try {
+            User user = getCurrentUsersProfileRequest.execute();
+
+            System.out.println("Display name: " + user.getDisplayName());
+            System.out.println("Display name: " + user.getImages()[0].getUrl());
+
+
+
+            ArrayList<String> returnList = new ArrayList<String>();
+            returnList.add(user.getDisplayName());
+
+            String image = user.getImages()[0].getUrl();
+            returnList.add(image);
+
+            return returnList;
+
+
+
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        //return new String[]{user.getDisplayName(), Arrays.toString(user.getImages())};
+        return null;
+
 
     }
 

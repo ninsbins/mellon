@@ -1,1 +1,1 @@
-{"proxy":{"/api/*":{"target":"https://[::1]:8080"}}}
+{"proxy":{"/api/*":{"target":"https://[::1]:8080"}},"dependencies":{"@material-ui/icons":"^4.11.2"}}

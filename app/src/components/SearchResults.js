@@ -16,6 +16,7 @@ const SearchResults = () => {
     }, [location]);
 
     function SwitchCase(arr) {
+        console.log(arr);
         let data = JSON.parse(JSON.stringify(arr)).arr;
         console.log(data.arr);
 

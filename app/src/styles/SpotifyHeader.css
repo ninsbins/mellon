@@ -1,0 +1,26 @@
+.spotifyheader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.spotifyheader_right {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    font-size:16px;
+}
+.spotifyheader_right > h4 {
+    margin-left: 8px;
+    font-size: 14px;
+
+}
+
+.spotifyheader_left {
+    flex: 0.5;
+    display: flex;
+    background-color: white;
+    padding: 20px;
+    border-radius: 30px;
+    color: gray;
+    align-items: center;
+}
