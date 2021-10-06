@@ -28,6 +28,13 @@ const MusicPage = (props) => {
         setPlayingTrack(uri)
     }
 
+    function playAlbum() {
+        console.log(info.uri)
+        setPlayingTrack(info.uri)
+    }
+
+
+
 
 
     useEffect(async () => {
@@ -84,11 +91,10 @@ const MusicPage = (props) => {
                             </div>
 
                             <div className="body_trackview">
+
                                 <div className="body_icons">
                                     <PlayCircleFilledIcon className="body__shuffle"/>
                                 </div>
-
-                                <div>{console.log(tracks)}</div>
 
                                 {tracks != null ? (tracks.map((item) => (
                                     <SongRow playSong={playSong} track={item} album={info} />
