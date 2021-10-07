@@ -13,6 +13,7 @@ import CreatePost from "./pages/CreatePost";
 import RecipePage from "./pages/RecipePage";
 import MoviePage from "./pages/MoviePage";
 import MusicPage from "./pages/MusicPage";
+import UpdateUserComponent from "./components/UpdateUserComponent";
 
 class App extends Component {
 
@@ -55,6 +56,10 @@ class App extends Component {
                         <Route path = "/item/music">
                             <MusicPage/>
                         </Route>
+
+                        {/* Testing User/employee update for now */}
+                        <Route path = "/update-user/:id" component= {UpdateUserComponent} ></Route>
+                        {/* '....update-employee/1' url */}
 
                         <Route path={'/'}>
                             <HomePage/>

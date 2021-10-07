@@ -10,6 +10,7 @@ import net.guides.springboot2.springboot2webappjsp.response.JwtResponse;
 
 import net.guides.springboot2.springboot2webappjsp.response.MessageResponse;
 import net.guides.springboot2.springboot2webappjsp.services.UserDetailsImpl;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -77,7 +78,4 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 
     }
-
-
-
 }
