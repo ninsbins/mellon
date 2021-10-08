@@ -18,6 +18,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="entityManagerFactory" />
+          <factory-entry name="springboot2-webapp-jsp" value="54966c71-1fbb-4d09-affa-05d344066c8e" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
