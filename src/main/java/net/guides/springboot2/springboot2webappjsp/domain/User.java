@@ -37,8 +37,8 @@ public class User {
 	private String lastName;
 	private String spotifyToken;
 
-//	@OneToMany(mappedBy = "user")
-//	private Set<Post> posts;
+	@OneToMany(mappedBy = "user")
+	private Set<Post> posts;
 
 
 	public User() {

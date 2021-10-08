@@ -8,9 +8,11 @@ import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
 import net.guides.springboot2.springboot2webappjsp.request.CreatePostRequest;
 import net.guides.springboot2.springboot2webappjsp.response.MessageResponse;
 import net.guides.springboot2.springboot2webappjsp.services.PostService;
+import net.guides.springboot2.springboot2webappjsp.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -36,23 +38,20 @@ public class PostController {
     private JwtUtils jwtUtils;
 
     @PostMapping("/addpost")
-    public ResponseEntity<?> addPost(@RequestBody Post post) throws NullPointerException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String token = authentication.getName();
-        String username=jwtUtils.getUserNameFromJwtToken(token);
-        Post savedPost = postService.savePost(username,post.getContent(),post.getCreatedDate(),post.getImageUrl(),
+    public ResponseEntity<?> addPost(@RequestBody Post post,@RequestHeader (name="Authorization") String token) throws NullPointerException {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String token = authentication.getName();
+//        String username=jwtUtils.getUserNameFromJwtToken(token);
+        String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+        Post savedPost = postService.savePost(username, post.getContent(),post.getCreatedDate(),post.getImageUrl(),
                 post.getItemType(),post.getItemTitle());
-        return ResponseEntity.created(URI.create("/private/mypost")).body(savedPost);
+        return ResponseEntity.ok(savedPost);
     }
 
     @GetMapping("/myposts")
-    public ResponseEntity<?> myPosts(@PathVariable Integer id) throws NullPointerException {
+    public ResponseEntity<?> myPosts(@RequestHeader (name="Authorization") String token) throws NullPointerException {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String token = authentication.getName();
-        String username=jwtUtils.getUserNameFromJwtToken(token);
-//        User user = userRepository.findById(id).
-//                orElseThrow(() -> new ResourceNotFoundException("User does not exist with id:" + id));
+        String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
         List<Post> postList = postService.getPostsOfUser(username);
         return ResponseEntity.ok(postList);
     }
@@ -60,12 +59,6 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity<List<Post>> getAllPosts(){
         List<Post> postList = postService.getAllPost();
-        return ResponseEntity.ok(postList);
-    }
-//
-    @GetMapping("/{username}/posts")
-    public ResponseEntity<?> getPostofUser(@PathVariable String username){
-        List<Post> postList = postService.getPostsOfUser(username);
         return ResponseEntity.ok(postList);
     }
 }

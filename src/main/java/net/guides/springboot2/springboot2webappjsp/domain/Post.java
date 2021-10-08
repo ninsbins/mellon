@@ -15,7 +15,7 @@ public class Post
     private String content;
 
     @ManyToOne
-    @JoinColumn(name ="FK_user_id", referencedColumnName = "username")
+    @JoinColumn(name ="username")
     private User user;
 
     @Column(name="created_date", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
