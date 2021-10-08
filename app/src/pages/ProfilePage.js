@@ -2,8 +2,12 @@ import Header from "../components/Header";
 import {Button, Col, Container, Nav, Row, Tab} from "react-bootstrap";
 import PostCard from "../components/PostCard";
 import ItemCard from "../components/ItemCard";
+import AuthService from "../services/authservice";
+
+
 
 const ProfilePage = () => {
+
     return (
         <div>
             <Header/>

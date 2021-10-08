@@ -3,18 +3,18 @@ import {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
 
 const Feed = () => {
-    const [users, setUsers] = useState(null);
-
-    useEffect(() => {
-        axiosConfig
-            .get(`/users`)
-            .then((result) => {
-                console.log(result);
-                setUsers(result);
-            }).catch((err) => {
-            console.log(err)
-        })
-    }, []);
+    // const [users, setUsers] = useState(null);
+    //
+    // useEffect(() => {
+    //     axiosConfig
+    //         .get(`/users`)
+    //         .then((result) => {
+    //             console.log(result);
+    //             setUsers(result);
+    //         }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }, []);
 
     return (
             <Container fluid className={"content-body"}>
@@ -27,7 +27,6 @@ const Feed = () => {
                     </Col>
                     <Col sm={6}>
                         <Container className={"rounded-card"}>
-                            Users: {users}
                         </Container>
 
 

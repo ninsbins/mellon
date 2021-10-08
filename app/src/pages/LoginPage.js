@@ -1,14 +1,40 @@
 import {Link} from "react-router-dom";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import Header from "../components/Header";
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
+import AuthService from "../services/authservice";
 
+import axios from "axios";
+import axiosConfig from "../services/axiosConfig";
 
 
 const LoginPage = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-    const handleSubmit = () => {
-    //     authenticate user
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(username);
+        AuthService
+            .login(username, password)
+            .then(() => {
+                //history.push("/profile")
+                window.location.replace(`http://localhost:3000/profile`);
+            },
+            error => {
+            const resMessage =
+                (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString();
+            console.log(resMessage);
+
+            });
+
+
+
     }
 
     return (
@@ -27,8 +53,9 @@ const LoginPage = () => {
                                         controlId={"floatingInput"}
                                         label={"Email"}
                                     > Email<Form.Control
-                                        type={"email"}
+                                        type={"input"}
                                         placeholder={"Enter your email"}
+                                        onChange={(e) => setUsername(e.target.value)}
                                     /></Form.Label>
 
                                     {/*password*/}
@@ -38,13 +65,17 @@ const LoginPage = () => {
                                     > Password <Form.Control
                                         type={"password"}
                                         placeholder={"Password"}
+                                        onChange={(e) => (setPassword(e.target.value))}
                                     /></Form.Label>
                                     </Col>
                                 </Form.Group>
                                 <Button
                                     type={"submit"}
                                     onClick={
-                                        console.log("login")
+                                        () => {
+                                            console.log("login")
+                                            console.log(username)
+                                        }
                                     }
                                 >Login</Button>
                             </Form>

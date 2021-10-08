@@ -18,6 +18,17 @@ const ItemCard = (props) => {
     function redirectToPage() {
         switch (itemType) {
             //add cases and pathname: '/item/music' or '/item/movie' etc
+            case "0":
+                console.log('redirect to music page');
+                console.log(props.d);
+                history.push({
+                    pathname: '/item/music',
+                    state: {
+                        data: props.d
+                    }
+                });
+                break;
+
             case "2":
                 console.log('redirect to movie page');
                 history.push({

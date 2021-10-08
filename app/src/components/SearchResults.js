@@ -16,6 +16,7 @@ const SearchResults = () => {
     }, [location]);
 
     function SwitchCase(arr) {
+        console.log(arr);
         let data = JSON.parse(JSON.stringify(arr)).arr;
         console.log(data.arr);
 
@@ -25,11 +26,11 @@ const SearchResults = () => {
                 //music search
                 return (
                     <ItemCard
-                        type={0}
-                        d={props.data}
-                        id={props.data.id}
-                        title={props.data.name}
-                        image={props.data.images[0].url}
+                        type={"0"}
+                        d={data}
+                        id={data.id}
+                        title={data.name}
+                        image={data.images[0].url}
                     />
                 );
             case "1":

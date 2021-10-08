@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/test")
 public class AuthTestController {
+
     @GetMapping("/all")
     public String allAccess() {
         return "Test succeeded.";
     }
+
+    @GetMapping("/spotifylogin")
+    public String returnSpotify() {return "Spotify Success";}
 }

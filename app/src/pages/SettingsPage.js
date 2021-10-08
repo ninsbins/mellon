@@ -1,7 +1,41 @@
 import Header from "../components/Header";
 import {Button, Col, Container, Form, Nav, Row, Tab} from "react-bootstrap";
+//import './SpotifyButton.css'
+
+import SpotifyButton from "../components/SpotifyButton";
+import axiosConfig from "../services/axiosConfig";
+import {useState} from "react";
+
 
 const SettingsPage = () => {
+    const [spotifyToken, setSpotifyToken] = useState(null);
+
+    const setToken = async () => {
+        axiosConfig
+            .get(`/spotify/get-token`)
+            .then(response => {
+                console.log(response.data);
+                setSpotifyToken(response.data);
+
+            })
+    }
+
+
+
+
+    const connectToSpotify = async () => {
+        //do something
+        axiosConfig
+            .get(`/spotify/login`)
+            .then(response => {
+                console.log(response);
+                window.location.replace(response.data);
+            });
+
+        setToken();
+
+    }
+
     return (
         <div>
             <Header/>
@@ -85,7 +119,23 @@ const SettingsPage = () => {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey={"connections"}>
                                     <Container className={"rounded-card"}>
-                                        <h2 className={"primary-text"}>Account Connections</h2>
+                                        <h2 className={"primary-text"}>Account Connections
+                                        </h2>
+                                        <h2>
+                                            <Button
+                                                variant="default"
+                                                style={{background: "#1ed760",
+                                                        borderTopLeftRadius: "20px",
+                                                        borderTopRightRadius: "20px",
+                                                        borderBottomRightRadius: "20px",
+                                                        borderBottomLeftRadius: "20px"}}
+                                                onClick={connectToSpotify}>
+                                                Connect to Spotify!
+
+                                                </Button>
+                                        </h2>
+
+
 
                                     </Container>
                                 </Tab.Pane>

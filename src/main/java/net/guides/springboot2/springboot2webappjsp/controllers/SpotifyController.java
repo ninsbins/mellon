@@ -5,21 +5,21 @@ import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import com.wrapper.spotify.model_objects.special.SearchResult;
-import com.wrapper.spotify.model_objects.specification.Artist;
-import com.wrapper.spotify.model_objects.specification.Paging;
-import com.wrapper.spotify.model_objects.specification.Recommendations;
+import com.wrapper.spotify.model_objects.specification.*;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
+import com.wrapper.spotify.requests.data.albums.GetAlbumsTracksRequest;
 import com.wrapper.spotify.requests.data.browse.GetRecommendationsRequest;
 import com.wrapper.spotify.requests.data.personalization.simplified.GetUsersTopArtistsRequest;
 import com.wrapper.spotify.requests.data.search.SearchItemRequest;
-import com.wrapper.spotify.requests.data.search.simplified.SearchArtistsRequest;
+import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/spotify")
@@ -28,6 +28,7 @@ public class SpotifyController {
     private static final String clientSecret = "0edc03c357c74df6bf63bfbfff9a5c5e";
     private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/spotify/callback/");
     private static String code = "";
+    private static String accessToken ="";
 
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientId)
@@ -35,7 +36,10 @@ public class SpotifyController {
             .setRedirectUri(redirectUri)
             .build();
 
-    private static final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri().build();
+    private static final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
+            .scope("user-modify-playback-state, user-read-playback-state, user-read-private, user-read-currently-playing, user-library-read, user-read-email, streaming, user-library-modify")
+            .build();
+    private User user;
 
     // Authorization Code Flow works in 3 steps:
     // 1. Authorization code flow requires a code, which is part of the redirectUri's query parameters when the user has opened a custom URL in a browser.
@@ -71,41 +75,29 @@ public class SpotifyController {
             e.printStackTrace();
         }
 
-        //response.sendRedirect("http://localhost:3000/search-results");
-        return spotifyApi.getAccessToken();
+        accessToken = spotifyApi.getAccessToken();
+        response.sendRedirect("http://localhost:3000/profile");
+
+        System.out.println("callback " + accessToken);
+        return accessToken;
+
 
     }
 
-    /*@GetMapping("/search")
-    public SearchResult search(String item) {
-        String type = "album,artist,playlist,track,show,episode";
+    @GetMapping("/get-token")
+    public String getToken() {
+        //return spotifyApi.getAccessToken();
+        System.out.println("get-token "+ accessToken);
+        return(accessToken);
+    }
 
-        String accessToken="BQCT4RJY2cVdPPhTivAFSdl5yZj3_rqK-kMRHUPK9q51z1_Gmnt1x9O5j93pjStFDKAVrva9_YXZ8-a8qxDYl4P4ZG4E2Z8uaufUqJsTYLZkoCgf6pL6xYB0EIYGV3G_7fACKHFzERSOmV1blQ";
-
-        System.out.println(type);
-
-        final SearchItemRequest searchItemRequest = spotifyApi.searchItem(item, type).build();
-
-        SearchResult searchResult = null;
-
-        try {
-            searchResult = searchItemRequest.execute();
-
-            System.out.println("Total tracks: " + searchResult.getTracks().getTotal());
-        } catch (IOException | SpotifyWebApiException | ParseException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
-        return searchResult;
-
-    }*/
 
     // Pass in as http://localhost:8080/spotify/search?item=dojacat
     @GetMapping("/search")
     public SearchResult search(String item) {
         String type = "album,artist,playlist,track";
 
-        String accessToken = "BQCbtQHUb25hghrGQETmoD5w7NtUWKeEBjY4u9zvGNm-QMDAuJxDj-XFp41K45EKLrPoxhkX4SY-7qpDL7aDqb5mrmdrp203VK04c4lyw9_cpkyRYQ5Q1cf2jZCOpmQxvSk8vivrh1r6pW_-Qg";
+       System.out.println("/search " + accessToken);
 
         final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
 
@@ -149,7 +141,7 @@ public class SpotifyController {
     public Paging<Artist> getUserTopArtists() {
         String accessToken = "BQDulSO-NwozchKAsb3-bqe6iqQioQnuVLxTuoD3N-qPEBzg2xC3WyVLqnshkkqHHaYUEEdI1peDfpZ8G3CTOcXEwGrmF31pfzMULMlJmu-VEnLFG8WFJB0jYEW5NlTcaOWBvpLQAJAjCOdzOw";
 
-        final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
+        //final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
 
         final GetUsersTopArtistsRequest getUsersTopArtistsRequest = spotifyApi.getUsersTopArtists().build();
 
@@ -162,6 +154,63 @@ public class SpotifyController {
             System.out.println("Error: " + e.getMessage());
         }
         return artistPaging;
+
+    }
+
+    @GetMapping("/get-album-tracks")
+    public Paging<TrackSimplified> getAlbumTracks(String albumId) {
+        final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
+
+        final GetAlbumsTracksRequest getAlbumsTracksRequest = spotifyApi.getAlbumsTracks(albumId).build();
+
+        Paging<TrackSimplified> trackSimplifiedPaging = null;
+
+        try {
+            trackSimplifiedPaging = getAlbumsTracksRequest.execute();
+
+            System.out.println("Total: " + trackSimplifiedPaging.getTotal());
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+
+        return trackSimplifiedPaging;
+
+    }
+
+    @GetMapping("/get-current-user-image")
+    public Object getCurrentUser() {
+        final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
+
+        final GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile()
+                .build();
+
+
+        try {
+            User user = getCurrentUsersProfileRequest.execute();
+
+            System.out.println("Display name: " + user.getDisplayName());
+            System.out.println("Display name: " + user.getImages()[0].getUrl());
+
+
+
+            ArrayList<String> returnList = new ArrayList<String>();
+            returnList.add(user.getDisplayName());
+
+            String image = user.getImages()[0].getUrl();
+            returnList.add(image);
+
+            return returnList;
+
+
+
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        //return new String[]{user.getDisplayName(), Arrays.toString(user.getImages())};
+        return null;
+
 
     }
 
