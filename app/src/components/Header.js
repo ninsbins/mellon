@@ -33,7 +33,7 @@ const Header = (props) => {
     const contentTypes = ['Music', 'Books', 'Movies', 'Recipes'];
 
     function userLoggedIn() {
-        // console.log( AuthService.getCurrentUser());
+        // console.log(AuthService.getCurrentUser());
         return AuthService.getCurrentUser();
     }
 
@@ -70,7 +70,7 @@ const Header = (props) => {
             axiosConfig
                 .get(`/spotify/search?item=${input}`, { headers: authHeader() })
                 .then((res) => {
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         console.log(res.data.albums.items);
                         setSearchResults(res.data.albums.items)
                         history.push({
@@ -96,8 +96,8 @@ const Header = (props) => {
         if (input) {
             await axios.get(`http://www.omdbapi.com?apikey=78f2db02&s=${input}`)
                 .then((res) => {
-                    if (res.status == 200) {
-                        console.log(res);
+                    if (res.status === 200) {
+                        // console.log(res);
                         setSearchResults(res.data.Search)
                         history.push({
                             pathname: `/search`,
@@ -118,8 +118,8 @@ const Header = (props) => {
         if (input) {
             await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
                 .then((res) => {
-                    if (res.status == 200) {
-                        console.log(res.data.meals);
+                    if (res.status === 200) {
+                        // console.log(res.data.meals);
                         setSearchResults(res.data.meals)
                         history.push({
                             pathname: `/search`,
@@ -169,7 +169,8 @@ const Header = (props) => {
                                     <Navbar.Brand>
                                         <Image
                                             src={`${process.env.PUBLIC_URL}/assets/logo.png`}
-                                            height={30}
+                                            height={28}
+                                            style={{paddingRight: "10px"}}
                                         />
                                         mellon
                                     </Navbar.Brand>

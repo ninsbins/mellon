@@ -1,8 +1,7 @@
-import {Link, Route, Switch, useHistory} from "react-router-dom";
-import {Button, Card, Container} from "react-bootstrap";
+import {useHistory} from "react-router-dom";
+import {Card} from "react-bootstrap";
 
 import "../styles/Post.css"
-import FoodPage from "../pages/RecipePage";
 import React, {useEffect} from "react";
 
 const ItemCard = (props) => {

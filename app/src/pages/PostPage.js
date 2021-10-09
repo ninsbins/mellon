@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import {Col, Container, Row} from "react-bootstrap";
-import { Link, useParams, useHistory } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 const PostPage = () => {

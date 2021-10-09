@@ -62,76 +62,74 @@ const SignUpPage = () => {
             <Container fluid className={"content-body"}>
                 <Row className={"justify-content-center"}>
                     <Col></Col>
-                    <Col sm={2}>
-                        <Container className={"justify-content-center rounded-card"}>
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group>
-                                    <Col className={"justify-content-md-center"}>
-                                        <Row>
-                                            {/*name*/}
-                                            <Form.Label
-                                                controlId={"floatingInput"}
-                                                label={"Name"}
-                                            >Name <Form.Control
-                                                type={"text"}
-                                                placeholder={"Enter your name"}
-                                                onChange={(e) => (setUsername(e.target.value))}
-                                            /></Form.Label>
-                                        </Row>
-                                        <Row>
-                                            {/*email*/}
-                                            <Form.Label
-                                                controlId={"floatingInput"}
-                                                label={"Email"}
-                                            >Email <Form.Control
-                                                type={"email"}
-                                                placeholder={"Enter your Email"}
-                                                onChange={(e) => (setEmail(e.target.value))}
-                                            /></Form.Label>
-                                        </Row>
-                                        <Row>
-                                            {/*password*/}
-                                            <Form.Label
-                                                controlId={"floatingPassword"}
-                                                label={"Password"}
-                                            >Password <Form.Control
-                                                type={"password"}
-                                                placeholder={"Enter a password"}
-                                                onChange={(e) => (setPassword(e.target.value))}
-                                            /></Form.Label>
-                                        </Row>
-                                        <Row>
-                                            <Form.Label
-                                                controlId={"floatingPassword"}
-                                                label={"Re-enter Password"}
-                                            >Re-enter Password <Form.Control
-                                                type={"password"}
-                                                placeholder={"Re-enter your password"}
-                                            /></Form.Label>
-                                        </Row>
-                                    </Col>
-                                </Form.Group>
-                                <Button
-                                    type={"submit"}
-                                    onClick={
-                                        console.log("signup")
-                                    }
-                                >Signup</Button>
-                            </Form>
+                    <Col sm={4}>
+                        <Container className={"justify-content-center"} style={{
+                            backgroundImage: `url(${process.env.PUBLIC_URL}/assets/container_blob.png)`,
+                            height: "500px",
+                            backgroundSize: "contain",
+                            backgroundRepeat: "no-repeat"
+                        }}>
+                            <Row className={"justify-content-center"}>
+
+                                <Form onSubmit={handleSubmit}>
+                                    <Form.Group>
+                                        <Col className={"justify-content-md-center"}>
+                                            <Form.Group>
+                                                {/*name*/}
+                                                <Form.Label
+                                                    controlId={"floatingInput"}
+                                                    label={"Name"}
+                                                >Name <Form.Control
+                                                    type={"text"}
+                                                    placeholder={"Enter your name"}
+                                                    onChange={(e) => (setUsername(e.target.value))}
+                                                /></Form.Label>
+                                            </Form.Group>
+                                            <Form.Group>
+                                                {/*email*/}
+                                                <Form.Label
+                                                    controlId={"floatingInput"}
+                                                    label={"Email"}
+                                                >Email <Form.Control
+                                                    type={"email"}
+                                                    placeholder={"Enter your Email"}
+                                                    onChange={(e) => (setEmail(e.target.value))}
+                                                /></Form.Label>
+                                            </Form.Group>
+                                            <Form.Group>
+                                                {/*password*/}
+                                                <Form.Label
+                                                    controlId={"floatingPassword"}
+                                                    label={"Password"}
+                                                >Password <Form.Control
+                                                    type={"password"}
+                                                    placeholder={"Enter a password"}
+                                                    onChange={(e) => (setPassword(e.target.value))}
+                                                /></Form.Label>
+                                            </Form.Group>
+                                            <Form.Group>
+                                                <Form.Label
+                                                    controlId={"floatingPassword"}
+                                                    label={"Re-enter Password"}
+                                                >Re-enter Password <Form.Control
+                                                    type={"password"}
+                                                    placeholder={"Re-enter your password"}
+                                                /></Form.Label>
+                                            </Form.Group>
+                                        </Col>
+                                    </Form.Group>
+                                    <Button type={"submit"}>Signup</Button>
+                                </Form>
+                            </Row>
+
                         </Container>
                     </Col>
-                    <Col sm={4}>
-                        <Row className={"justify-content-center"}>
-                            <Col></Col>
-                            <Col className={"align-content-center"}>
-                                <h2 className={"primary-text"}>Sign up now!</h2>
-                                <p>Already a member? <Link to={'/login'}>Log in</Link></p>
-                            </Col>
-                            <Col></Col>
-                        </Row>
+                    <Col sm={2}>
+                        <h2 className={"primary-text"}>Sign up now!</h2>
+                        <p>Already a member? <Link to={'/login'}>Log in</Link></p>
 
                     </Col>
-                    <Col></Col>
+                    <Col/>
 
 
                 </Row>

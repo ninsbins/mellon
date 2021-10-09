@@ -1,23 +1,55 @@
 import Header from "../components/Header";
 import {Button, Col, Container, Form, Image, Row} from "react-bootstrap";
-import {useLocation} from "react-router-dom";
-import {useEffect} from "react";
+import {useHistory, useLocation} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axiosConfig from "../services/axiosConfig";
+import AuthService from "../services/authservice";
 
 const CreatePost = () => {
 
     let location = useLocation();
+    let history = useHistory();
 
     //post info
+    let username = AuthService.getCurrentUser().username;
+    let date = Date();
     let type = location.state.type
     let title = location.state.title;
     let image = location.state.image;
 
+    let [content, setContent] = useState("");
+
     useEffect(() => {
-        console.log(location.state.title)
+        console.log(location.state.type)
+        console.log()
     }, [location]);
 
     const handleSubmit = async () => {
         //    send post to database
+        let postData = {
+            "content": content,
+            "created_date": date,
+            "image_url": image,
+            "item_type": type,
+            "item_title": title,
+        }
+        console.log(postData)
+
+        axiosConfig.post(`/post/addpost`, {
+               postData
+            })
+            .then((res) => {
+                console.log(res);
+
+            })
+            .catch((err) => {
+                console.log(err);
+
+            });
+
+        history.push({
+            pathname: `/`
+        })
     }
 
     return (
@@ -60,6 +92,7 @@ const CreatePost = () => {
                                             as={"textarea"}
                                             placeholder={"What do you want to share?"}
                                             rows={4}
+                                            onChange={(e) => setContent(e.target.value)}
                                         />
                                     </Form.Group>
                                     <Button type={"submit"}>Post!</Button>

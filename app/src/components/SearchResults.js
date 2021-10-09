@@ -2,7 +2,6 @@ import {Col, Container, Image, Row} from "react-bootstrap";
 import ItemCard from "./ItemCard";
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import Post from "./Post";
 
 // 0 = music, 1 = books, 2 = video, 3 = recipes
 
@@ -17,9 +16,9 @@ const SearchResults = () => {
     }, [location]);
 
     function SwitchCase(arr) {
-        console.log(arr);
+        // console.log(arr);
         let data = JSON.parse(JSON.stringify(arr)).arr;
-        console.log(data.arr);
+        // console.log(data.arr);
 
         switch(searchFilter) {
             //type prop will help the item card know which page to redirect to
