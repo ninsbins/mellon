@@ -1,13 +1,16 @@
 import Header from "../components/Header";
-import {Button, Col, Container, Form, Nav, Row, Tab} from "react-bootstrap";
+import {Button, Col, Container, Form, Image, Nav, Row, Tab} from "react-bootstrap";
 //import './SpotifyButton.css'
 
-import SpotifyButton from "../components/SpotifyButton";
 import axiosConfig from "../services/axiosConfig";
 import {useState} from "react";
+import authservice from "../services/authservice";
+import {useHistory} from "react-router-dom";
 
 
 const SettingsPage = () => {
+    let history = useHistory();
+
     const [spotifyToken, setSpotifyToken] = useState(null);
 
     const setToken = async () => {
@@ -21,8 +24,6 @@ const SettingsPage = () => {
     }
 
 
-
-
     const connectToSpotify = async () => {
         //do something
         axiosConfig
@@ -33,6 +34,17 @@ const SettingsPage = () => {
             });
 
         setToken();
+
+    }
+
+    const handleLogout = async() => {
+        // how to logout
+        console.log(localStorage.getItem('user'))
+        authservice.logout();
+        console.log(localStorage.getItem('user'))
+        history.push(
+            {pathname: `/`}
+    );
 
     }
 
@@ -56,7 +68,9 @@ const SettingsPage = () => {
                                     </Nav.Link>
                                 </Nav.Item>
                             </Nav>
-
+                            <Button onClick={handleLogout}>
+                                Logout
+                            </Button>
                         </Col>
                         <Col sm={6}>
                             <Tab.Content>
@@ -122,17 +136,42 @@ const SettingsPage = () => {
                                         <h2 className={"primary-text"}>Account Connections
                                         </h2>
                                         <h2>
-                                            <Button
-                                                variant="default"
-                                                style={{background: "#1ed760",
+                                            {spotifyToken ?  (<Button
+                                                    variant="default"
+                                                    style={{background: "#1ed760",
                                                         borderTopLeftRadius: "20px",
                                                         borderTopRightRadius: "20px",
                                                         borderBottomRightRadius: "20px",
                                                         borderBottomLeftRadius: "20px"}}
-                                                onClick={connectToSpotify}>
+                                                    onClick={connectToSpotify}>
+                                                    <Image
+                                                        src={`${process.env.PUBLIC_URL}/assets/spotify.png`}
+                                                        height={25}
+                                                        style={{
+                                                            paddingRight: "5px"
+                                                        }}
+                                                    />
                                                 Connect to Spotify!
+                                                </Button>)
+                                                :(<Button
+                                                    variant="outline-danger"
+                                                    style={{
+                                                        borderTopLeftRadius: "20px",
+                                                        borderTopRightRadius: "20px",
+                                                        borderBottomRightRadius: "20px",
+                                                        borderBottomLeftRadius: "20px"}}
+                                                    onClick={connectToSpotify}>
+                                                    <Image
+                                                        src={`${process.env.PUBLIC_URL}/assets/spotify.png`}
+                                                        height={25}
+                                                        style={{
+                                                            paddingRight: "5px"
+                                                        }}
+                                                    />
+                                                    Disconnect from Spotify!
 
-                                                </Button>
+                                                </Button>)}
+
                                         </h2>
 
 

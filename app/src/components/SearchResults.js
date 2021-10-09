@@ -1,7 +1,8 @@
-import {CardDeck, Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Image, Row} from "react-bootstrap";
 import ItemCard from "./ItemCard";
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
+import Post from "./Post";
 
 // 0 = music, 1 = books, 2 = video, 3 = recipes
 
@@ -75,11 +76,14 @@ const SearchResults = () => {
                         <Container className={"py-4 px-4"}>
                             <h2 className={"primary-text"}>Results for '{searchTerm}'</h2>
                             <Row xs={1} sm={2} md={4} className="grid">
-                                {searchResults.map((result) => (
+                                {searchResults != null ? searchResults.map((result) => (
                                     <Col>
                                         <SwitchCase arr={result}/>
                                     </Col>
-                                ))}
+                                )) : <Row className={"justify-content-center"}>
+                                    <Image src={`https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif`}
+                                           width={40}/>
+                                </Row>}
                             </Row>
                         </Container>) : (
                         <Row className={"justify-content-center"}>No results for '{searchTerm}'</Row>

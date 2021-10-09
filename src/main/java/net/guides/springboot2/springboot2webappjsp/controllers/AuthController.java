@@ -6,8 +6,6 @@ import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
 import net.guides.springboot2.springboot2webappjsp.request.LoginRequest;
 import net.guides.springboot2.springboot2webappjsp.request.SignUpRequest;
 import net.guides.springboot2.springboot2webappjsp.response.JwtResponse;
-
-
 import net.guides.springboot2.springboot2webappjsp.response.MessageResponse;
 import net.guides.springboot2.springboot2webappjsp.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;

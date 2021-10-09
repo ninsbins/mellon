@@ -1,30 +1,16 @@
 package net.guides.springboot2.springboot2webappjsp.controllers;
 
 import net.guides.springboot2.springboot2webappjsp.domain.Post;
-import net.guides.springboot2.springboot2webappjsp.domain.User;
 import net.guides.springboot2.springboot2webappjsp.jwt.JwtUtils;
-import net.guides.springboot2.springboot2webappjsp.repositories.PostRepository;
 import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
-import net.guides.springboot2.springboot2webappjsp.request.CreatePostRequest;
-import net.guides.springboot2.springboot2webappjsp.response.MessageResponse;
 import net.guides.springboot2.springboot2webappjsp.services.PostService;
-import net.guides.springboot2.springboot2webappjsp.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/post")
 public class PostController {
 

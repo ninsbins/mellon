@@ -4,8 +4,6 @@ import {Link} from "react-router-dom";
 import {useState} from "react";
 import AuthService from "../services/authservice";
 
-import axios from "axios";
-
 const SignUpPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");

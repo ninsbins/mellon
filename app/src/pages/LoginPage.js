@@ -52,9 +52,9 @@ const LoginPage = () => {
                                     <Form.Label
                                         controlId={"floatingInput"}
                                         label={"Email"}
-                                    > Email<Form.Control
+                                    > Username<Form.Control
                                         type={"input"}
-                                        placeholder={"Enter your email"}
+                                        placeholder={"Enter your username"}
                                         onChange={(e) => setUsername(e.target.value)}
                                     /></Form.Label>
 

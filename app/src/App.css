@@ -59,10 +59,6 @@ body {
   padding: 40px;
 }
 
-.blob {
-  /*background-image: url(../../src/images/container_bg.png);*/
-}
-
 .app-bg {
   background-color: #efefef;
   height: 100vh;

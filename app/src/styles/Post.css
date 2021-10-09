@@ -4,3 +4,12 @@
     flex: 1;
     margin: 10px;
 }
+
+.post-box {
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.timestamp {
+    color: dimgrey;
+}

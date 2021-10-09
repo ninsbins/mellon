@@ -38,7 +38,7 @@ class App extends Component {
                             <ProfilePage/>
                         </Route>
 
-                        <Route path={'/post'}>
+                        <Route path={'/post/:id'}>
                             <PostPage/>
                         </Route>
                         <Route path={'/create'}>

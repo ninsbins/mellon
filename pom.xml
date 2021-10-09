@@ -130,9 +130,19 @@
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
 		</dependency>
+        <dependency>
+            <groupId>backport-util-concurrent</groupId>
+            <artifactId>backport-util-concurrent</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.guides.springboot2</groupId>
+            <artifactId>springboot2-webapp-jsp</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>

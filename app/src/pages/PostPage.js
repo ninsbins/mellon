@@ -1,9 +1,19 @@
 import Header from "../components/Header";
-import {Button, Col, Container, Row} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Col, Container, Row} from "react-bootstrap";
+import { Link, useParams, useHistory } from "react-router-dom";
+import {useEffect, useState} from "react";
 
 const PostPage = () => {
     // these are posts made by users that are stored on our database
+
+    const { id } = useParams();
+
+    const [postInfo, setPostInfo] = useState("");
+
+    useEffect(() => {
+        //get post with id from backend
+
+    })
 
     return (
         <div>
@@ -12,15 +22,14 @@ const PostPage = () => {
                 <Row className={"justify-content-center"}>
                     <Col>
                         <Row className={"justify-content-end"}>
-                            <h2 className={"primary-text"}>Test post</h2>
+                            <h2 className={"primary-text"}>post title</h2>
                         </Row>
                     </Col>
                     <Col sm={6}>
                         <Container className={"rounded-card"}>
                             <Col>
                                 <Container>
-                                    image <br/>
-                                    Post description
+                                    post id {id}
                                 </Container>
                             </Col>
 

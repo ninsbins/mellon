@@ -86,6 +86,10 @@
           <element id="library" level="project" name="Maven: org.apache.velocity:velocity:1.7" />
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.4" />
+          <element id="library" level="project" name="Maven: backport-util-concurrent:backport-util-concurrent:3.1" />
+          <element id="archive" name="springboot2-webapp-jsp-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="springboot2-webapp-jsp" />
+          </element>
         </element>
       </element>
       <element id="directory" name="META-INF">

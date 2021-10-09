@@ -1,13 +1,13 @@
 import {
     Container,
     Dropdown,
-    Form,
+    Form, Image,
     Modal,
     Nav,
     Navbar,
     Row
 } from "react-bootstrap";
-import {Link, Route, Switch, useHistory, useRouteMatch} from "react-router-dom";
+import {Link, Route, Switch, useHistory} from "react-router-dom";
 
 import "../styles/Header.css"
 import "../styles/Home.css"
@@ -33,9 +33,8 @@ const Header = (props) => {
     const contentTypes = ['Music', 'Books', 'Movies', 'Recipes'];
 
     function userLoggedIn() {
-        return AuthService.getCurrentUser != null;
-
-
+        // console.log( AuthService.getCurrentUser());
+        return AuthService.getCurrentUser();
     }
 
     //search functions
@@ -168,80 +167,88 @@ const Header = (props) => {
                             <Container fluid>
                                 <Link to="/">
                                     <Navbar.Brand>
-                                        {/*<Image*/}
-                                        {/*    src={"./images/logo.png"}*/}
-                                        {/*    width={"30"}*/}
-                                        {/*    height={"30"}*/}
-                                        {/*/>*/}
+                                        <Image
+                                            src={`${process.env.PUBLIC_URL}/assets/logo.png`}
+                                            height={30}
+                                        />
                                         mellon
                                     </Navbar.Brand>
                                 </Link>
 
+                                { userLoggedIn() ?
+                                    (<Nav className={"ml-auto"}>
+                                        <div className={"d-flex"}>
+                                            <Container className={"mr-5"}>
+                                                {/*change so search bar is only shown when logged in*/}
+                                                {/*filter search area*/}
+                                                <Row>
+                                                    <Dropdown onSelect={handleSelect}>
+                                                        <Dropdown.Toggle
+                                                            variant="light"
+                                                            id="dropdown-basic"
 
-                                <Nav className={"ml-auto"}>
-                                    <div className={"d-flex"}>
-                                        <Container className={"mr-5"}>
-                                            {/*change so search bar is only shown when logged in*/}
-                                            {/*filter search area*/}
-                                            <Row>
-                                                <Dropdown onSelect={handleSelect}>
-                                                    <Dropdown.Toggle
-                                                        variant="light"
-                                                        id="dropdown-basic"
-
-                                                    >
-                                                        {searchFilter == null
-                                                            ? "Search filter"
-                                                            : contentTypes[searchFilter]}
-                                                    </Dropdown.Toggle>
-                                                    <Dropdown.Menu>
-                                                        <Dropdown.Item disabled>
-                                                            Search filter
-                                                        </Dropdown.Item>
-                                                        {contentTypes.map((option, index) => (
-                                                            <Dropdown.Item eventKey={index}>
-                                                                {option}
+                                                        >
+                                                            {searchFilter == null
+                                                                ? "Search filter"
+                                                                : contentTypes[searchFilter]}
+                                                        </Dropdown.Toggle>
+                                                        <Dropdown.Menu>
+                                                            <Dropdown.Item disabled>
+                                                                Search filter
                                                             </Dropdown.Item>
-                                                        ))}
-                                                    </Dropdown.Menu>
-                                                </Dropdown>
-                                                <Form onSubmit={handleFormSubmit}>
-                                                    <Form.Control
-                                                        type={"search"}
-                                                        placeholder={"Search"}
-                                                        className={"me-2"}
-                                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                                        onKeyUp={handleSearchKeyUp}
-                                                    />
-                                                </Form>
-                                            </Row>
-                                        </Container>
+                                                            {contentTypes.map((option, index) => (
+                                                                <Dropdown.Item eventKey={index}>
+                                                                    {option}
+                                                                </Dropdown.Item>
+                                                            ))}
+                                                        </Dropdown.Menu>
+                                                    </Dropdown>
+                                                    <Form onSubmit={handleFormSubmit}>
+                                                        <Form.Control
+                                                            type={"search"}
+                                                            placeholder={"Search"}
+                                                            className={"me-2"}
+                                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                                            onKeyUp={handleSearchKeyUp}
+                                                        />
+                                                    </Form>
+                                                </Row>
+                                            </Container>
 
-                                        <Nav.Link>
-                                            <Link to={"/about"} className={"nav-links"}>
-                                                About
-                                            </Link>
-                                        </Nav.Link>
-                                        {/*    add in auth check when implemented*/}
-                                        <Nav.Link>
-                                            <Link to={"/profile"} className={"nav-links"}>
-                                                Profile
-                                            </Link>
-                                        </Nav.Link>
+                                            <Nav.Link>
+                                                <Link to={"/about"} className={"nav-links"}>
+                                                    About
+                                                </Link>
+                                            </Nav.Link>
 
-                                        <Nav.Link>
-                                            <Link to={"/settings"} className={"nav-links"}>
-                                                Settings
-                                            </Link>
-                                        </Nav.Link>
+                                            <Nav.Link>
+                                                <Link to={"/settings"} className={"nav-links"}>
+                                                    Settings
+                                                </Link>
+                                            </Nav.Link>
 
-                                        <Nav.Link>
-                                            <Link to={"/login"} className={"nav-links"}>
-                                                Login
-                                            </Link>
-                                        </Nav.Link>
-                                    </div>
-                                </Nav>
+                                            <Nav.Link>
+                                                <Link to={"/profile"} className={"nav-links"}>
+                                                    Profile
+                                                </Link>
+                                            </Nav.Link>
+
+                                        </div>
+                                    </Nav>) : (
+                                        <Nav>
+                                            <Nav.Link>
+                                                <Link to={"/about"} className={"nav-links"}>
+                                                    About
+                                                </Link>
+                                            </Nav.Link>
+                                            <Nav.Link>
+                                                <Link to={"/login"} className={"nav-links"}>
+                                                    Login
+                                                </Link>
+                                            </Nav.Link>
+                                        </Nav>
+                                    )
+                                }
                             </Container>
                         </Navbar>
 
@@ -260,9 +267,6 @@ const Header = (props) => {
                             </Route>
                         </Switch>
                     </>
-
-
-
 
     );
 }
