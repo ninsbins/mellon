@@ -11,10 +11,6 @@ const HomePage = () => {
     let {path, url} = useRouteMatch();
     // let history = useHistory();
 
-    useEffect(() => {
-
-    });
-
     return (
         <div>
             <Header/>
@@ -24,11 +20,6 @@ const HomePage = () => {
             ) : (
                 <SignUpPage/>
             )}
-            {/*<Switch>*/}
-            {/*    <Route exact path={path}>*/}
-            {/*        <Feed/>*/}
-            {/*    </Route>*/}
-            {/*</Switch>*/}
         </div>
 
     );

@@ -51,19 +51,19 @@ const Feed = () => {
                     {posts != null ? posts.map((post) => (
                         <Post
                             id={post.id}
-                            date={post.created_date}
-                            title={post.item_title}
+                            date={post.createdDate}
+                            title={post.itemTitle}
                             content={post.content}
-                            image={post.image_url}
-                            type={post.item_type}
-                            poster={post.username}
+                            image={post.imageUrl}
+                            type={post.itemType}
+                            poster={post.user.username}
                         />
                     )) : <Row className={"justify-content-center"}>
                         <Image src={`https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif`}
                         width={40}/>
                     </Row>}
                 </Col>
-                <Col></Col>
+                <Col/>
 
             </Row>
 

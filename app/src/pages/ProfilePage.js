@@ -1,12 +1,25 @@
 import Header from "../components/Header";
-import {Button, Col, Container, Nav, Row, Tab} from "react-bootstrap";
+import {Col, Container, Nav, Row, Tab} from "react-bootstrap";
 import PostCard from "../components/PostCard";
 import ItemCard from "../components/ItemCard";
-import authService from "../services/authService";
-
+import {useEffect, useState} from "react";
+import axiosConfig from "../services/axiosConfig";
 
 
 const ProfilePage = () => {
+
+    const [posts, setPosts] = useState(null);
+
+    useEffect(() => {
+        axiosConfig.get(`post/myposts`)
+            .then((res) => {
+                console.log(res);
+                setPosts(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    });
 
     return (
         <div>
@@ -68,9 +81,18 @@ const ProfilePage = () => {
                                         <Container className={"rounded-card"}>
                                             {/*map card grid*/}
                                             Recent
-                                            <PostCard>
+                                            {posts != null ? (posts.slice(0, 3).map((post) => (
+                                                        <PostCard
+                                                            title={post.itemTitle}
+                                                            image={post.imageUrl}
+                                                            id={post.id}
+                                                        />
+                                                    ))
+                                                ) : (
+                                                    <div></div>
+                                                )
+                                            }
 
-                                            </PostCard>
                                         </Container>
                                     </Tab.Pane>
                                     <Tab.Pane eventKey={"music"}>

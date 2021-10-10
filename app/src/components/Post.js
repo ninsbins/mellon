@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Button, Container, FormControl} from "react-bootstrap";
+import {Button, Container, FormControl, Image, Row} from "react-bootstrap";
 import {InputGroup} from "reactstrap";
 import {Link} from "react-router-dom";
 
@@ -8,7 +8,6 @@ const Post = (props) => {
     const [comment, setComment] = useState("");
 
     const postComment = async () => {
-        console.log(comment);
         setComment("");
     }
 
@@ -24,7 +23,10 @@ const Post = (props) => {
                 </svg>      {props.poster}
             </h2>
             <h3><Link to={`/post/${props.id}`}>{props.title}</Link></h3>
-            <p className={"timestamp"}>{props.date}</p>
+            <p className={"timestamp"}>{(props.date)}</p>
+            <Row className={"justify-content-center"}>
+                <Image width="400px" src={props.image}/>
+            </Row>
             <p>{props.content}</p>
             <InputGroup>
                 <FormControl

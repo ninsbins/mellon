@@ -37,11 +37,23 @@ const SignUpPage = () => {
     const formValidation = () => {
         const newErr = {};
 
+        //username required
         if ( !username || username === '' ) newErr.username = 'Please enter a username!';
+
+        //email required and valid email address
         if ( !email || email === '' ) newErr.email = 'Please enter an email!';
+        else {
+            const expression = /\S+@\S+/;
+            let validEmail = expression.test(String(email).toLowerCase());
+            if (!validEmail) newErr.email = 'Please enter a valid email';
+        }
+        console.log(repeatPassword)
+        //password required, and repeat password must match
         if ( !password || password === '' ) newErr.password = 'Please enter a password!';
         if ( !repeatPassword || repeatPassword === '' ) newErr.repeatPassword = 'Please re-enter your password!';
-        if ( password !== repeatPassword ) newErr.repeatPassword = "Your passwords don't match!";
+        else {
+            if ( password !== repeatPassword ) newErr.repeatPassword = "Your passwords don't match!";
+        }
 
         return newErr;
     }
@@ -58,7 +70,6 @@ const SignUpPage = () => {
 
         if (Object.keys(hasError).length > 0 ) {
             setErrors(hasError);
-
         } else {
             console.log(username);
             setValidated(true);
@@ -99,7 +110,7 @@ const SignUpPage = () => {
                             backgroundSize: "contain",
                             backgroundRepeat: "no-repeat"
                         }}>
-                            <Row className={"justify-content-center"} style={{paddingTop: "100px", paddingLeft: "50px"}}>
+                            <Row className={"justify-content-center"} style={{paddingTop: "80px", paddingLeft: "50px"}}>
                                 <Form noValidate onSubmit={handleSubmit} validated={validated} style={{color: "white"}}>
                                     <Form.Group>
                                         <Col className={"justify-content-center"}>
@@ -155,12 +166,12 @@ const SignUpPage = () => {
                                                 <Form.Label
                                                     controlId={"floatingPassword"}
                                                     label={"Re-enter Password"}
-                                                    onChange={(e) => (setRepeatPassword(e.target.value))}
                                                 >Re-enter Password</Form.Label>
                                                 <Form.Control
                                                     isInvalid={!! errors.repeatPassword}
                                                     type={"password"}
                                                     placeholder={"Re-enter your password"}
+                                                    onChange={(e) => (setRepeatPassword(e.target.value))}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
                                                     {errors.repeatPassword}
@@ -177,7 +188,7 @@ const SignUpPage = () => {
                         </Container>
                     </Col>
                     <Col sm={2} className={"align-content-center"}>
-                        <div style={{paddingTop: "150px"}}>
+                        <div style={{paddingTop: "200px"}}>
                             <h2 className={"primary-text"}>Sign up now!</h2>
                             <p>Already a member? <Link to={'/login'}>Log in</Link></p>
                         </div>

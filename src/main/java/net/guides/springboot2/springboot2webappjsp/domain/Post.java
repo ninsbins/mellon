@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="post")
+@Table(name="post",
+        schema = "targetSchemaName")
 public class Post
 {
     @Id

@@ -12,10 +12,13 @@ const CreatePost = () => {
 
     //post info
     let username = authService.getCurrentUser().username;
-    let date = Date();
+    let date = (new Date()).toJSON();
     let type = location.state.type
     let title = location.state.title;
     let image = location.state.image;
+
+    //post validation
+    const [errors, setErrors] = useState({});
 
     let [content, setContent] = useState("");
 
@@ -24,32 +27,58 @@ const CreatePost = () => {
         console.log()
     }, [location]);
 
-    const handleSubmit = async () => {
+    const formValidation = () => {
+        const newErr= {};
+
+        //null check for error
+        if (!content || content === '') newErr.content = 'Add a comment to your post!';
+
+        return newErr;
+    };
+
+    const handleSubmit = (event) => {
         //    send post to database
-        let postData = {
-            "content": content,
-            "created_date": date,
-            "image_url": image,
-            "item_type": type,
-            "item_title": title,
+        event.preventDefault();
+
+        const hasError = formValidation();
+        console.log(hasError);
+        console.log(content);
+
+        if (Object.keys(hasError).length > 0) {
+            setErrors(hasError)
+        } else {
+            // let postData = JSON.parse('{
+            //     "content": content,
+            //     "createdDate": ${date},
+            //     "imageUrl": ${image},
+            //     "itemType": {type},
+            //     "itemTitle": {title},
+            // }');
+            //
+            console.log(date)
+
+            axiosConfig.post(`/post/addpost`, {
+                content: content,
+                createdDate: date,
+                imageUrl: image,
+                itemType: type,
+                itemTitle: title
+            })
+                .then((res) => {
+                    console.log(res);
+
+                })
+                .catch((err) => {
+                    console.log(err);
+
+                });
+
+            history.push({
+                pathname: `/`
+            })
+
+        //   add modal popup of successful post
         }
-        console.log(postData)
-
-        axiosConfig.post(`/post/addpost`, {
-               postData
-            })
-            .then((res) => {
-                console.log(res);
-
-            })
-            .catch((err) => {
-                console.log(err);
-
-            });
-
-        history.push({
-            pathname: `/`
-        })
     }
 
     return (
@@ -93,6 +122,7 @@ const CreatePost = () => {
                                             placeholder={"What do you want to share?"}
                                             rows={4}
                                             onChange={(e) => setContent(e.target.value)}
+                                            isInvalid={!! errors.content}
                                         />
                                     </Form.Group>
                                     <Button type={"submit"}>Post!</Button>
@@ -100,7 +130,7 @@ const CreatePost = () => {
                             </Form>
                         </Container>
                     </Col>
-                    <Col></Col>
+                    <Col/>
                 </Row>
             </Container>
         </div>

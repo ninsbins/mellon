@@ -18,6 +18,7 @@ import SearchResults from "./SearchResults";
 import axiosConfig from "../services/axiosConfig";
 import authHeader from '../services/authHeader';
 import authService from "../services/authService";
+import HomePage from "../pages/HomePage";
 
 const Header = (props) => {
     const [show, setShow] = useState(false);
@@ -58,17 +59,15 @@ const Header = (props) => {
                 await recipeSearch(term);
                 break;
         }
-        setSearchFilter(null);
         setSearchTerm(null);
         setSearchResults(null);
     }
 
 
-
     const musicSearch = async (input) => {
         if (input) {
             axiosConfig
-                .get(`/spotify/search?item=${input}`, { headers: authHeader() })
+                .get(`/spotify/search?item=${input}`, {headers: authHeader()})
                 .then((res) => {
                     if (res.status === 200) {
                         console.log(res.data.albums.items);
@@ -85,9 +84,7 @@ const Header = (props) => {
                 }).catch((err) => {
                 console.log(err)
             })
-        }
-
-        else {
+        } else {
 
         }
     }
@@ -154,7 +151,7 @@ const Header = (props) => {
     const handleFormSubmit = e => e.preventDefault();
 
     let handleSelect = async (eventKey) => {
-        console.log(eventKey);
+        // console.log(eventKey);
         setSearchFilter(eventKey);
     };
 
@@ -162,114 +159,114 @@ const Header = (props) => {
     let handleClose = () => setShow(false);
 
     return (
-                    <>
-                        <Navbar variant={"dark"} className={"bg-gradient"} expand={"lg"} fixed={"top"}>
-                            <Container fluid>
-                                <Link to="/">
-                                    <Navbar.Brand>
-                                        <Image
-                                            src={`${process.env.PUBLIC_URL}/assets/logo.png`}
-                                            height={28}
-                                            style={{paddingRight: "10px"}}
-                                        />
-                                        mellon
-                                    </Navbar.Brand>
-                                </Link>
+        <>
+            <Navbar variant={"dark"} className={"bg-gradient"} expand={"lg"} fixed={"top"}>
+                <Container fluid>
+                    <Link to="/">
+                        <Navbar.Brand>
+                            <Image
+                                src={`${process.env.PUBLIC_URL}/assets/logo.png`}
+                                height={28}
+                                style={{paddingRight: "10px"}}
+                            />
+                            mellon
+                        </Navbar.Brand>
+                    </Link>
 
-                                { userLoggedIn() ?
-                                    (<Nav className={"ml-auto"}>
-                                        <div className={"d-flex"}>
-                                            <Container className={"mr-5"}>
-                                                {/*change so search bar is only shown when logged in*/}
-                                                {/*filter search area*/}
-                                                <Row>
-                                                    <Dropdown onSelect={handleSelect}>
-                                                        <Dropdown.Toggle
-                                                            variant="light"
-                                                            id="dropdown-basic"
+                    {userLoggedIn() ?
+                        (<Nav className={"ml-auto"}>
+                            <div className={"d-flex"}>
+                                <Container className={"mr-5"}>
+                                    {/*change so search bar is only shown when logged in*/}
+                                    {/*filter search area*/}
+                                    <Row>
+                                        <Dropdown onSelect={handleSelect}>
+                                            <Dropdown.Toggle
+                                                variant="light"
+                                                id="dropdown-basic"
 
-                                                        >
-                                                            {searchFilter == null
-                                                                ? "Search filter"
-                                                                : contentTypes[searchFilter]}
-                                                        </Dropdown.Toggle>
-                                                        <Dropdown.Menu>
-                                                            <Dropdown.Item disabled>
-                                                                Search filter
-                                                            </Dropdown.Item>
-                                                            {contentTypes.map((option, index) => (
-                                                                <Dropdown.Item eventKey={index}>
-                                                                    {option}
-                                                                </Dropdown.Item>
-                                                            ))}
-                                                        </Dropdown.Menu>
-                                                    </Dropdown>
-                                                    <Form onSubmit={handleFormSubmit}>
-                                                        <Form.Control
-                                                            type={"search"}
-                                                            placeholder={"Search"}
-                                                            className={"me-2"}
-                                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                                            onKeyUp={handleSearchKeyUp}
-                                                        />
-                                                    </Form>
-                                                </Row>
-                                            </Container>
+                                            >
+                                                {searchFilter == null
+                                                    ? "Search filter"
+                                                    : contentTypes[searchFilter]}
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item disabled>
+                                                    Search filter
+                                                </Dropdown.Item>
+                                                {contentTypes.map((option, index) => (
+                                                    <Dropdown.Item eventKey={index}>
+                                                        {option}
+                                                    </Dropdown.Item>
+                                                ))}
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                        <Form onSubmit={handleFormSubmit}>
+                                            <Form.Control
+                                                type={"search"}
+                                                placeholder={"Search"}
+                                                className={"me-2"}
+                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                onKeyUp={handleSearchKeyUp}
+                                            />
+                                        </Form>
+                                    </Row>
+                                </Container>
 
-                                            <Nav.Link>
-                                                <Link to={"/about"} className={"nav-links"}>
-                                                    About
-                                                </Link>
-                                            </Nav.Link>
+                                <Nav.Link>
+                                    <Link to={"/about"} className={"nav-links"}>
+                                        About
+                                    </Link>
+                                </Nav.Link>
 
-                                            <Nav.Link>
-                                                <Link to={"/settings"} className={"nav-links"}>
-                                                    Settings
-                                                </Link>
-                                            </Nav.Link>
+                                <Nav.Link>
+                                    <Link to={"/settings"} className={"nav-links"}>
+                                        Settings
+                                    </Link>
+                                </Nav.Link>
 
-                                            <Nav.Link>
-                                                <Link to={"/profile"} className={"nav-links"}>
-                                                    Profile
-                                                </Link>
-                                            </Nav.Link>
+                                <Nav.Link>
+                                    <Link to={"/profile"} className={"nav-links"}>
+                                        Profile
+                                    </Link>
+                                </Nav.Link>
 
-                                        </div>
-                                    </Nav>) : (
-                                        <Nav>
-                                            <Nav.Link>
-                                                <Link to={"/about"} className={"nav-links"}>
-                                                    About
-                                                </Link>
-                                            </Nav.Link>
-                                            <Nav.Link>
-                                                <Link to={"/login"} className={"nav-links"}>
-                                                    Login
-                                                </Link>
-                                            </Nav.Link>
-                                        </Nav>
-                                    )
-                                }
-                            </Container>
-                        </Navbar>
+                            </div>
+                        </Nav>) : (
+                            <Nav>
+                                <Nav.Link>
+                                    <Link to={"/about"} className={"nav-links"}>
+                                        About
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link to={"/login"} className={"nav-links"}>
+                                        Login
+                                    </Link>
+                                </Nav.Link>
+                            </Nav>
+                        )
+                    }
+                </Container>
+            </Navbar>
 
-                        <Modal show={show} onHide={handleClose}>
-                            <Modal.Body>
-                                Please select a search filter and try again.
-                            </Modal.Body>
-                        </Modal>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Body>
+                    Please select a search filter and try again.
+                </Modal.Body>
+            </Modal>
 
-                        <Switch>
-                            <Route path={'/search'}>
-                                <SearchResults
-                                    searchFilter={searchFilter}
-                                    searchTerm={searchTerm}
-                                    searchResults={searchResults}/>
-                            </Route>
-                        </Switch>
-                    </>
+            <Switch>
+                <Route path={'/search'}>
+                    <SearchResults
+                        searchFilter={searchFilter}
+                        searchTerm={searchTerm}
+                        searchResults={searchResults}/>
+                </Route>
+            </Switch>
+        </>
 
-    );
+);
 }
 
 export default Header;

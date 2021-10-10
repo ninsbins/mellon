@@ -1,20 +1,19 @@
 package net.guides.springboot2.springboot2webappjsp.domain;
 
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(	name = "users",
 		uniqueConstraints = {
 				@UniqueConstraint(columnNames = "username"),
 				@UniqueConstraint(columnNames = "email")
-		})
+		},
+		schema = "targetSchemaName")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

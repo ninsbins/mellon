@@ -10,8 +10,8 @@ const ItemCard = (props) => {
     let itemType = props.type;
 
     useEffect(() => {
-        console.log(props.d);
-        console.log(props.title)
+        // console.log(props.d);
+        // console.log(props.title)
     }, [])
 
     function redirectToPage() {

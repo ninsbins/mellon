@@ -65,7 +65,7 @@ const SearchResults = () => {
                 //default catchall case
                 return (<div></div>)
         }
-    }
+    };
 
     return (
         <div>
