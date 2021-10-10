@@ -41,10 +41,16 @@ public class PostController {
         List<Post> postList = postService.getPostsOfUser(username);
         return ResponseEntity.ok(postList);
     }
-//
+    //
     @GetMapping("/posts")
     public ResponseEntity<List<Post>> getAllPosts(){
         List<Post> postList = postService.getAllPost();
         return ResponseEntity.ok(postList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> getPostId(@PathVariable Integer id,@RequestHeader (name="Authorization") String token) {
+        Post post = postService.getPostById(id);
+        return ResponseEntity.ok(post);
     }
 }

@@ -7,7 +7,6 @@ import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -41,5 +40,9 @@ public class PostService {
 
     public List<Post> getAllPost(){
         return postRepository.findAllByOrderByIdDesc();
+    }
+
+    public Post getPostById (Integer id) {
+        return postRepository.findById(id).get();
     }
 }
