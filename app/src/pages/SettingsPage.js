@@ -63,9 +63,7 @@ const SettingsPage = () => {
                                 <Tab.Pane eventKey={"settings"}>
                                     <Container className={"rounded-card"}>
                                         <h2 className={"primary-text"}>Settings</h2>
-                                        Email
-
-                                        Change email
+                                        Change password!
                                         <Form>
                                             <Form.Group>
                                                 <Form.Label>
@@ -74,7 +72,6 @@ const SettingsPage = () => {
                                             </Form.Group>
                                         </Form>
 
-                                        Change password
                                         <Form>
                                             <Form.Group>
                                                 <Form.Label>Old Password</Form.Label>

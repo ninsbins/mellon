@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const USER_API_BASE_URL = "http://localhost:8080/api/auth/users"; //api call
 
+//return axios.get(API_URL + 'user', { headers: authHeader() });
 
 //Class used by UpdateUserComponents, which then invokes UserControllerTesting.
 class UserServiceTesting {

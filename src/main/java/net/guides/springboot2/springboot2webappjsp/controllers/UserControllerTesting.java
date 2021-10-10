@@ -47,6 +47,8 @@ public class UserControllerTesting {
         user.setUsername((userDetails.getUsername()));
         user.setEmail((userDetails.getEmail()));
         user.setPassword((userDetails.getPassword()));
+        user.setFirstName((userDetails.getFirstName()));
+        user.setLastName((userDetails.getLastName()));
 
         User updatedUser = userRepository.save(user); //SAVE TO DB
         System.out.println("UPDATED USER OK!");

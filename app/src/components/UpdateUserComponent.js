@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import UserServiceTesting from "../services/UserServiceTesting";
 import Header from "../components/Header";
+import '../styles/UpdateUserComponent.css';
+
+import {Container} from "@material-ui/core";
 //^used 'rcc' to create the React snippet
 
 //This component is for updating User details.
@@ -15,7 +18,9 @@ class UpdateUserComponent extends Component {
             id: this.props.match.params.id, //this gets the ID passed in from url/route
             username: '',
             email: '',
-            password: ''
+            password: '',
+            firstName: '',
+            lastName: ''
         }
 
         console.log("The User ID you entered in the routing = " + this.state.id);
@@ -24,6 +29,8 @@ class UpdateUserComponent extends Component {
         this.changeUsernameHandler = this.changeUsernameHandler.bind(this);
         this.changeEmailHandler = this.changeEmailHandler.bind(this);
         this.changePasswordHandler = this.changePasswordHandler.bind(this);
+        this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
+        this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
         this.updateUser = this.updateUser.bind(this); //when Update button is clicked
     }
 
@@ -37,7 +44,9 @@ class UpdateUserComponent extends Component {
             this.setState( {
                 username: user.username,
                 email: user.email,
-                password: user.password
+                password: user.password,
+                firstName: user.firstName,
+                lastName: user.lastName
             });
         });
     }
@@ -50,7 +59,9 @@ class UpdateUserComponent extends Component {
         let user = {
             username: this.state.username,
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName
         };
 
         console.log('User! => ' + JSON.stringify(user))
@@ -60,7 +71,6 @@ class UpdateUserComponent extends Component {
             alert("Update has been successful - Redirecting..."); //confirm with User
             this.props.history.push('/'); //after updated redirect to the Main page
         });
-
     }
 
     //When Cancel button is clicked
@@ -68,7 +78,7 @@ class UpdateUserComponent extends Component {
         this.props.history.push('/'); //route back to Home page if Cancel button has been selected
     }
 
-    //SETTING THE 3 PROPERTIES below:
+    //SETTING THE 5 PROPERTIES below:
     changeUsernameHandler = (event) => {
         this.setState({username: event.target.value});
     }
@@ -83,12 +93,27 @@ class UpdateUserComponent extends Component {
         this.setState({password: event.target.value});
     }
 
+    //setting the ^ properties
+    changeFirstNameHandler = (event) => {
+        this.setState({firstName: event.target.value});
+    }
+
+    //setting the ^ properties
+    changeLastNameHandler = (event) => {
+        this.setState({lastName: event.target.value});
+    }
 
 
+    //<Container className={"rounded-card"}>
+    //</Container>
     render() {
         return (
             <div>
                 <Header/>
+                <div className="spacer">
+                    &nbsp;
+                </div>
+
                 <div className= "container-body">
                     <div className= "row">
                         <div className = "card col-md-6 offset-md-3 offset-md-3"> {/* column width -give space from left margin*/}
@@ -100,6 +125,18 @@ class UpdateUserComponent extends Component {
                                         <label> Username: </label>
                                         <input placeholder="username" name = "username" className="form-control"
                                                value={this.state.username} onChange={this.changeUsernameHandler}/> {/*event handler called */}
+                                    </div>
+
+                                    <div className = "form-group">
+                                        <label> First Name: </label>
+                                        <input placeholder="First name" name = "firstName" className="form-control"
+                                               value={this.state.firstName} onChange={this.changeFirstNameHandler}/> {/*event handler called */}
+                                    </div>
+
+                                    <div className = "form-group">
+                                        <label> Last Name: </label>
+                                        <input placeholder="Last name" name = "lastName" className="form-control"
+                                               value={this.state.lastName} onChange={this.changeLastNameHandler}/> {/*event handler called */}
                                     </div>
 
                                     <div className = "form-group">
