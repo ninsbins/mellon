@@ -3,7 +3,7 @@ import ItemCard from "./ItemCard";
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 
-// 0 = music, 1 = books, 2 = video, 3 = recipes
+// 0 = music, 1 = playlists, 2 = video, 3 = recipes
 
 const SearchResults = () => {
     let location = useLocation();
@@ -34,7 +34,7 @@ const SearchResults = () => {
                     />
                 );
             case "1":
-                //book search
+                //playlist search
                 return (
                     <ItemCard
                         type={"1"}

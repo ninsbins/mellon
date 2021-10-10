@@ -1,6 +1,6 @@
 import axiosConfig from "./axiosConfig";
 
-class AuthService {
+class authService {
     login(username, password) {
         return axiosConfig
             .post(`/api/auth/login`, {
@@ -38,4 +38,4 @@ class AuthService {
     }
 }
 
-export default new AuthService();
+export default new authService();

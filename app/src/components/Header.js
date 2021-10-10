@@ -16,8 +16,8 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import SearchResults from "./SearchResults";
 import axiosConfig from "../services/axiosConfig";
-import authHeader from '../services/authheader';
-import AuthService from "../services/authservice";
+import authHeader from '../services/authHeader';
+import authService from "../services/authService";
 
 const Header = (props) => {
     const [show, setShow] = useState(false);
@@ -30,11 +30,11 @@ const Header = (props) => {
     let history = useHistory();
 
     //dictionary of content types in application
-    const contentTypes = ['Music', 'Books', 'Movies', 'Recipes'];
+    const contentTypes = ['Music', 'Playlists', 'Movies', 'Recipes'];
 
     function userLoggedIn() {
-        // console.log(AuthService.getCurrentUser());
-        return AuthService.getCurrentUser();
+        // console.log(authService.getCurrentUser());
+        return authService.getCurrentUser();
     }
 
     //search functions
@@ -47,7 +47,7 @@ const Header = (props) => {
                 await musicSearch(term);
                 break;
             case "1":
-                // book search
+                // playlist search
                 break;
             case "2":
                 // movie search

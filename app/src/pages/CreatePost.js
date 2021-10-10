@@ -3,7 +3,7 @@ import {Button, Col, Container, Form, Image, Row} from "react-bootstrap";
 import {useHistory, useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
-import AuthService from "../services/authservice";
+import authService from "../services/authService";
 
 const CreatePost = () => {
 
@@ -11,7 +11,7 @@ const CreatePost = () => {
     let history = useHistory();
 
     //post info
-    let username = AuthService.getCurrentUser().username;
+    let username = authService.getCurrentUser().username;
     let date = Date();
     let type = location.state.type
     let title = location.state.title;

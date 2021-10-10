@@ -4,6 +4,8 @@ import "../styles/Home.css"
 import React, {useEffect} from "react";
 import {Route, useRouteMatch, Switch} from "react-router-dom";
 import Feed from "../components/Feed";
+import authService from "../services/authService";
+import SignUpPage from "./SignUpPage";
 
 const HomePage = () => {
     let {path, url} = useRouteMatch();
@@ -17,11 +19,16 @@ const HomePage = () => {
         <div>
             <Header/>
             {/* add behaviour that user must be logged in to see feed */}
-            <Switch>
-                <Route exact path={path}>
-                    <Feed/>
-                </Route>
-            </Switch>
+            {authService.getCurrentUser() ? (
+                <Feed/>
+            ) : (
+                <SignUpPage/>
+            )}
+            {/*<Switch>*/}
+            {/*    <Route exact path={path}>*/}
+            {/*        <Feed/>*/}
+            {/*    </Route>*/}
+            {/*</Switch>*/}
         </div>
 
     );

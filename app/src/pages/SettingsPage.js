@@ -4,7 +4,7 @@ import {Button, Col, Container, Form, Image, Nav, Row, Tab} from "react-bootstra
 
 import axiosConfig from "../services/axiosConfig";
 import {useState} from "react";
-import authservice from "../services/authservice";
+import authService from "../services/authService";
 import {useHistory} from "react-router-dom";
 
 
@@ -40,7 +40,7 @@ const SettingsPage = () => {
     const handleLogout = async() => {
         // how to logout
         console.log(localStorage.getItem('user'))
-        authservice.logout();
+        authService.logout();
         console.log(localStorage.getItem('user'))
         history.push(
             {pathname: `/`}

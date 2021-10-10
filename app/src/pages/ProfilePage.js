@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import {Button, Col, Container, Nav, Row, Tab} from "react-bootstrap";
 import PostCard from "../components/PostCard";
 import ItemCard from "../components/ItemCard";
-import AuthService from "../services/authservice";
+import authService from "../services/authService";
 
 
 
@@ -15,7 +15,7 @@ const ProfilePage = () => {
                 <div className={"profile-header"}>
                     <Row>
                         <Col sm={3}>
-                            <h2 className={"primary-text"}>Profile page</h2>
+                            <h2 className={"primary-text"}>Your profile</h2>
                         </Col>
                         <Col sm={9}>
                             {/*<Button variant={"outline-primary"}>*/}
@@ -44,6 +44,21 @@ const ProfilePage = () => {
                                             Music
                                         </Nav.Link>
                                     </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey={"playlists"}>
+                                            Playlists
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey={"movies"}>
+                                            Movies
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey={"recipes"}>
+                                            Recipes
+                                        </Nav.Link>
+                                    </Nav.Item>
                                 </Nav>
                             </Col>
                             <Col sm={9}>
@@ -63,6 +78,31 @@ const ProfilePage = () => {
                                             {/*map card grid*/}
                                             Music
                                             <ItemCard/>
+                                        </Container>
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey={"playlists"}>
+                                        <Container className={"rounded-card"}>
+                                            {/*map card grid*/}
+                                            Playlists
+                                            <ItemCard/>
+                                        </Container>
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey={"movies"}>
+                                        <Container className={"rounded-card"}>
+                                            {/*map card grid*/}
+                                            Movies
+                                            <PostCard>
+
+                                            </PostCard>
+                                        </Container>
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey={"recipes"}>
+                                        <Container className={"rounded-card"}>
+                                            {/*map card grid*/}
+                                            Recipes
+                                            <PostCard>
+
+                                            </PostCard>
                                         </Container>
                                     </Tab.Pane>
                                 </Tab.Content>
