@@ -13,13 +13,13 @@ import java.util.List;
 
 @CrossOrigin(origins="*", maxAge=3600)//to stop the CORS issue on this front-end page(without it, go to Console in Inspections)
 @RestController
-@RequestMapping("/api/auth/") //can test this api point using Postman so e.g. 'http://localhost:8080/api/auth/users/18'
+@RequestMapping("/update") //can test this api point using Postman so e.g. 'http://localhost:8080/api/auth/users/18' NO LONGER
+//http://localhost:8080/update/users/18
 public class UserControllerTesting {
 
     //enables you to inject the object dependency implicitly
     @Autowired
     private UserRepository userRepository;
-
 
     //get all users
     @GetMapping("/users")

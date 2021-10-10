@@ -37,6 +37,7 @@ class UpdateUserComponent extends Component {
 
     //Call the rest api to pre-fill the form.
     componentDidMount() { //passing in the id from this route
+        //Below 'UserServiceTesting.getUserById(this.state.id). ' calls the UserService class
         UserServiceTesting.getUserById(this.state.id).then( (res) => {
 
             let user = res.data; //get data into this object .
