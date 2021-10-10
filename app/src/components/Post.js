@@ -7,6 +7,8 @@ import {Link} from "react-router-dom";
 const Post = (props) => {
     const [comment, setComment] = useState("");
 
+    const date = JSON.parse(props.date);
+
     const postComment = async () => {
         setComment("");
     }
@@ -23,7 +25,7 @@ const Post = (props) => {
                 </svg>      {props.poster}
             </h2>
             <h3><Link to={`/post/${props.id}`}>{props.title}</Link></h3>
-            <p className={"timestamp"}>{(props.date)}</p>
+            <p className={"timestamp"}>{date}</p>
             <Row className={"justify-content-center"}>
                 <Image width="400px" src={props.image}/>
             </Row>

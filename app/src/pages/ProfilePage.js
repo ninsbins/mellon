@@ -19,6 +19,7 @@ const ProfilePage = () => {
             .then((res) => {
                 // console.log(res);
                 setPosts(res.data);
+                console.log(posts);
 
                 const musicList = [];
                 const playlistList = [];
@@ -26,18 +27,18 @@ const ProfilePage = () => {
                 const recipeList = [];
 
                 (res.data).map((post) => {
-                    switch (post.type) {
-                        case 'Music':
-                            musicList.add(post);
+                    switch (post.itemType) {
+                        case "Music":
+                            musicList.push(post);
                             break;
-                        case 'Playlist':
-                            playlistList.add(post);
+                        case "Playlist":
+                            playlistList.push(post);
                             break;
-                        case 'Movie':
-                            movieList.add(post);
+                        case "Movie":
+                            movieList.push(post);
                             break;
-                        case 'Recipe':
-                            recipeList.add(post);
+                        case "Recipe":
+                            recipeList.push(post);
                             break;
                     }
                 })
@@ -52,7 +53,7 @@ const ProfilePage = () => {
             .catch((err) => {
                 console.log(err);
             })
-    });
+    }, []);
 
     return (
         <div>
@@ -82,12 +83,21 @@ const ProfilePage = () => {
                                 <Nav variant={"pills"} className={"flex-column"}>
                                     <Nav.Item>
                                         <Nav.Link eventKey={"recent"}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 style={{marginRight: "15px"}}
+                                                 fill="currentColor" className="bi bi-clock" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                                                <path
+                                                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                                            </svg>
                                             Recent
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link eventKey={"music"}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 style={{marginRight: "15px"}}
                                                  fill="currentColor" className="bi bi-music-note-beamed"
                                                  viewBox="0 0 16 16">
                                                 <path
@@ -102,6 +112,7 @@ const ProfilePage = () => {
                                     <Nav.Item>
                                         <Nav.Link eventKey={"playlists"}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 style={{marginRight: "15px"}}
                                                  fill="currentColor" className="bi bi-music-note-list"
                                                  viewBox="0 0 16 16">
                                                 <path
@@ -118,6 +129,7 @@ const ProfilePage = () => {
                                     <Nav.Item>
                                         <Nav.Link eventKey={"movies"}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 style={{marginRight: "15px"}}
                                                  fill="currentColor"
                                                  className="bi bi-film" viewBox="0 0 16 16">
                                                 <path
@@ -129,6 +141,7 @@ const ProfilePage = () => {
                                     <Nav.Item>
                                         <Nav.Link eventKey={"recipes"}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 style={{marginRight: "15px"}}
                                                  fill="currentColor"
                                                  className="bi bi-egg-fried" viewBox="0 0 16 16">
                                                 <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -155,8 +168,8 @@ const ProfilePage = () => {
                                                     />
                                                 ))
                                             ) : (
-                                                <div>You have no posts. Start exploring, and make posts to see them
-                                                    here!</div>
+                                                <Row className={"justify-content-center"}>You have no posts. Start exploring, and make posts to see them
+                                                    here!</Row>
                                             )
                                             }
 
@@ -166,7 +179,7 @@ const ProfilePage = () => {
                                         <Container className={"rounded-card"}>
                                             {/*map card grid*/}
                                             Music
-                                            {musicPosts ? (musicPosts.map((post) => (
+                                            {musicPosts.length > 0 ? (musicPosts.map((post) => (
                                                     <PostCard
                                                         title={post.itemTitle}
                                                         image={post.imageUrl}
@@ -174,7 +187,7 @@ const ProfilePage = () => {
                                                     />
                                                 ))
                                             ) : (
-                                                <div>You have no music posts.</div>
+                                                <Row className={"justify-content-center"}>You have no music posts.</Row>
                                             )
                                             }
                                         </Container>
@@ -183,7 +196,7 @@ const ProfilePage = () => {
                                         <Container className={"rounded-card"}>
                                             {/*map card grid*/}
                                             Playlists
-                                            {playlistPosts ? (playlistPosts.map((post) => (
+                                            {playlistPosts.length > 0 ? (playlistPosts.map((post) => (
                                                     <PostCard
                                                         title={post.itemTitle}
                                                         image={post.imageUrl}
@@ -191,7 +204,8 @@ const ProfilePage = () => {
                                                     />
                                                 ))
                                             ) : (
-                                                <div>You have no playlist posts.</div>
+                                                <Row className={"justify-content-center"}>You have no playlist posts.</Row>
+
                                             )
                                             }
                                         </Container>
@@ -200,7 +214,7 @@ const ProfilePage = () => {
                                         <Container className={"rounded-card"}>
                                             {/*map card grid*/}
                                             Movies
-                                            {moviePosts ? (moviePosts.map((post) => (
+                                            {moviePosts.length > 0 ? (moviePosts.map((post) => (
                                                     <PostCard
                                                         title={post.itemTitle}
                                                         image={post.imageUrl}
@@ -208,7 +222,7 @@ const ProfilePage = () => {
                                                     />
                                                 ))
                                             ) : (
-                                                <div>You have no movie posts.</div>
+                                                <Row className={"justify-content-center"}>You have no movie posts.</Row>
                                             )
                                             }
                                         </Container>
@@ -217,7 +231,7 @@ const ProfilePage = () => {
                                         <Container className={"rounded-card"}>
                                             {/*map card grid*/}
                                             Recipes
-                                            {recipePosts ? (recipePosts.map((post) => (
+                                            {recipePosts.length > 0 ? (recipePosts.map((post) => (
                                                     <PostCard
                                                         title={post.itemTitle}
                                                         image={post.imageUrl}
@@ -225,7 +239,7 @@ const ProfilePage = () => {
                                                     />
                                                 ))
                                             ) : (
-                                                <div>You have no recipe posts.</div>
+                                                <Row className={"justify-content-center"}>You have no recipe posts.</Row>
                                             )
                                             }
                                         </Container>

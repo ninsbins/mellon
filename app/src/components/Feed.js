@@ -36,7 +36,7 @@ const Feed = () => {
             ).catch((err) => {
             console.log(err)
         })
-    });
+    }, [posts]);
 
     return (
         <Container fluid className={"content-body"}>
