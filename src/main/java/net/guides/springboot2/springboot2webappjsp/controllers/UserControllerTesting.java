@@ -6,6 +6,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -20,6 +21,10 @@ public class UserControllerTesting {
     //enables you to inject the object dependency implicitly
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder encoder; //this is for encrypting the pw.
+
 
     //get all users
     @GetMapping("/users")
@@ -46,7 +51,7 @@ public class UserControllerTesting {
                 orElseThrow(() -> new ResourceNotFoundException("User does not exist with id:" + id)); //if id not found
         user.setUsername((userDetails.getUsername()));
         user.setEmail((userDetails.getEmail()));
-        user.setPassword((userDetails.getPassword()));
+        user.setPassword((encoder.encode(userDetails.getPassword()))); //need to encrypt this!
         user.setFirstName((userDetails.getFirstName()));
         user.setLastName((userDetails.getLastName()));
 

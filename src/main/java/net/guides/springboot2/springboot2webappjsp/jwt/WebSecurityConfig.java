@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
+                //.antMatchers("/update/**").permitAll()
 //                .antMatchers("/spotify/**").permitAll()
 //                .antMatchers("/spotify/callback").permitAll()
 //                .antMatchers("/spotify/get-token").permitAll()
