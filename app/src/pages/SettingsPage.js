@@ -3,15 +3,22 @@ import {Button, Col, Container, Form, Image, Nav, Row, Tab} from "react-bootstra
 //import './SpotifyButton.css'
 
 import axiosConfig from "../services/axiosConfig";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import authService from "../services/authService";
 import {useHistory} from "react-router-dom";
+import axios from "axios";
 
 
 const SettingsPage = () => {
     let history = useHistory();
 
     const [spotifyToken, setSpotifyToken] = useState(null);
+
+    useEffect(() => {
+        const jsObject = authService.getCurrentUser();
+        console.log("getting user details: " + JSON.stringify(jsObject));
+        console.log("ID of current logged in User: " + jsObject.id);
+    })
 
     const setToken = async () => {
         axiosConfig
