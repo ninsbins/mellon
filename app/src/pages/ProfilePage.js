@@ -1,7 +1,6 @@
 import Header from "../components/Header";
-import {Col, Container, Nav, Row, Tab} from "react-bootstrap";
+import {Col, Container, Image, Nav, Row, Tab} from "react-bootstrap";
 import PostCard from "../components/PostCard";
-import ItemCard from "../components/ItemCard";
 import React, {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
 
@@ -42,8 +41,6 @@ const ProfilePage = () => {
                             break;
                     }
                 })
-
-                console.log(movieList);
 
                 setMusicPosts(musicList);
                 setPlaylistPosts(playlistList);
@@ -153,99 +150,132 @@ const ProfilePage = () => {
                                     </Nav.Item>
                                 </Nav>
                             </Col>
-                            <Col sm={9}>
+                            <Col sm={10}>
+                                <Container style={{padding: "10px"}}>
+                                    <Tab.Content>
+                                        <Tab.Pane eventKey={"recent"}>
+                                            <Container className={"rounded-card"}>
+                                                {/*map card grid*/}
+                                                <h3 className={"secondary-text"}>Recent</h3>
 
-                                <Tab.Content>
-                                    <Tab.Pane eventKey={"recent"}>
-                                        <Container className={"rounded-card"}>
-                                            {/*map card grid*/}
-                                            Recent
-                                            {posts ? (posts.slice(0, 3).map((post) => (
-                                                    <PostCard
-                                                        title={post.itemTitle}
-                                                        image={post.imageUrl}
-                                                        id={post.id}
-                                                    />
-                                                ))
-                                            ) : (
-                                                <Row className={"justify-content-center"}>You have no posts. Start exploring, and make posts to see them
-                                                    here!</Row>
-                                            )
-                                            }
+                                                {posts ?
+                                                    <Row xs={2} sm={3} md={4} className="grid">
+                                                        {(posts.slice(0, 4).map((post) => (
+                                                            <Col>
+                                                                <PostCard
+                                                                    title={post.itemTitle}
+                                                                    image={post.imageUrl}
+                                                                    id={post.id}
+                                                                />
 
-                                        </Container>
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey={"music"}>
-                                        <Container className={"rounded-card"}>
-                                            {/*map card grid*/}
-                                            Music
-                                            {musicPosts.length > 0 ? (musicPosts.map((post) => (
-                                                    <PostCard
-                                                        title={post.itemTitle}
-                                                        image={post.imageUrl}
-                                                        id={post.id}
-                                                    />
-                                                ))
-                                            ) : (
-                                                <Row className={"justify-content-center"}>You have no music posts.</Row>
-                                            )
-                                            }
-                                        </Container>
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey={"playlists"}>
-                                        <Container className={"rounded-card"}>
-                                            {/*map card grid*/}
-                                            Playlists
-                                            {playlistPosts.length > 0 ? (playlistPosts.map((post) => (
-                                                    <PostCard
-                                                        title={post.itemTitle}
-                                                        image={post.imageUrl}
-                                                        id={post.id}
-                                                    />
-                                                ))
-                                            ) : (
-                                                <Row className={"justify-content-center"}>You have no playlist posts.</Row>
+                                                            </Col>
+                                                        )))}
+                                                    </Row>
+                                                    : (
+                                                        <Row className={"justify-content-center"}>You have no posts yet.
+                                                            Start exploring, and make posts to see them here!</Row>
+                                                    )
+                                                }
+                                            </Container>
+                                        </Tab.Pane>
+                                        <Tab.Pane eventKey={"music"}>
+                                            <Container className={"rounded-card"}>
+                                                {/*map card grid*/}
+                                                <h3 className={"secondary-text"}>Music</h3>
 
-                                            )
-                                            }
-                                        </Container>
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey={"movies"}>
-                                        <Container className={"rounded-card"}>
-                                            {/*map card grid*/}
-                                            Movies
-                                            {moviePosts.length > 0 ? (moviePosts.map((post) => (
-                                                    <PostCard
-                                                        title={post.itemTitle}
-                                                        image={post.imageUrl}
-                                                        id={post.id}
-                                                    />
-                                                ))
-                                            ) : (
-                                                <Row className={"justify-content-center"}>You have no movie posts.</Row>
-                                            )
-                                            }
-                                        </Container>
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey={"recipes"}>
-                                        <Container className={"rounded-card"}>
-                                            {/*map card grid*/}
-                                            Recipes
-                                            {recipePosts.length > 0 ? (recipePosts.map((post) => (
-                                                    <PostCard
-                                                        title={post.itemTitle}
-                                                        image={post.imageUrl}
-                                                        id={post.id}
-                                                    />
-                                                ))
-                                            ) : (
-                                                <Row className={"justify-content-center"}>You have no recipe posts.</Row>
-                                            )
-                                            }
-                                        </Container>
-                                    </Tab.Pane>
-                                </Tab.Content>
+                                                {musicPosts && musicPosts.length > 0 ?
+                                                    <Row xs={2} sm={3} md={4} className="grid">
+                                                        {(musicPosts.map((post) => (
+                                                                <Col>
+                                                                    <PostCard
+                                                                        title={post.itemTitle}
+                                                                        image={post.imageUrl}
+                                                                        id={post.id}
+                                                                    />
+                                                                </Col>
+                                                            ))
+                                                        )}
+                                                    </Row>
+                                                    : (
+                                                        <Row className={"justify-content-center"}>You have no music
+                                                            posts.</Row>
+                                                    )
+                                                }
+                                            </Container>
+                                        </Tab.Pane>
+                                        <Tab.Pane eventKey={"playlists"}>
+                                            <Container className={"rounded-card"}>
+                                                {/*map card grid*/}
+                                                <h3 className={"secondary-text"}>Playlists</h3>
 
+                                                {playlistPosts && playlistPosts.length > 0 ?
+                                                    <Row xs={2} sm={3} md={4} className="grid">
+                                                        {(playlistPosts.map((post) => (
+                                                                <Col>
+                                                                    <PostCard
+                                                                        title={post.itemTitle}
+                                                                        image={post.imageUrl}
+                                                                        id={post.id}
+                                                                    />
+                                                                </Col>
+                                                            ))
+                                                        )}
+                                                    </Row>
+                                                    : (
+                                                        <Row className={"justify-content-center"}>You have no playlist
+                                                            posts.</Row>
+
+                                                    )
+                                                }
+                                            </Container>
+                                        </Tab.Pane>
+                                        <Tab.Pane eventKey={"movies"}>
+                                            <Container className={"rounded-card"}>
+                                                {/*map card grid*/}
+                                                <h3 className={"secondary-text"}>Movies</h3>
+                                                {moviePosts && moviePosts.length > 0 ?
+                                                    (<Row xs={2} sm={3} md={4} className="grid">
+                                                        {(moviePosts.map((post) => (
+                                                            <Col>
+                                                                <PostCard
+                                                                    title={post.itemTitle}
+                                                                    image={post.imageUrl}
+                                                                    id={post.id}
+                                                                />
+                                                            </Col>
+                                                        )))}
+                                                    </Row>)
+                                                    : (
+                                                        <Row className={"justify-content-center"}>You have no movie
+                                                            posts.</Row>
+                                                    )
+                                                }
+                                            </Container>
+                                        </Tab.Pane>
+                                        <Tab.Pane eventKey={"recipes"}>
+                                            <Container className={"rounded-card"}>
+                                                {/*map card grid*/}
+                                                <h3 className={"secondary-text"}>Recipes</h3>
+                                                {recipePosts && recipePosts.length > 0 ?
+                                                    <Row xs={2} sm={3} md={4} className="grid">
+                                                        {(recipePosts.map((post) => (
+                                                            <Col>
+                                                                <PostCard
+                                                                    title={post.itemTitle}
+                                                                    image={post.imageUrl}
+                                                                    id={post.id}
+                                                                />
+                                                            </Col>
+                                                        )))}
+                                                    </Row> : (
+                                                        <Row className={"justify-content-center"}>You have no recipe
+                                                            posts.</Row>
+                                                    )
+                                                }
+                                            </Container>
+                                        </Tab.Pane>
+                                    </Tab.Content>
+                                </Container>
                             </Col>
                         </Row>
                     </Tab.Container>

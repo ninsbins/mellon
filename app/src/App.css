@@ -40,6 +40,13 @@ body {
   background-color: #efefef;
 }
 
+.secondary-text {
+  font-weight: bold;
+  font-size: 1.3rem;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 .primary-text {
   font-weight: bold;
   font-size: 1.5rem;
@@ -56,7 +63,7 @@ body {
 .rounded-card {
   border-radius: 20px;
   background-color: white;
-  padding: 40px;
+  padding: 20px 30px;
 }
 
 .app-bg {

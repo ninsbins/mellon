@@ -6,6 +6,7 @@ import {Route, useRouteMatch, Switch} from "react-router-dom";
 import Feed from "../components/Feed";
 import authService from "../services/authService";
 import SignUpPage from "./SignUpPage";
+import SearchResults from "../components/SearchResults";
 
 const HomePage = () => {
     let {path, url} = useRouteMatch();
@@ -20,7 +21,14 @@ const HomePage = () => {
             ) : (
                 <SignUpPage/>
             )}
+
+            {/*<Switch>*/}
+            {/*    <Route exact path={path}>*/}
+            {/*        <Feed/>*/}
+            {/*    </Route>*/}
+            {/*</Switch>*/}
         </div>
+
 
     );
 }

@@ -24,7 +24,8 @@ const CreatePost = () => {
 
     useEffect(() => {
         console.log(location.state.type)
-        console.log()
+        console.log(date);
+        // console.log(JSON.parse(date));
     }, [location]);
 
     const formValidation = () => {
@@ -93,7 +94,9 @@ const CreatePost = () => {
                     </Col>
                     <Col sm={6}>
                         <Container className={"rounded-card"}>
-                            <Image src={image}/>
+                            <Row className={"justify-content-center"}>
+                                <Image height="400px" src={image}/>
+                            </Row>
                             <Form onSubmit={handleSubmit}>
                                 <Col>
                                     {/*prefilled post content*/}

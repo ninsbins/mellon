@@ -56,7 +56,7 @@ const MoviePage = () => {
                                         <p>Type: {info.Type}</p>
                                     </Col>
                                 </Row>
-                                <Row className={"justify-content-center"}>
+                                <Row className={"justify-content-center"} style={{marginTop: "40px"}}>
                                     <Button onClick={handleClick}>
                                         Share
                                     </Button>

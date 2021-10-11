@@ -74,8 +74,8 @@ const SearchResults = () => {
                     searchResults != null ? (
                         <Container className={"py-4 px-4"}>
                             <h2 className={"primary-text"}>Results for '{searchTerm}'</h2>
-                            <Row xs={1} sm={2} md={4} className="grid">
-                                {searchResults != null ? searchResults.map((result) => (
+                            <Row xs={2} sm={3} md={4} className="grid">
+                                {searchResults ? searchResults.map((result) => (
                                     <Col>
                                         <SwitchCase arr={result}/>
                                     </Col>

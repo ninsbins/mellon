@@ -84,7 +84,7 @@ const RecipePage = (props) => {
                                     <iframe width="420" height="315" src={(getVideo())}/>
                                 </Row>
 
-                                <Row className={"justify-content-center"}>
+                                <Row className={"justify-content-center"} style={{marginTop: "40px"}}>
                                     <Button onClick={handleClick}>
                                         Share
                                     </Button>

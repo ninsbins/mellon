@@ -1,4 +1,4 @@
-import {Card, Container} from "react-bootstrap";
+import {Card, Col, Container} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 
 import "../styles/Post.css"

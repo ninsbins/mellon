@@ -19,6 +19,7 @@ import axiosConfig from "../services/axiosConfig";
 import authHeader from '../services/authHeader';
 import authService from "../services/authService";
 import HomePage from "../pages/HomePage";
+import {Home} from "@material-ui/icons";
 
 const Header = (props) => {
     const [show, setShow] = useState(false);
@@ -263,6 +264,9 @@ const Header = (props) => {
                         searchTerm={searchTerm}
                         searchResults={searchResults}/>
                 </Route>
+                {/*<Route path={'/'}>*/}
+                {/*    <HomePage/>*/}
+                {/*</Route>*/}
             </Switch>
         </>
 
