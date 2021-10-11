@@ -1,13 +1,13 @@
 import {
     Container,
     Dropdown,
-    Form,
+    Form, Image,
     Modal,
     Nav,
     Navbar,
     Row
 } from "react-bootstrap";
-import {Link, Route, Switch, useHistory, useRouteMatch} from "react-router-dom";
+import {Link, Route, Switch, useHistory} from "react-router-dom";
 
 import "../styles/Header.css"
 import "../styles/Home.css"
@@ -16,8 +16,9 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import SearchResults from "./SearchResults";
 import axiosConfig from "../services/axiosConfig";
-import authHeader from '../services/authheader';
-import AuthService from "../services/authservice";
+import authHeader from '../services/authHeader';
+import authService from "../services/authService";
+import HomePage from "../pages/HomePage";
 
 const Header = (props) => {
     const [show, setShow] = useState(false);
@@ -30,12 +31,11 @@ const Header = (props) => {
     let history = useHistory();
 
     //dictionary of content types in application
-    const contentTypes = ['Music', 'Books', 'Movies', 'Recipes'];
+    const contentTypes = ['Music', 'Playlists', 'Movies', 'Recipes'];
 
     function userLoggedIn() {
-        return AuthService.getCurrentUser != null;
-
-
+        // console.log(authService.getCurrentUser());
+        return authService.getCurrentUser();
     }
 
     //search functions
@@ -48,7 +48,7 @@ const Header = (props) => {
                 await musicSearch(term);
                 break;
             case "1":
-                // book search
+                // playlist search
                 break;
             case "2":
                 // movie search
@@ -59,19 +59,17 @@ const Header = (props) => {
                 await recipeSearch(term);
                 break;
         }
-        setSearchFilter(null);
         setSearchTerm(null);
         setSearchResults(null);
     }
 
 
-
     const musicSearch = async (input) => {
         if (input) {
             axiosConfig
-                .get(`/spotify/search?item=${input}`, { headers: authHeader() })
+                .get(`/spotify/search?item=${input}`, {headers: authHeader()})
                 .then((res) => {
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         console.log(res.data.albums.items);
                         setSearchResults(res.data.albums.items)
                         history.push({
@@ -86,9 +84,7 @@ const Header = (props) => {
                 }).catch((err) => {
                 console.log(err)
             })
-        }
-
-        else {
+        } else {
 
         }
     }
@@ -97,8 +93,8 @@ const Header = (props) => {
         if (input) {
             await axios.get(`http://www.omdbapi.com?apikey=78f2db02&s=${input}`)
                 .then((res) => {
-                    if (res.status == 200) {
-                        console.log(res);
+                    if (res.status === 200) {
+                        // console.log(res);
                         setSearchResults(res.data.Search)
                         history.push({
                             pathname: `/search`,
@@ -119,8 +115,8 @@ const Header = (props) => {
         if (input) {
             await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
                 .then((res) => {
-                    if (res.status == 200) {
-                        console.log(res.data.meals);
+                    if (res.status === 200) {
+                        // console.log(res.data.meals);
                         setSearchResults(res.data.meals)
                         history.push({
                             pathname: `/search`,
@@ -155,7 +151,7 @@ const Header = (props) => {
     const handleFormSubmit = e => e.preventDefault();
 
     let handleSelect = async (eventKey) => {
-        console.log(eventKey);
+        // console.log(eventKey);
         setSearchFilter(eventKey);
     };
 
@@ -163,108 +159,114 @@ const Header = (props) => {
     let handleClose = () => setShow(false);
 
     return (
-                    <>
-                        <Navbar variant={"dark"} className={"bg-gradient"} expand={"lg"} fixed={"top"}>
-                            <Container fluid>
-                                <Link to="/">
-                                    <Navbar.Brand>
-                                        {/*<Image*/}
-                                        {/*    src={"./images/logo.png"}*/}
-                                        {/*    width={"30"}*/}
-                                        {/*    height={"30"}*/}
-                                        {/*/>*/}
-                                        mellon
-                                    </Navbar.Brand>
-                                </Link>
+        <>
+            <Navbar variant={"dark"} className={"bg-gradient"} expand={"lg"} fixed={"top"}>
+                <Container fluid>
+                    <Link to="/">
+                        <Navbar.Brand>
+                            <Image
+                                src={`${process.env.PUBLIC_URL}/assets/logo.png`}
+                                height={28}
+                                style={{paddingRight: "10px"}}
+                            />
+                            mellon
+                        </Navbar.Brand>
+                    </Link>
 
+                    {userLoggedIn() ?
+                        (<Nav className={"ml-auto"}>
+                            <div className={"d-flex"}>
+                                <Container className={"mr-5"}>
+                                    {/*change so search bar is only shown when logged in*/}
+                                    {/*filter search area*/}
+                                    <Row>
+                                        <Dropdown onSelect={handleSelect}>
+                                            <Dropdown.Toggle
+                                                variant="light"
+                                                id="dropdown-basic"
 
-                                <Nav className={"ml-auto"}>
-                                    <div className={"d-flex"}>
-                                        <Container className={"mr-5"}>
-                                            {/*change so search bar is only shown when logged in*/}
-                                            {/*filter search area*/}
-                                            <Row>
-                                                <Dropdown onSelect={handleSelect}>
-                                                    <Dropdown.Toggle
-                                                        variant="light"
-                                                        id="dropdown-basic"
+                                            >
+                                                {searchFilter == null
+                                                    ? "Search filter"
+                                                    : contentTypes[searchFilter]}
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item disabled>
+                                                    Search filter
+                                                </Dropdown.Item>
+                                                {contentTypes.map((option, index) => (
+                                                    <Dropdown.Item eventKey={index}>
+                                                        {option}
+                                                    </Dropdown.Item>
+                                                ))}
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                        <Form onSubmit={handleFormSubmit}>
+                                            <Form.Control
+                                                type={"search"}
+                                                placeholder={"Search"}
+                                                className={"me-2"}
+                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                onKeyUp={handleSearchKeyUp}
+                                            />
+                                        </Form>
+                                    </Row>
+                                </Container>
 
-                                                    >
-                                                        {searchFilter == null
-                                                            ? "Search filter"
-                                                            : contentTypes[searchFilter]}
-                                                    </Dropdown.Toggle>
-                                                    <Dropdown.Menu>
-                                                        <Dropdown.Item disabled>
-                                                            Search filter
-                                                        </Dropdown.Item>
-                                                        {contentTypes.map((option, index) => (
-                                                            <Dropdown.Item eventKey={index}>
-                                                                {option}
-                                                            </Dropdown.Item>
-                                                        ))}
-                                                    </Dropdown.Menu>
-                                                </Dropdown>
-                                                <Form onSubmit={handleFormSubmit}>
-                                                    <Form.Control
-                                                        type={"search"}
-                                                        placeholder={"Search"}
-                                                        className={"me-2"}
-                                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                                        onKeyUp={handleSearchKeyUp}
-                                                    />
-                                                </Form>
-                                            </Row>
-                                        </Container>
+                                <Nav.Link>
+                                    <Link to={"/about"} className={"nav-links"}>
+                                        About
+                                    </Link>
+                                </Nav.Link>
 
-                                        <Nav.Link>
-                                            <Link to={"/about"} className={"nav-links"}>
-                                                About
-                                            </Link>
-                                        </Nav.Link>
-                                        {/*    add in auth check when implemented*/}
-                                        <Nav.Link>
-                                            <Link to={"/profile"} className={"nav-links"}>
-                                                Profile
-                                            </Link>
-                                        </Nav.Link>
+                                <Nav.Link>
+                                    <Link to={"/settings"} className={"nav-links"}>
+                                        Settings
+                                    </Link>
+                                </Nav.Link>
 
-                                        <Nav.Link>
-                                            <Link to={"/settings"} className={"nav-links"}>
-                                                Settings
-                                            </Link>
-                                        </Nav.Link>
+                                <Nav.Link>
+                                    <Link to={"/profile"} className={"nav-links"}>
+                                        Profile
+                                    </Link>
+                                </Nav.Link>
 
-                                        <Nav.Link>
-                                            <Link to={"/login"} className={"nav-links"}>
-                                                Login
-                                            </Link>
-                                        </Nav.Link>
-                                    </div>
-                                </Nav>
-                            </Container>
-                        </Navbar>
+                            </div>
+                        </Nav>) : (
+                            <Nav>
+                                <Nav.Link>
+                                    <Link to={"/about"} className={"nav-links"}>
+                                        About
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link to={"/login"} className={"nav-links"}>
+                                        Login
+                                    </Link>
+                                </Nav.Link>
+                            </Nav>
+                        )
+                    }
+                </Container>
+            </Navbar>
 
-                        <Modal show={show} onHide={handleClose}>
-                            <Modal.Body>
-                                Please select a search filter and try again.
-                            </Modal.Body>
-                        </Modal>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Body>
+                    Please select a search filter and try again.
+                </Modal.Body>
+            </Modal>
 
-                        <Switch>
-                            <Route path={'/search'}>
-                                <SearchResults
-                                    searchFilter={searchFilter}
-                                    searchTerm={searchTerm}
-                                    searchResults={searchResults}/>
-                            </Route>
-                        </Switch>
-                    </>
+            <Switch>
+                <Route path={'/search'}>
+                    <SearchResults
+                        searchFilter={searchFilter}
+                        searchTerm={searchTerm}
+                        searchResults={searchResults}/>
+                </Route>
+            </Switch>
+        </>
 
-
-
-
-    );
+);
 }
 
 export default Header;

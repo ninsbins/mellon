@@ -1,9 +1,9 @@
-import {CardDeck, Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Image, Row} from "react-bootstrap";
 import ItemCard from "./ItemCard";
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 
-// 0 = music, 1 = books, 2 = video, 3 = recipes
+// 0 = music, 1 = playlists, 2 = video, 3 = recipes
 
 const SearchResults = () => {
     let location = useLocation();
@@ -16,9 +16,9 @@ const SearchResults = () => {
     }, [location]);
 
     function SwitchCase(arr) {
-        console.log(arr);
+        // console.log(arr);
         let data = JSON.parse(JSON.stringify(arr)).arr;
-        console.log(data.arr);
+        // console.log(data.arr);
 
         switch(searchFilter) {
             //type prop will help the item card know which page to redirect to
@@ -34,7 +34,7 @@ const SearchResults = () => {
                     />
                 );
             case "1":
-                //book search
+                //playlist search
                 return (
                     <ItemCard
                         type={"1"}
@@ -65,7 +65,7 @@ const SearchResults = () => {
                 //default catchall case
                 return (<div></div>)
         }
-    }
+    };
 
     return (
         <div>
@@ -75,11 +75,14 @@ const SearchResults = () => {
                         <Container className={"py-4 px-4"}>
                             <h2 className={"primary-text"}>Results for '{searchTerm}'</h2>
                             <Row xs={1} sm={2} md={4} className="grid">
-                                {searchResults.map((result) => (
+                                {searchResults != null ? searchResults.map((result) => (
                                     <Col>
                                         <SwitchCase arr={result}/>
                                     </Col>
-                                ))}
+                                )) : <Row className={"justify-content-center"}>
+                                    <Image src={`https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif`}
+                                           width={40}/>
+                                </Row>}
                             </Row>
                         </Container>) : (
                         <Row className={"justify-content-center"}>No results for '{searchTerm}'</Row>

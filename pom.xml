@@ -125,10 +125,20 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>5.5.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
+		</dependency>
         <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>1.7</version>
+            <groupId>backport-util-concurrent</groupId>
+            <artifactId>backport-util-concurrent</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.guides.springboot2</groupId>
+            <artifactId>springboot2-webapp-jsp</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
 

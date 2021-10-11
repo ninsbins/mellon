@@ -1,23 +1,84 @@
 import Header from "../components/Header";
 import {Button, Col, Container, Form, Image, Row} from "react-bootstrap";
-import {useLocation} from "react-router-dom";
-import {useEffect} from "react";
+import {useHistory, useLocation} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axiosConfig from "../services/axiosConfig";
+import authService from "../services/authService";
 
 const CreatePost = () => {
 
     let location = useLocation();
+    let history = useHistory();
 
     //post info
+    let username = authService.getCurrentUser().username;
+    let date = (new Date()).toJSON();
     let type = location.state.type
     let title = location.state.title;
     let image = location.state.image;
 
+    //post validation
+    const [errors, setErrors] = useState({});
+
+    let [content, setContent] = useState("");
+
     useEffect(() => {
-        console.log(location.state.title)
+        console.log(location.state.type)
+        console.log()
     }, [location]);
 
-    const handleSubmit = async () => {
+    const formValidation = () => {
+        const newErr= {};
+
+        //null check for error
+        if (!content || content === '') newErr.content = 'Add a comment to your post!';
+
+        return newErr;
+    };
+
+    const handleSubmit = (event) => {
         //    send post to database
+        event.preventDefault();
+
+        const hasError = formValidation();
+        console.log(hasError);
+        console.log(content);
+
+        if (Object.keys(hasError).length > 0) {
+            setErrors(hasError)
+        } else {
+            // let postData = JSON.parse('{
+            //     "content": content,
+            //     "createdDate": ${date},
+            //     "imageUrl": ${image},
+            //     "itemType": {type},
+            //     "itemTitle": {title},
+            // }');
+            //
+            console.log(date)
+
+            axiosConfig.post(`/post/addpost`, {
+                content: content,
+                createdDate: date,
+                imageUrl: image,
+                itemType: type,
+                itemTitle: title
+            })
+                .then((res) => {
+                    console.log(res);
+
+                })
+                .catch((err) => {
+                    console.log(err);
+
+                });
+
+            history.push({
+                pathname: `/`
+            })
+
+        //   add modal popup of successful post
+        }
     }
 
     return (
@@ -60,6 +121,8 @@ const CreatePost = () => {
                                             as={"textarea"}
                                             placeholder={"What do you want to share?"}
                                             rows={4}
+                                            onChange={(e) => setContent(e.target.value)}
+                                            isInvalid={!! errors.content}
                                         />
                                     </Form.Group>
                                     <Button type={"submit"}>Post!</Button>
@@ -67,7 +130,7 @@ const CreatePost = () => {
                             </Form>
                         </Container>
                     </Col>
-                    <Col></Col>
+                    <Col/>
                 </Row>
             </Container>
         </div>
