@@ -1,5 +1,5 @@
 import axios from 'axios';
-import authHeader from "./authheader";
+import authHeader from "./authHeader";
 
 const USER_API_BASE_URL = "http://localhost:8080/update/users"; //api call
 
@@ -23,7 +23,7 @@ class UserServiceTesting {
 
     //also used (part 2) in UpdateEmployeeComponent
     updateUser(user, userId) {
-        return axios.put(USER_API_BASE_URL + '/' + userId, user); //making a rest api call: PUT(to modify) http request
+        return axios.put(`http://localhost:8080/update/users/${userId}`, user, { headers: authHeader() }); //making a rest api call: PUT(to modify) http request
     }
 }
 
