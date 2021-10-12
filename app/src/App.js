@@ -57,9 +57,8 @@ class App extends Component {
                             <MusicPage/>
                         </Route>
 
-                        {/* Testing User/employee update for now */}
+                        {/* Testing User update for now */}
                         <Route path = "/update-user/:id" component= {UpdateUserComponent} ></Route>
-                        {/* '....update-employee/1' url */}
 
                         <Route path={'/'}>
                             <HomePage/>

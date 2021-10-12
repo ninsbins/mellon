@@ -13,12 +13,26 @@ const SettingsPage = () => {
     let history = useHistory();
 
     const [spotifyToken, setSpotifyToken] = useState(null);
+    const [userID, setUserID] = useState("");
 
     useEffect(() => {
         const jsObject = authService.getCurrentUser();
-        console.log("getting user details: " + JSON.stringify(jsObject));
-        console.log("ID of current logged in User: " + jsObject.id);
+        //console.log("getting user details: " + JSON.stringify(jsObject));
+        //console.log("ID of current logged in User: " + jsObject.id);
+        setUserID(jsObject.id);
+        console.log("Double checking User's ID: " + userID);
     })
+
+    function changePassword() {
+        console.log("CLICKED - on change password!");
+        //history.push("/update-user/" + userID);
+        //need to create another route and component!
+    }
+
+    function changeUserDetails() {
+        console.log("CLICKED - on change User deets!");
+        history.push("/update-user/" + userID);
+    }
 
     const setToken = async () => {
         axiosConfig
@@ -69,6 +83,7 @@ const SettingsPage = () => {
                                         Settings
                                     </Nav.Link>
                                 </Nav.Item>
+
                                 <Nav.Item>
                                     <Nav.Link eventKey={"connections"}>
                                         Account Connections
@@ -81,60 +96,27 @@ const SettingsPage = () => {
                         </Col>
                         <Col sm={6}>
                             <Tab.Content>
+
                                 <Tab.Pane eventKey={"settings"}>
                                     <Container className={"rounded-card"}>
                                         <h2 className={"primary-text"}>Settings</h2>
-                                        Change password!
-                                        <Form>
-                                            <Form.Group>
-                                                <Form.Label>
+                                            Change password!
 
-                                                </Form.Label>
-                                            </Form.Group>
-                                        </Form>
-
-                                        <Form>
                                             <Form.Group>
-                                                <Form.Label>Old Password</Form.Label>
-                                                <Form.Control
-                                                    type="password"
-                                                    // onChange={(e) => setOldPassword(e.target.value)}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group>
-                                                <Form.Label>New Password</Form.Label>
-                                                <Form.Control
-                                                    type="password"
-                                                    // onChange={(e) => setNewPassword1(e.target.value)}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group>
-                                                <Form.Label>Re-enter New Password</Form.Label>
-                                                <Form.Control
-                                                    type="password"
-                                                    // onChange={(e) => setNewPassword2(e.target.value)}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group>
-                                                <Button variant="outline-primary" type="submit">
+                                                <Button variant="outline-primary" onClick={changePassword}>
                                                     Change Password
                                                 </Button>
                                             </Form.Group>
-                                            {/*handle errors*/}
-                                            {/*{error ? (*/}
-                                            {/*    <div style={{ color: "red" }}>*/}
-                                            {/*        Error: Couldn&#39;t change password*/}
-                                            {/*    </div>*/}
-                                            {/*) : null}*/}
-                                            {/*{nonMatching ? (*/}
-                                            {/*    <div style={{ color: "red" }}>Passwords don&#39;t match</div>*/}
-                                            {/*) : null}*/}
-                                            {/*{success ? (*/}
-                                            {/*    <div style={{ color: "green" }}>Changed Password</div>*/}
-                                            {/*) : null}*/}
-                                        </Form>
+
+                                            Change other User details
+                                            <Form.Group>
+                                                <Button variant="outline-info" onClick={changeUserDetails} >Info</Button>{' '}
+                                            </Form.Group>
+
                                     </Container>
                                 </Tab.Pane>
+
+
                                 <Tab.Pane eventKey={"connections"}>
                                     <Container className={"rounded-card"}>
                                         <h2 className={"primary-text"}>Account Connections

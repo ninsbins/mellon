@@ -76,7 +76,7 @@ class UpdateUserComponent extends Component {
 
     //When Cancel button is clicked
     cancel() {
-        this.props.history.push('/'); //route back to Home page if Cancel button has been selected
+        this.props.history.push('/settings'); //route back to Home page if Cancel button has been selected
     }
 
     //SETTING THE 5 PROPERTIES below:
@@ -156,8 +156,8 @@ class UpdateUserComponent extends Component {
                                     <div className="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
 
                                     {/*  Create 2 buttons  */}
-                                    <button className="btn btn-success" onClick={this.updateUser}> Update! </button> {/* updateUser() will be called */}
-                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)} style = {{marginLeft: "20px"}}> Cancel</button> {/* cancel() will be called */}
+                                    <button className="btn btn-outline-success" onClick={this.updateUser}> Update </button> {/* updateUser() will be called */}
+                                    <button className="btn btn-outline-danger" onClick={this.cancel.bind(this)} style = {{marginLeft: "20px"}}> Cancel</button> {/* cancel() will be called */}
 
                                 </form>
                             </div>
