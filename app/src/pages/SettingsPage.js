@@ -3,7 +3,7 @@ import {Button, Col, Container, Form, Image, Nav, Row, Tab} from "react-bootstra
 //import './SpotifyButton.css'
 
 import axiosConfig from "../services/axiosConfig";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import authService from "../services/authService";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
@@ -25,7 +25,7 @@ const SettingsPage = () => {
 
     function changePassword() {
         console.log("CLICKED - on change password!");
-        //history.push("/update-user/" + userID);
+        history.push("/update-password/" + userID);
         //need to create another route and component!
     }
 
@@ -99,7 +99,11 @@ const SettingsPage = () => {
 
                                 <Tab.Pane eventKey={"settings"}>
                                     <Container className={"rounded-card"}>
+
                                         <h2 className={"primary-text"}>Settings</h2>
+
+                                            {/*  empty space before buttons */}
+                                            <div className="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
                                             Change password!
 
                                             <Form.Group>
@@ -108,9 +112,12 @@ const SettingsPage = () => {
                                                 </Button>
                                             </Form.Group>
 
-                                            Change other User details
+                                            {/*  empty space before buttons */}
+                                            <div className="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
+
+                                            Edit your other details!
                                             <Form.Group>
-                                                <Button variant="outline-info" onClick={changeUserDetails} >Info</Button>{' '}
+                                                <Button variant="outline-info" onClick={changeUserDetails} >Edit User Details</Button>{' '}
                                             </Form.Group>
 
                                     </Container>

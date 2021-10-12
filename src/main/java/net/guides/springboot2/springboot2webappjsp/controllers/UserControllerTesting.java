@@ -43,7 +43,19 @@ public class UserControllerTesting {
         return ResponseEntity.ok(user);
     }
 
-    //Update(PUT) user by ID rest api
+    //Update(PUT) user by ID rest api - updating only User's password
+    @PutMapping("/users/password/{id}") //Annotation for mapping HTTP PUT requests onto specific handler methods.
+    public ResponseEntity<User> updateUsersPassword(@PathVariable Integer id, @RequestBody User userDetails) {
+
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User does not exist with id:" + id)); //if id not found
+        user.setPassword((encoder.encode(userDetails.getPassword()))); //need to encrypt this!
+
+        User updatedUser = userRepository.save(user); //SAVE TO DB
+        System.out.println("UPDATED USER BY PASSWORD -> OK!");
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    //Update(PUT) user by ID rest api - updating all User details(besides Password)
     @PutMapping("/users/{id}") //Annotation for mapping HTTP PUT requests onto specific handler methods.
     public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User userDetails) {
 
@@ -51,12 +63,12 @@ public class UserControllerTesting {
                 orElseThrow(() -> new ResourceNotFoundException("User does not exist with id:" + id)); //if id not found
         user.setUsername((userDetails.getUsername()));
         user.setEmail((userDetails.getEmail()));
-        user.setPassword((encoder.encode(userDetails.getPassword()))); //need to encrypt this!
+        //user.setPassword((encoder.encode(userDetails.getPassword()))); //need to encrypt this!
         user.setFirstName((userDetails.getFirstName()));
         user.setLastName((userDetails.getLastName()));
 
         User updatedUser = userRepository.save(user); //SAVE TO DB
-        System.out.println("UPDATED USER OK!");
+        System.out.println("UPDATED USER - ALL DETAILS -> OK!");
         return ResponseEntity.ok(updatedUser);
     }
 

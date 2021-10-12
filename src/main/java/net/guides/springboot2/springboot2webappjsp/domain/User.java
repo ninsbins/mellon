@@ -43,6 +43,11 @@ public class User {
 	public User() {
 	}
 
+	//Called when User only wants to update their password.
+	public User(String password) {
+		this.password = password;
+	}
+
 	public User(String username, String email, String password) {
 		this.username = username;
 		this.email = email;
@@ -50,10 +55,9 @@ public class User {
 	}
 
 	//Constructor is called when updating User details in Settings
-	public User(String username, String email, String password, String firstName, String lastName) {
+	public User(String username, String email, String firstName, String lastName) {
 		this.username = username;
 		this.email = email;
-		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}

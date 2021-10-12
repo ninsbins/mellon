@@ -21,7 +21,12 @@ class UserServiceTesting {
 
     }
 
-    //also used (part 2) in UpdateEmployeeComponent
+    //called(in UpdateUserPassword.js) when updating password only
+    updateUsersPassword(user, userId) {
+        return axios.put(`http://localhost:8080/update/users/password/${userId}`, user, { headers: authHeader() }); //making a rest api call: PUT(to modify) http request
+    }
+
+    //called(in UpdateEmployeeComponent.js) for updating most User details
     updateUser(user, userId) {
         return axios.put(`http://localhost:8080/update/users/${userId}`, user, { headers: authHeader() }); //making a rest api call: PUT(to modify) http request
     }

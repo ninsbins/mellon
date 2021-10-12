@@ -105,8 +105,6 @@ class UpdateUserComponent extends Component {
     }
 
 
-    //<Container className={"rounded-card"}>
-    //</Container>
     render() {
         return (
             <div>
@@ -117,9 +115,12 @@ class UpdateUserComponent extends Component {
 
                 <div className= "container-body">
                     <div className= "row">
-                        <div className = "card col-md-6 offset-md-3 offset-md-3"> {/* column width -give space from left margin*/}
-                            <h3 className="text-center"> Update User</h3>
+                        <div className = "rounded-card col-md-6 offset-md-3 offset-md-3 "> {/* column width -give space from left margin*/}
+                            <h2 className="text-center"> Update User</h2>
                             <div className="card-body">
+
+                                {/*  empty space before buttons */}
+                                <div className="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
 
                                 <form>
                                     <div className = "form-group">
@@ -144,12 +145,6 @@ class UpdateUserComponent extends Component {
                                         <label> Email: </label>
                                         <input placeholder="email" name = "email" className="form-control"
                                                value={this.state.email} onChange={this.changeEmailHandler}/> {/*event handler called */}
-                                    </div>
-
-                                    <div className = "form-group">
-                                        <label> Your New Password: </label>
-                                        <input placeholder="password" name = "password" className="form-control"
-                                               value={this.state.password} onChange={this.changePasswordHandler}/> {/*event handler called */}
                                     </div>
 
                                     {/*  empty space before buttons */}
