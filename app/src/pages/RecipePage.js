@@ -24,6 +24,13 @@ const RecipePage = (props) => {
         return list;
     }
 
+    function mealCategory(){
+        const category = `${info[`strCategory`]}`
+        return category
+
+
+    }
+
     function getInstructions() {
         const instructions = `${info[`strInstructions`]}`
         return instructions;
@@ -73,6 +80,9 @@ const RecipePage = (props) => {
                                 <Row className={"justify-content-center"}>
                                     <Image width="600px" src={info.strMealThumb}/>
                                 </Row>
+                                <p>Category</p>
+                                <p>{mealCategory()}</p>
+
                                 <p>Ingredients</p>
                                 <p>{getIngredients()}</p>
 
