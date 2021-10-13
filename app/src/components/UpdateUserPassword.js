@@ -64,8 +64,9 @@ class UpdateUserPassword extends Component {
                         <div className = "rounded-card col-md-6 offset-md-3 offset-md-3 "> {/* column width -give space from left margin*/}
                             <h2 className="text-center"> Update User</h2>
 
+                            {/*  insert centered image */}
                             <div className="gandalf">
-                                <img src={Gandalf} alt="Gandalf cute" height={100} width={100} />
+                                <img src={Gandalf} alt="Gandalf cute" height={80} width={80} />
                             </div>
 
                             <div className="card-body">
