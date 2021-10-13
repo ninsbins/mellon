@@ -2,6 +2,8 @@ import {Card, Col, Container, Row} from "react-bootstrap";
 import Header from "../components/Header";
 
 import "../styles/About.css"
+import Moria from "../DoorsOfMoria.png";
+import React from "react";
 
 const AboutPage = () => {
     return (
@@ -16,7 +18,7 @@ const AboutPage = () => {
                     </Col>
                     <Col xs={5}>
                         <Container className={"rounded-card"}>
-                            <p>Mellon is the elvish name for ‘friend’, from the movie series Lord of the Rings.
+                            <p><em>Mellon</em> is the elvish name for ‘friend’, from J. R. R. Tolkien's novel The Lord of the Rings.
                                 We believed this to be a simple representation of the purpose of our site –
                                 to connect with others and make friends. </p>
 
@@ -27,6 +29,12 @@ const AboutPage = () => {
                                 find people that share similar favourites.</p>
 
                             <p>Explore new content, share recommendations with your friends, and build a community! </p>
+
+                            <div className="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
+                            {/*  insert centered image */}
+                            <div className="moria">
+                                <img src={Moria} alt="Moria" height={150} width={120} />
+                            </div>
 
                         </Container>
                     </Col>
