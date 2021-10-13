@@ -18,7 +18,9 @@ const RecipePage = (props) => {
     function getIngredients() {
         let list = [];
         for (let i = 1; info[`strIngredient${i}`]; i++) {
-            const ingredients = `- ${info[`strMeasure${i}`]} ${info[`strIngredient${i}`]}`
+            const ingredients = `- ${info[`strMeasure${i}`]} ${info[`strIngredient${i}`]} 
+            
+            `
             list.push(ingredients);
         }
         return list;
@@ -80,16 +82,16 @@ const RecipePage = (props) => {
                                 <Row className={"justify-content-center"}>
                                     <Image width="600px" src={info.strMealThumb}/>
                                 </Row>
-                                <p>Category</p>
+                                <p><strong>Category</strong></p>
                                 <p>{mealCategory()}</p>
 
-                                <p>Ingredients</p>
+                                <p><strong>Ingredients</strong></p>
                                 <p>{getIngredients()}</p>
 
-                                <p>Instructions</p>
+                                <p><strong>Instructions</strong></p>
                                 <p>{getInstructions()}</p>
 
-                                <p>Demo Video</p>
+                                <p><strong>Demo Video</strong></p>
                                 <Row className={"justify-content-center"}>
                                     <iframe width="420" height="315" src={(getVideo())}/>
                                 </Row>
