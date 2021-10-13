@@ -29,6 +29,11 @@ h2 {
     justify-content: center;
 }
 
+.moria {
+    display: flex;
+    justify-content: center;
+}
+
 /*
 .btn {
     font-family: "Times New Roman", Times, serif;
