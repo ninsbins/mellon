@@ -9,15 +9,6 @@
     transition: 0.3s;
 }
 
-h2 {
-    color: midnightblue;
-    font-family: "Times New Roman", Times, serif;
-}
-
-.form-group {
-    font-family: "Times New Roman", Times, serif;
-}
-
 .gandalf {
     display: flex;
     justify-content: center;

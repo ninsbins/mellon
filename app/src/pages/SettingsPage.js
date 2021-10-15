@@ -117,7 +117,7 @@ const SettingsPage = () => {
 
                                             Edit your other details!
                                             <Form.Group>
-                                                <Button variant="outline-info" onClick={changeUserDetails} >Edit User Details</Button>{' '}
+                                                <Button variant="outline-primary" onClick={changeUserDetails} >Edit User Details</Button>{' '}
                                             </Form.Group>
 
                                     </Container>

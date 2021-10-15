@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import UserServiceTesting from "../services/UserServiceTesting";
 import Header from "../components/Header";
 import '../styles/UpdateUserComponent.css';
-import Fellowship from '../fellowship-lotr.png'
 
 import {Container} from "@material-ui/core";
 import Gandalf from "../Gandalf-cute.png";
@@ -121,8 +120,8 @@ class UpdateUserComponent extends Component {
                             <h2 className="text-center"> Update User</h2>
 
                             {/*  insert centered image */}
-                            <div className="fellowship">
-                                <img src={Fellowship} alt="Fellowship" height={50} width={280} />
+                            <div className="gandalf">
+                                <img src={Gandalf} alt="Gandalf cute" height={80} width={80} />
                             </div>
 
                             <div className="card-body">
