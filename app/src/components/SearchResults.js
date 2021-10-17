@@ -2,6 +2,7 @@ import {Col, Container, Image, Row} from "react-bootstrap";
 import ItemCard from "./ItemCard";
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
+import Header from "./Header";
 
 // 0 = music, 1 = playlists, 2 = video, 3 = recipes
 
@@ -65,10 +66,11 @@ const SearchResults = () => {
                 //default catchall case
                 return (<div></div>)
         }
-    };
+    }
 
     return (
         <div>
+            <Header/>
             <Container fluid className={"content-body"}>
                 {
                     searchResults != null ? (

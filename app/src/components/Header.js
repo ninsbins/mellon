@@ -27,7 +27,6 @@ const Header = (props) => {
     const [searchTerm, setSearchTerm] = useState(null);
     const [searchFilter, setSearchFilter] = useState(null);
     const [searchResults, setSearchResults] = useState(null);
-    //const [userLoggedIn, setUserLoggedIn] = useState(false);
 
     let history = useHistory();
 
@@ -257,17 +256,6 @@ const Header = (props) => {
                 </Modal.Body>
             </Modal>
 
-            <Switch>
-                <Route path={'/search'}>
-                    <SearchResults
-                        searchFilter={searchFilter}
-                        searchTerm={searchTerm}
-                        searchResults={searchResults}/>
-                </Route>
-                {/*<Route path={'/'}>*/}
-                {/*    <HomePage/>*/}
-                {/*</Route>*/}
-            </Switch>
         </>
 
 );

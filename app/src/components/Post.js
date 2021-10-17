@@ -7,10 +7,12 @@ import {Link} from "react-router-dom";
 const Post = (props) => {
     const [comment, setComment] = useState("");
 
-    const date = JSON.parse(props.date);
-
     const postComment = async () => {
         setComment("");
+    }
+
+    const convertDate = (date) => {
+        return new Date(date).toString();
     }
 
     //component to display on news feed
@@ -27,7 +29,7 @@ const Post = (props) => {
                 {props.poster}
             </h2>
             <h3><Link className={"secondary-text"} to={`/post/${props.id}`}>{props.title}</Link></h3>
-            <p className={"timestamp"}>{date}</p>
+            <p className={"timestamp"}>{convertDate(props.date)}</p>
             <Row className={"justify-content-center"}>
                 <Image height="400px" src={props.image}/>
             </Row>

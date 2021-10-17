@@ -1,21 +1,29 @@
 import Header from "../components/Header";
 import {Badge, Button, Card, Col, Container, Image, Row} from "react-bootstrap";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
+import axios from "axios";
 
 
 const MoviePage = () => {
     //this is important to ensure the response data gets passed down to the page
     let location = useLocation();
     let history = useHistory();
-
     let info = location.state.data;
+    const [moreMovieInfo, setInfo] = useState(null); //store the api json response
 
     useEffect(() => {
-        console.log(location.state.data);
+        //Call omdb api again but using ID instead of Search
+        axios.get(`http://www.omdbapi.com?apikey=78f2db02&i=${info.imdbID}`)
+            .then((response)=>{
+                setInfo(response.data); //set State
+                console.log("issue here: " + response.data.Runtime)
+                //console.log("checking the state variable has beeen state: " + moreMovieInfo.Plot) this will cause issue
+            })
+    }, [location])
 
-    }, [location]);
 
+    //This function is called when the 'Share' button is clicked.
     function handleClick() {
         history.push({
             pathname: '/create',
@@ -23,10 +31,11 @@ const MoviePage = () => {
                 type: 'Movie',
                 title: info.Title,
                 image: info.Poster
-                }
+            }
         })
     }
 
+    //Note: Plot and Runtime issue because needs to be re-rendered
     return (
         <div>
             <Header/>
@@ -54,6 +63,9 @@ const MoviePage = () => {
                                     <Col>
                                         <p>Year: {info.Year}</p>
                                         <p>Type: {info.Type}</p>
+                                        <p>Runtime : {moreMovieInfo === null ? 'loading' :  moreMovieInfo.Runtime }</p>
+                                        <p>Plot: {moreMovieInfo === null ? 'loading' : moreMovieInfo.Plot}</p>
+
                                     </Col>
                                 </Row>
                                 <Row className={"justify-content-center"} style={{marginTop: "40px"}}>
@@ -73,5 +85,49 @@ const MoviePage = () => {
         </div>
     )
 }
+
+/**
+ * api response from omdb api, searching by movieID
+ * {
+    "Title": "Harry Potter and the Goblet of Fire",
+    "Year": "2005",
+    "Rated": "PG-13",
+    "Released": "18 Nov 2005",
+    "Runtime": "157 min",
+    "Genre": "Adventure, Family, Fantasy",
+    "Director": "Mike Newell",
+    "Writer": "Steve Kloves, J.K. Rowling",
+    "Actors": "Daniel Radcliffe, Emma Watson, Rupert Grint",
+    "Plot": "Harry Potter finds himself competing in a hazardous tournament between rival schools of magic, but he is distracted by recurring nightmares.",
+    "Language": "English, French, Latin",
+    "Country": "United Kingdom, United States",
+    "Awards": "Nominated for 1 Oscar. 13 wins & 44 nominations total",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BMTI1NDMyMjExOF5BMl5BanBnXkFtZTcwOTc4MjQzMQ@@._V1_SX300.jpg",
+    "Ratings": [
+        {
+            "Source": "Internet Movie Database",
+            "Value": "7.7/10"
+        },
+        {
+            "Source": "Rotten Tomatoes",
+            "Value": "88%"
+        },
+        {
+            "Source": "Metacritic",
+            "Value": "81/100"
+        }
+    ],
+    "Metascore": "81",
+    "imdbRating": "7.7",
+    "imdbVotes": "573,611",
+    "imdbID": "tt0330373",
+    "Type": "movie",
+    "DVD": "07 Mar 2006",
+    "BoxOffice": "$290,417,905",
+    "Production": "Warner Bros., 1492 Pictures, Heyday Films",
+    "Website": "N/A",
+    "Response": "True"
+}
+ */
 
 export default MoviePage;

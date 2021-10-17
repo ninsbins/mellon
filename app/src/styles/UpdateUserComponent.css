@@ -1,0 +1,32 @@
+.spacer
+{
+    width: 80%;
+    height: 100px;
+}
+
+.rounded-card { /* add shadows */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.gandalf {
+    display: flex;
+    justify-content: center;
+}
+
+
+.fellowship {
+    display: flex;
+    justify-content: center;
+}
+
+.moria {
+    display: flex;
+    justify-content: center;
+}
+
+/*
+.btn {
+    font-family: "Times New Roman", Times, serif;
+}
+*/

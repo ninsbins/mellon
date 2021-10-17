@@ -13,6 +13,9 @@ import CreatePost from "./pages/CreatePost";
 import RecipePage from "./pages/RecipePage";
 import MoviePage from "./pages/MoviePage";
 import MusicPage from "./pages/MusicPage";
+import UpdateUserComponent from "./components/UpdateUserComponent";
+import UpdateUserPassword from "./components/UpdateUserPassword";
+import SearchResults from "./components/SearchResults";
 
 class App extends Component {
 
@@ -37,6 +40,9 @@ class App extends Component {
                         <Route path={'/profile'}>
                             <ProfilePage/>
                         </Route>
+                        <Route path={'/search'}>
+                            <SearchResults/>
+                        </Route>
 
                         <Route path={'/post/:id'}>
                             <PostPage/>
@@ -55,6 +61,10 @@ class App extends Component {
                         <Route path = "/item/music">
                             <MusicPage/>
                         </Route>
+
+                        {/* Testing User update for now */}
+                        <Route path = "/update-user/:id" component= {UpdateUserComponent} ></Route>
+                        <Route path = "/update-password/:id" component= {UpdateUserPassword} ></Route>
 
                         <Route path={'/'}>
                             <HomePage/>
