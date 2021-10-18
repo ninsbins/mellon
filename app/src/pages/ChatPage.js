@@ -8,7 +8,7 @@ import MessagingChannelList from '../components/MessagingChannelList';
 
 
 import 'stream-chat-css/dist/css/index.css';
-import "../styles/Chat.css";
+//import "../styles/Chat.css";
 
 import authService from "../services/authService";
 import axiosConfig from "../services/axiosConfig";
