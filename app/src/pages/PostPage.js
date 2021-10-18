@@ -27,17 +27,17 @@ const PostPage = () => {
                 console.log(err);
             })
 
-        let c = ( {
-                "user": "toast",
-                "comment": "omg same",
-            },
-            {
-                "user": "nina",
-                "comment": "i love this!!!"
-            });
-        setPostComments(c);
+        // let c = ( {
+        //         "user": "toast",
+        //         "comment": "omg same",
+        //     },
+        //     {
+        //         "user": "nina",
+        //         "comment": "i love this!!!"
+        //     });
+        // setPostComments(c);
 
-    }, [postComments])
+    }, [])
 
     const postComment = (event) => {
         postComments.push({
@@ -115,17 +115,17 @@ const PostPage = () => {
                                     <p style={{paddingTop: "15px", paddingBottom: "15px"}}>{postInfo.content}</p>
                                     <div style={{padding: "10px"}}>
                                         {/*render comments*/}
-                                        {postComments ? (
-                                                postComments.map((comment) => (
-                                                        <Comment info={comment}/>
-                                                    )
-                                                )
-                                            ) :
-                                            (<Row className={"justify-content-center"}>
-                                                No comments yet. Be the first to comment!
-                                            </Row>)
+                                        {/*{postComments ? (*/}
+                                        {/*        postComments.map((comment) => (*/}
+                                        {/*                <Comment info={comment}/>*/}
+                                        {/*            )*/}
+                                        {/*        )*/}
+                                        {/*    ) :*/}
+                                        {/*    (<Row className={"justify-content-center"}>*/}
+                                        {/*        No comments yet. Be the first to comment!*/}
+                                        {/*    </Row>)*/}
 
-                                        }
+                                        {/*}*/}
                                     </div>
                                     <InputGroup>
                                         <FormControl

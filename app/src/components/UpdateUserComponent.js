@@ -3,10 +3,6 @@ import UserServiceTesting from "../services/UserServiceTesting";
 import Header from "../components/Header";
 import '../styles/UpdateUserComponent.css';
 
-import {Container} from "@material-ui/core";
-import Gandalf from "../Gandalf-cute.png";
-//^used 'rcc' to create the React snippet
-
 //This component is for updating User details.
 //Called when '/update-user/:id'
 class UpdateUserComponent extends Component {
@@ -117,13 +113,7 @@ class UpdateUserComponent extends Component {
                 <div className= "container-body">
                     <div className= "row">
                         <div className = "rounded-card col-md-6 offset-md-3 offset-md-3 "> {/* column width -give space from left margin*/}
-                            <h2 className="text-center"> Update User</h2>
-
-                            {/*  insert centered image */}
-                            <div className="gandalf">
-                                <img src={Gandalf} alt="Gandalf cute" height={80} width={80} />
-                            </div>
-
+                            <h2 className="text-center"> Update your account info</h2>
                             <div className="card-body">
 
                                 {/*  empty space before buttons */}
