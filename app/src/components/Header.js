@@ -90,6 +90,7 @@ const Header = (props) => {
     }
 
     const movieSearch = async (input) => {
+        console.log("input = " + input);
         if (input) {
             await axios.get(`http://www.omdbapi.com?apikey=78f2db02&s=${input}`)
                 .then((res) => {

@@ -15,6 +15,7 @@ import MoviePage from "./pages/MoviePage";
 import MusicPage from "./pages/MusicPage";
 import UpdateUserComponent from "./components/UpdateUserComponent";
 import UpdateUserPassword from "./components/UpdateUserPassword";
+import DisplayUserComponent from "./components/DisplayUserComponent";
 import SearchResults from "./components/SearchResults";
 
 class App extends Component {
@@ -65,6 +66,9 @@ class App extends Component {
                         {/* Testing User update for now */}
                         <Route path = "/update-user/:id" component= {UpdateUserComponent} ></Route>
                         <Route path = "/update-password/:id" component= {UpdateUserPassword} ></Route>
+
+                        {/* For displaying selected User in the Feed */}
+                        <Route path = "/profile-info/:username" component= {DisplayUserComponent} ></Route>
 
                         <Route path={'/'}>
                             <HomePage/>

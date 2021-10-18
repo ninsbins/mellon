@@ -30,6 +30,13 @@ class UserServiceTesting {
     updateUser(user, userId) {
         return axios.put(`http://localhost:8080/update/users/${userId}`, user, { headers: authHeader() }); //making a rest api call: PUT(to modify) http request
     }
+
+    //called during DisplayUserComponent. Gets the User object.
+    getUserByUserName(username) {
+        //return axios.get(USER_API_BASE_URL + '/' + userId); //making a rest api call: GET request
+        return axios.get(`http://localhost:8080/update/user/${username}`, { headers: authHeader() } ); //making a rest api call: GET request
+
+    }
 }
 
 export default new UserServiceTesting();

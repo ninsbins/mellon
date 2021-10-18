@@ -17,7 +17,8 @@ class UpdateUserComponent extends Component {
             email: '',
             password: '',
             firstName: '',
-            lastName: ''
+            lastName: '',
+            bio: ''
         }
 
         console.log("The User ID you entered in the routing = " + this.state.id);
@@ -28,6 +29,7 @@ class UpdateUserComponent extends Component {
         this.changePasswordHandler = this.changePasswordHandler.bind(this);
         this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
         this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
+        this.changeBioHandler = this.changeBioHandler.bind(this);
         this.updateUser = this.updateUser.bind(this); //when Update button is clicked
     }
 
@@ -44,7 +46,8 @@ class UpdateUserComponent extends Component {
                 email: user.email,
                 password: user.password,
                 firstName: user.firstName,
-                lastName: user.lastName
+                lastName: user.lastName,
+                bio: user.bio
             });
         });
     }
@@ -59,7 +62,8 @@ class UpdateUserComponent extends Component {
             email: this.state.email,
             password: this.state.password,
             firstName: this.state.firstName,
-            lastName: this.state.lastName
+            lastName: this.state.lastName,
+            bio: this.state.bio
         };
 
         console.log('User! => ' + JSON.stringify(user))
@@ -76,7 +80,7 @@ class UpdateUserComponent extends Component {
         this.props.history.push('/settings'); //route back to Home page if Cancel button has been selected
     }
 
-    //SETTING THE 5 PROPERTIES below:
+    //SETTING THE 6 PROPERTIES below:
     changeUsernameHandler = (event) => {
         this.setState({username: event.target.value});
     }
@@ -99,6 +103,11 @@ class UpdateUserComponent extends Component {
     //setting the ^ properties
     changeLastNameHandler = (event) => {
         this.setState({lastName: event.target.value});
+    }
+
+    //setting the ^ properties
+    changeBioHandler = (event) => {
+        this.setState({bio: event.target.value});
     }
 
 
@@ -143,6 +152,17 @@ class UpdateUserComponent extends Component {
                                         <input placeholder="email" name = "email" className="form-control"
                                                value={this.state.email} onChange={this.changeEmailHandler}/> {/*event handler called */}
                                     </div>
+
+                                    <div className="form-group">
+                                        <label> Your Bio </label>
+                                        <textarea className="form-control"
+                                                  placeholder="Introduce yourself"
+                                                  onChange={this.changeBioHandler}
+                                                  value={this.state.bio}
+                                                  rows="5">
+                                        </textarea>
+                                    </div>
+
 
                                     {/*  empty space before buttons */}
                                     <div className="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
