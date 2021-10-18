@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@CrossOrigin(origins="*", maxAge=3600)//to stop the CORS issue on this front-end page(without it, go to Console in Inspections)
+//@CrossOrigin(origins="*", maxAge=3600)//to stop the CORS issue on this front-end page(without it, go to Console in Inspections)
 @RestController
 @RequestMapping("/update") //can test this api point using Postman so e.g. 'http://localhost:8080/api/auth/users/18' NO LONGER
 //http://localhost:8080/update/users/18
@@ -76,12 +76,13 @@ public class UserControllerTesting {
 
 
     //Find and GET user object by USERNAME rest api
-    @GetMapping("/user/{username}")
-    public ResponseEntity<User> getUserByUserName(@PathVariable String username) {
+    @GetMapping("/user")
+    public ResponseEntity<User> getUserByUserName(String username) throws NullPointerException {
         System.out.println("Getting User by their USERNAME.");
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()-> new UsernameNotFoundException("User Not Found with username: " + username));
+
         return ResponseEntity.ok(user);
     }
 }

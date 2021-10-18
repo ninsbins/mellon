@@ -27,6 +27,7 @@ const Header = (props) => {
     const [searchTerm, setSearchTerm] = useState(null);
     const [searchFilter, setSearchFilter] = useState(null);
     const [searchResults, setSearchResults] = useState(null);
+    const [thisUsername, setThisUsername] = useState(null);
 
     let history = useHistory();
 
@@ -35,6 +36,7 @@ const Header = (props) => {
 
     function userLoggedIn() {
         // console.log(authService.getCurrentUser());
+        //setThisUsername(authService.getCurrentUser().username);
         return authService.getCurrentUser();
     }
 
@@ -227,7 +229,7 @@ const Header = (props) => {
                                 </Nav.Link>
 
                                 <Nav.Link>
-                                    <Link to={"/profile"} className={"nav-links"}>
+                                    <Link to={`/profile/${authService.getCurrentUser().username}`} className={"nav-links"}>
                                         Profile
                                     </Link>
                                 </Nav.Link>

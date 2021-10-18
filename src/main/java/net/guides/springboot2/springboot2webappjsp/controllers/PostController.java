@@ -35,9 +35,8 @@ public class PostController {
     }
 
     @GetMapping("/myposts")
-    public ResponseEntity<?> myPosts(@RequestHeader (name="Authorization") String token) throws NullPointerException {
+    public ResponseEntity<?> myPosts(String username) throws NullPointerException {
 
-        String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
         List<Post> postList = postService.getPostsOfUser(username);
         return ResponseEntity.ok(postList);
     }

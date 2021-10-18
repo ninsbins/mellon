@@ -38,7 +38,7 @@ class App extends Component {
                         <Route path={'/settings'}>
                             <SettingsPage/>
                         </Route>
-                        <Route path={'/profile'}>
+                        <Route path={'/profile/:id'}>
                             <ProfilePage/>
                         </Route>
                         <Route path={'/search'}>
@@ -66,9 +66,6 @@ class App extends Component {
                         {/* Testing User update for now */}
                         <Route path = "/update-user/:id" component= {UpdateUserComponent} ></Route>
                         <Route path = "/update-password/:id" component= {UpdateUserPassword} ></Route>
-
-                        {/* For displaying selected User in the Feed */}
-                        <Route path = "/profile-info/:username" component= {DisplayUserComponent} ></Route>
 
                         <Route path={'/'}>
                             <HomePage/>
