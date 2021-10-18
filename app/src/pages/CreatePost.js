@@ -37,7 +37,7 @@ const CreatePost = () => {
         return newErr;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         //    send post to database
         event.preventDefault();
 
@@ -58,7 +58,7 @@ const CreatePost = () => {
             //
             console.log(date)
 
-            axiosConfig.post(`/post/addpost`, {
+            await axiosConfig.post(`/post/addpost`, {
                 content: content,
                 createdDate: date,
                 imageUrl: image,
