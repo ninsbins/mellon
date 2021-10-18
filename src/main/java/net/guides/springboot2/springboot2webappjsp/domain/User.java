@@ -34,6 +34,7 @@ public class User {
 
 	private String firstName;
 	private String lastName;
+	private String bio;
 	private String spotifyToken;
 
 	@OneToMany(mappedBy = "user")
@@ -55,11 +56,12 @@ public class User {
 	}
 
 	//Constructor is called when updating User details in Settings
-	public User(String username, String email, String firstName, String lastName) {
+	public User(String username, String email, String firstName, String lastName, String bio) {
 		this.username = username;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.bio = bio;
 	}
 
 	public Integer getId() {
@@ -109,5 +111,13 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
 	}
 }

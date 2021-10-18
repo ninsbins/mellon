@@ -60,7 +60,7 @@ const Feed = () => {
                         />
                     )) : <Row className={"justify-content-center"}>
                         <Image src={`https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif`}
-                        width={40}/>
+                               width={40}/>
                     </Row>}
                 </Col>
                 <Col/>
