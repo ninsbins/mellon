@@ -130,8 +130,7 @@ const SettingsPage = () => {
                                             <Button variant="outline-primary"
                                                     onClick={changePassword}
                                                     style={{marginTop: "20px"}}
-                                            >
-                                                Change Password
+                                            >Change Password
                                             </Button>
                                         </Form.Group>
 
