@@ -73,6 +73,8 @@ const ProfilePage = () => {
     const chatWithUser = () => {
         try {
             // TODO: create new chat
+            window.location.replace("http://localhost:3000/chat")
+
         } catch (e) {
             console.log(e);
         }
