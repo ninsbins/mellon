@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import UserServiceTesting from "../services/UserServiceTesting";
 import Header from "../components/Header";
 import '../styles/UpdateUserComponent.css';
-import Gandalf from '../Gandalf-cute.png'
 
 //This component is for updating User details.
 //Called when '/update-password/:id'
@@ -62,12 +61,7 @@ class UpdateUserPassword extends Component {
                 <div className= "container-body">
                     <div className= "row">
                         <div className = "rounded-card col-md-6 offset-md-3 offset-md-3 "> {/* column width -give space from left margin*/}
-                            <h2 className="text-center"> Update User</h2>
-
-                            {/*  insert centered image */}
-                            <div className="gandalf">
-                                <img src={Gandalf} alt="Gandalf cute" height={80} width={80} />
-                            </div>
+                            <h2 className="text-center"> Update your password</h2>
 
                             <div className="card-body">
 
@@ -76,8 +70,8 @@ class UpdateUserPassword extends Component {
 
                                 <form>
                                     <div className = "form-group">
-                                        <label> Your New Password: </label>
-                                        <input placeholder="password" name = "password" className="form-control"
+                                        <label> Enter your new password </label>
+                                        <input placeholder="Password" name = "password" className="form-control"
                                                value={this.state.password} onChange={this.changePasswordHandler}/> {/*event handler called */}
                                     </div>
 

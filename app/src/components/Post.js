@@ -12,7 +12,8 @@ const Post = (props) => {
     }
 
     const convertDate = (date) => {
-        return new Date(date).toString();
+        const format = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+        return new Date(date).toLocaleString("en-US", format);
     }
 
     //component to display on news feed

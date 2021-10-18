@@ -3,10 +3,6 @@ import UserServiceTesting from "../services/UserServiceTesting";
 import Header from "../components/Header";
 import '../styles/UpdateUserComponent.css';
 
-import {Container} from "@material-ui/core";
-import Gandalf from "../Gandalf-cute.png";
-//^used 'rcc' to create the React snippet
-
 //This component is for updating User details.
 //Called when '/update-user/:id'
 class UpdateUserComponent extends Component {
@@ -117,13 +113,7 @@ class UpdateUserComponent extends Component {
                 <div className= "container-body">
                     <div className= "row">
                         <div className = "rounded-card col-md-6 offset-md-3 offset-md-3 "> {/* column width -give space from left margin*/}
-                            <h2 className="text-center"> Update User</h2>
-
-                            {/*  insert centered image */}
-                            <div className="gandalf">
-                                <img src={Gandalf} alt="Gandalf cute" height={80} width={80} />
-                            </div>
-
+                            <h2 className="text-center"> Update your account info</h2>
                             <div className="card-body">
 
                                 {/*  empty space before buttons */}
@@ -131,25 +121,25 @@ class UpdateUserComponent extends Component {
 
                                 <form>
                                     <div className = "form-group">
-                                        <label> Username: </label>
+                                        <label> Username </label>
                                         <input placeholder="username" name = "username" className="form-control"
                                                value={this.state.username} onChange={this.changeUsernameHandler}/> {/*event handler called */}
                                     </div>
 
                                     <div className = "form-group">
-                                        <label> First Name: </label>
+                                        <label> First Name </label>
                                         <input placeholder="First name" name = "firstName" className="form-control"
                                                value={this.state.firstName} onChange={this.changeFirstNameHandler}/> {/*event handler called */}
                                     </div>
 
                                     <div className = "form-group">
-                                        <label> Last Name: </label>
+                                        <label> Last Name </label>
                                         <input placeholder="Last name" name = "lastName" className="form-control"
                                                value={this.state.lastName} onChange={this.changeLastNameHandler}/> {/*event handler called */}
                                     </div>
 
                                     <div className = "form-group">
-                                        <label> Email: </label>
+                                        <label> Email </label>
                                         <input placeholder="email" name = "email" className="form-control"
                                                value={this.state.email} onChange={this.changeEmailHandler}/> {/*event handler called */}
                                     </div>

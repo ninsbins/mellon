@@ -58,14 +58,14 @@ const SettingsPage = () => {
 
     }
 
-    const handleLogout = async() => {
+    const handleLogout = async () => {
         // how to logout
         console.log(localStorage.getItem('user'))
         authService.logout();
         console.log(localStorage.getItem('user'))
         history.push(
             {pathname: `/`}
-    );
+        );
 
     }
 
@@ -90,7 +90,7 @@ const SettingsPage = () => {
                                     </Nav.Link>
                                 </Nav.Item>
                             </Nav>
-                            <Button onClick={handleLogout}>
+                            <Button variant="outline-danger" onClick={handleLogout} style={{marginTop: "20px"}}>
                                 Logout
                             </Button>
                         </Col>
@@ -102,23 +102,23 @@ const SettingsPage = () => {
 
                                         <h2 className={"primary-text"}>Settings</h2>
 
-                                            {/*  empty space before buttons */}
-                                            <div className="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
-                                            Change password!
+                                        <Form.Group>
+                                            <Button variant="outline-primary"
+                                                    onClick={changeUserDetails}
+                                                    style={{marginTop: "20px"}}
+                                            >Edit account details
+                                            </Button>
+                                        </Form.Group>
 
-                                            <Form.Group>
-                                                <Button variant="outline-primary" onClick={changePassword}>
-                                                    Change Password
-                                                </Button>
-                                            </Form.Group>
+                                        <Form.Group>
+                                            <Button variant="outline-primary"
+                                                    onClick={changePassword}
+                                                    style={{marginTop: "20px"}}
+                                            >
+                                                Change Password
+                                            </Button>
+                                        </Form.Group>
 
-                                            {/*  empty space before buttons */}
-                                            <div className="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
-
-                                            Edit your other details!
-                                            <Form.Group>
-                                                <Button variant="outline-primary" onClick={changeUserDetails} >Edit User Details</Button>{' '}
-                                            </Form.Group>
 
                                     </Container>
                                 </Tab.Pane>
@@ -129,13 +129,13 @@ const SettingsPage = () => {
                                         <h2 className={"primary-text"}>Account Connections
                                         </h2>
                                         <h2>
-                                            {spotifyToken ?  (<Button
+                                            {spotifyToken ? (<Button
                                                     variant="default"
-                                                    style={{background: "#1ed760",
-                                                        borderTopLeftRadius: "20px",
-                                                        borderTopRightRadius: "20px",
-                                                        borderBottomRightRadius: "20px",
-                                                        borderBottomLeftRadius: "20px"}}
+                                                    style={{
+                                                        marginTop: "20px",
+                                                        background: "#1ed760",
+                                                        borderRadius: "20px",
+                                                    }}
                                                     onClick={connectToSpotify}>
                                                     <Image
                                                         src={`${process.env.PUBLIC_URL}/assets/spotify.png`}
@@ -144,15 +144,14 @@ const SettingsPage = () => {
                                                             paddingRight: "5px"
                                                         }}
                                                     />
-                                                Connect to Spotify!
+                                                    Connect to Spotify!
                                                 </Button>)
-                                                :(<Button
+                                                : (<Button
                                                     variant="outline-danger"
                                                     style={{
-                                                        borderTopLeftRadius: "20px",
-                                                        borderTopRightRadius: "20px",
-                                                        borderBottomRightRadius: "20px",
-                                                        borderBottomLeftRadius: "20px"}}
+                                                        marginTop: "20px",
+                                                        borderRadius: "20px",
+                                                    }}
                                                     onClick={connectToSpotify}>
                                                     <Image
                                                         src={`${process.env.PUBLIC_URL}/assets/spotify.png`}
@@ -166,7 +165,6 @@ const SettingsPage = () => {
                                                 </Button>)}
 
                                         </h2>
-
 
 
                                     </Container>

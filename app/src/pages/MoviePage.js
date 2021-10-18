@@ -61,10 +61,37 @@ const MoviePage = () => {
                                         <Image width="300px" src={info.Poster}/>
                                     </Col>
                                     <Col>
-                                        <p>Year: {info.Year}</p>
-                                        <p>Type: {info.Type}</p>
-                                        <p>Runtime : {moreMovieInfo === null ? 'loading' :  moreMovieInfo.Runtime }</p>
-                                        <p>Plot: {moreMovieInfo === null ? 'loading' : moreMovieInfo.Plot}</p>
+                                        <Row class={"justify-content-space-between"}>
+                                            <Col>
+                                                <strong>Year</strong>
+                                            </Col>
+                                            <Col>
+                                                {info.Year}
+                                            </Col>
+                                        </Row>
+
+                                        <Row class={"justify-content-space-between"}>
+                                            <Col>
+                                                <strong>Type</strong>
+                                            </Col>
+                                            <Col>
+                                                {info.Type}
+                                            </Col>
+                                        </Row>
+
+                                        <Row class={"justify-content-space-between"}>
+                                            <Col>
+                                                <strong>Runtime</strong>
+                                            </Col>
+                                            <Col>
+                                                {moreMovieInfo === null ? '' :  moreMovieInfo.Runtime}
+                                            </Col>
+                                        </Row>
+
+                                        <p> </p>
+
+                                        <p><strong>Plot</strong></p>
+                                        <p>{moreMovieInfo === null ? 'loading' : moreMovieInfo.Plot}</p>
 
                                     </Col>
                                 </Row>
