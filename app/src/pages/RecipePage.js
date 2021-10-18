@@ -18,19 +18,17 @@ const RecipePage = (props) => {
     function getIngredients() {
         let list = [];
         for (let i = 1; info[`strIngredient${i}`]; i++) {
-            const ingredients = `- ${info[`strMeasure${i}`]} ${info[`strIngredient${i}`]} 
-            
-            `
-            list.push(ingredients);
+            // const ingredient = `${<p>{info[`strMeasure${i}`]} {info[`strIngredient${i}`]}</p>}`
+            const ingredient = `- ${info[`strMeasure${i}`]} ${info[`strIngredient${i}`]} ` + '\n';
+            list.push(ingredient);
         }
         return list;
+
     }
 
     function mealCategory(){
         const category = `${info[`strCategory`]}`
         return category
-
-
     }
 
     function getInstructions() {
@@ -79,7 +77,8 @@ const RecipePage = (props) => {
                         <Container className={"rounded-card"}>
                             <Col>
                                 <h2 className={"primary-text"}>{info.strMeal}</h2>
-                                <Row className={"justify-content-center"}>
+                                <Row className={"justify-content-center"}
+                                style={{paddingTop: "15px", paddingBottom: "15px"}}>
                                     <Image width="600px" src={info.strMealThumb}/>
                                 </Row>
                                 <p><strong>Category</strong></p>

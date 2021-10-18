@@ -70,7 +70,7 @@ class UpdateUserPassword extends Component {
 
                                 <form>
                                     <div className = "form-group">
-                                        <label> Enter your new password: </label>
+                                        <label> Enter your new password </label>
                                         <input placeholder="Password" name = "password" className="form-control"
                                                value={this.state.password} onChange={this.changePasswordHandler}/> {/*event handler called */}
                                     </div>

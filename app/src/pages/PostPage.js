@@ -14,8 +14,6 @@ const PostPage = () => {
 
     const [postComments, setPostComments] = useState({});
 
-    // const date = JSON.parse(postInfo.createdDate);
-
     useEffect(() => {
         //get post with id from backend
         axiosConfig.get(`/post/${id}`)
@@ -82,7 +80,8 @@ const PostPage = () => {
     }
 
     const convertDate = (date) => {
-        return new Date(date).toString();
+        const format = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+        return new Date(date).toLocaleString("en-US", format);
     }
 
     return (
@@ -115,17 +114,16 @@ const PostPage = () => {
                                     <p style={{paddingTop: "15px", paddingBottom: "15px"}}>{postInfo.content}</p>
                                     <div style={{padding: "10px"}}>
                                         {/*render comments*/}
-                                        {/*{postComments ? (*/}
-                                        {/*        postComments.map((comment) => (*/}
-                                        {/*                <Comment info={comment}/>*/}
-                                        {/*            )*/}
-                                        {/*        )*/}
-                                        {/*    ) :*/}
-                                        {/*    (<Row className={"justify-content-center"}>*/}
-                                        {/*        No comments yet. Be the first to comment!*/}
-                                        {/*    </Row>)*/}
-
-                                        {/*}*/}
+                                        {postComments.length > 0 ? (
+                                                postComments.map((comment) => (
+                                                        <Comment info={comment}/>
+                                                    )
+                                                )
+                                            ) :
+                                            (<Row className={"justify-content-center"}>
+                                                No comments yet. Be the first to comment!
+                                            </Row>)
+                                        }
                                     </div>
                                     <InputGroup>
                                         <FormControl

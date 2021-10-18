@@ -121,25 +121,25 @@ class UpdateUserComponent extends Component {
 
                                 <form>
                                     <div className = "form-group">
-                                        <label> Username: </label>
+                                        <label> Username </label>
                                         <input placeholder="username" name = "username" className="form-control"
                                                value={this.state.username} onChange={this.changeUsernameHandler}/> {/*event handler called */}
                                     </div>
 
                                     <div className = "form-group">
-                                        <label> First Name: </label>
+                                        <label> First Name </label>
                                         <input placeholder="First name" name = "firstName" className="form-control"
                                                value={this.state.firstName} onChange={this.changeFirstNameHandler}/> {/*event handler called */}
                                     </div>
 
                                     <div className = "form-group">
-                                        <label> Last Name: </label>
+                                        <label> Last Name </label>
                                         <input placeholder="Last name" name = "lastName" className="form-control"
                                                value={this.state.lastName} onChange={this.changeLastNameHandler}/> {/*event handler called */}
                                     </div>
 
                                     <div className = "form-group">
-                                        <label> Email: </label>
+                                        <label> Email </label>
                                         <input placeholder="email" name = "email" className="form-control"
                                                value={this.state.email} onChange={this.changeEmailHandler}/> {/*event handler called */}
                                     </div>
