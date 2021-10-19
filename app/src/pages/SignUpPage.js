@@ -79,8 +79,13 @@ const SignUpPage = () => {
                 .then(
                     response => {
                         console.log(response);
-                        // this line is what i'm trying to fix
-                        window.location.replace(`http://localhost:3000/profile`);
+                        if (response.status==200) {
+                            authService.login(username, password)
+                                .then(() => {
+                                    //history.push("/profile")
+                                    window.location.replace(`http://localhost:3000/profile`);
+                                });
+                        }
                     },
                     error => {
                         const resMessage =

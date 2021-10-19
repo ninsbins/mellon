@@ -27,11 +27,12 @@ class authService {
             email,
             password
         }).then(response => {
-            if (response.data.accessToken) {
-                localStorage.setItem("user", JSON.stringify(response.data));
-            }
-            return response.data;
-        });
+            console.log(response)
+                if (response.status == 200) {
+                    return response;
+                }
+                return null;
+            });
     }
 
     getCurrentUser() {

@@ -50,7 +50,7 @@ const ChatPage = ({chatWithUser}) => {
 
         initChat();
 
-        return () => chatClient?.disconnectUser();
+        //return () => chatClient?.disconnectUser();
     }, []);
 
     if (!chatClient) return null;
