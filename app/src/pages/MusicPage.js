@@ -67,7 +67,16 @@ const MusicPage = (props) => {
 
     }, []);
 
-
+    function handleClick() {
+        history.push({
+            pathname: '/create',
+            state: {
+                type: info.type,
+                title: info.name,
+                image: info.images[0].url
+            }
+        })
+    }
 
     return (
         <div>
@@ -81,7 +90,7 @@ const MusicPage = (props) => {
                     </Col>
                     <Col sm={8}>
                         <Container className={"rounded-card"}>
-                            <SpotifyHeader />
+                            <SpotifyHeader handleClick={handleClick} />
                             <div className="body_info">
                                 <img src={info.images[0].url} alt="" />
                                 <div className="body_infoText">

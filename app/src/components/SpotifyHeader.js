@@ -6,7 +6,7 @@ import {Button} from "react-bootstrap";
 import axiosConfig from "../services/axiosConfig";
 
 
-function SpotifyHeader() {
+function SpotifyHeader({handleClick}) {
 
     const [spotifyUser, setSpotifyUser] = useState(null);
     const [spotifyUserImage, setSpotifyUserImage] = useState(null);
@@ -32,6 +32,7 @@ function SpotifyHeader() {
 
     }, []);
 
+
     return (
         <div className="spotifyheader">
             <div className="spotifyheader_left">
@@ -42,7 +43,7 @@ function SpotifyHeader() {
                         borderTopRightRadius: "20px",
                         borderBottomRightRadius: "20px",
                         borderBottomLeftRadius: "20px"}}
-                    //onClick={connectToSpotify}
+                    onClick={() => handleClick()}
                     >
                     Share to Feed!
 
