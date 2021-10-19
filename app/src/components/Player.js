@@ -1,17 +1,28 @@
-import React, {useEffect, useState} from "react";
-import SpotifyPlayer from "react-spotify-web-playback";
+import { useState, useEffect } from "react"
+import SpotifyPlayer from "react-spotify-web-playback"
+import "../styles/SpotifyWebPlayer.css";
+import React from "react";
+import { Navbar } from "react-bootstrap";
 
-export default function Player({accessToken, trackUri}) {
+import "../styles/Header.css"
+import "../styles/Home.css"
 
+export default function Player({trackUri }) {
     const [play, setPlay] = useState(false)
 
+    useEffect(() => setPlay(true), [trackUri])
 
-    useEffect(()=> setPlay(true), [trackUri])
-
-    if(!accessToken) return null
-    return (<SpotifyPlayer
-        token={accessToken}
-        showSaveIcon
-        uris={trackUri ? [trackUri] : []}
-    />)
+    return (
+        <Navbar fixed={"bottom"}>
+        <SpotifyPlayer
+            token={localStorage.getItem("spotifyToken")}
+            showSaveIcon
+            callback={state => {
+                if (!state.isPlaying) setPlay(false)
+            }}
+            play={play}
+            uris={trackUri ? [trackUri] : []}
+        />
+        </Navbar>
+    )
 }

@@ -1,3 +1,8 @@
 .album-body {
     display: flex;
 }
+
+.player {
+    display: flex;
+    height: 100%;
+}

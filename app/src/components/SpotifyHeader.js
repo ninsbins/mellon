@@ -6,7 +6,7 @@ import {Button} from "react-bootstrap";
 import axiosConfig from "../services/axiosConfig";
 
 
-function SpotifyHeader() {
+function SpotifyHeader({handleClick}) {
 
     const [spotifyUser, setSpotifyUser] = useState(null);
     const [spotifyUserImage, setSpotifyUserImage] = useState(null);
@@ -14,7 +14,11 @@ function SpotifyHeader() {
     useEffect(async () => {
 
         await axiosConfig
-            .get(`/spotify/get-current-user-image`)
+            .get(`/spotify/get-current-user-image`, {
+                params : {
+                    spotifyToken: localStorage.getItem("spotifyToken")
+                }
+            })
             .then(response => {
                 if(response.status === 200) {
                     console.log(response.data[1]);
@@ -28,6 +32,7 @@ function SpotifyHeader() {
 
     }, []);
 
+
     return (
         <div className="spotifyheader">
             <div className="spotifyheader_left">
@@ -38,9 +43,9 @@ function SpotifyHeader() {
                         borderTopRightRadius: "20px",
                         borderBottomRightRadius: "20px",
                         borderBottomLeftRadius: "20px"}}
-                    //onClick={connectToSpotify}
+                    onClick={() => handleClick()}
                     >
-                    Share this Album!
+                    Share to Feed!
 
                 </Button>
 

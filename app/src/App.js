@@ -14,6 +14,7 @@ import RecipePage from "./pages/RecipePage";
 import MoviePage from "./pages/MoviePage";
 import MusicPage from "./pages/MusicPage";
 import ChatPage from "./pages/ChatPage";
+import PlaylistPage from "./pages/PlaylistPage";
 import UpdateUserComponent from "./components/UpdateUserComponent";
 import UpdateUserPassword from "./components/UpdateUserPassword";
 import DisplayUserComponent from "./components/DisplayUserComponent";
@@ -62,6 +63,10 @@ class App extends Component {
                         </Route>
                         <Route path = "/item/music">
                             <MusicPage/>
+                        </Route>
+
+                        <Route path = "/item/playlist">
+                            <PlaylistPage/>
                         </Route>
 
                         <Route path = "/chat">

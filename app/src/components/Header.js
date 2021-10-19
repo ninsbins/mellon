@@ -47,10 +47,11 @@ const Header = (props) => {
         switch (filter) {
             case "0":
                 // music search
-                await musicSearch(term);
+                await musicSearch(term, "album,track");
                 break;
             case "1":
                 // playlist search
+                await playlistSearch(term, "playlist,track");
                 break;
             case "2":
                 // movie search
@@ -65,13 +66,52 @@ const Header = (props) => {
         setSearchResults(null);
     }
 
-
-    const musicSearch = async (input) => {
+    const playlistSearch = async (input, searchType) => {
+        console.log(localStorage.getItem("spotifyToken"))
         if (input) {
             axiosConfig
-                .get(`/spotify/search?item=${input}`, {headers: authHeader()})
+                .get(`/spotify/search`, {
+                    params : {
+                        searchTerm: input,
+                        searchType: searchType,
+                        spotifyToken: localStorage.getItem("spotifyToken")
+                    }
+                })
                 .then((res) => {
                     if (res.status === 200) {
+                        console.log(res);
+                        console.log(res.data.playlists.items);
+                        setSearchResults(res.data.playlists.items)
+                        history.push({
+                            pathname: `/search`,
+                            state: {
+                                searchTerm: searchTerm,
+                                searchFilter: searchFilter,
+                                searchResults: res.data.playlists.items
+                            }
+                        });
+                    }
+                }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+
+        }
+    }
+    const musicSearch = async (input, searchType) => {
+        console.log(localStorage.getItem("spotifyToken"))
+        if (input) {
+            axiosConfig
+                .get(`/spotify/search`, {
+                    params : {
+                        searchTerm: input,
+                        searchType: searchType,
+                        spotifyToken: localStorage.getItem("spotifyToken")
+                    }
+                })
+                .then((res) => {
+                    if (res.status === 200) {
+                        console.log(res);
                         console.log(res.data.albums.items);
                         setSearchResults(res.data.albums.items)
                         history.push({

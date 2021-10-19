@@ -27,7 +27,16 @@ const ItemCard = (props) => {
                     }
                 });
                 break;
-
+            case "1":
+                console.log('redirect to playlist page');
+                console.log(props.d);
+                history.push({
+                    pathname: '/item/playlist',
+                    state: {
+                        data: props.d
+                    }
+                });
+                break;
             case "2":
                 console.log('redirect to movie page');
                 history.push({

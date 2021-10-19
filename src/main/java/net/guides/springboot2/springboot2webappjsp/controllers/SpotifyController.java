@@ -11,6 +11,7 @@ import com.wrapper.spotify.requests.authorization.authorization_code.Authorizati
 import com.wrapper.spotify.requests.data.albums.GetAlbumsTracksRequest;
 import com.wrapper.spotify.requests.data.browse.GetRecommendationsRequest;
 import com.wrapper.spotify.requests.data.personalization.simplified.GetUsersTopArtistsRequest;
+import com.wrapper.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
 import com.wrapper.spotify.requests.data.search.SearchItemRequest;
 import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 import org.apache.hc.core5.http.ParseException;
@@ -67,13 +68,6 @@ public class SpotifyController {
             spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
             spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
 
-
-
-
-
-
-
-
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (SpotifyWebApiException e) {
@@ -81,12 +75,10 @@ public class SpotifyController {
         }
 
         accessToken = spotifyApi.getAccessToken();
-        response.sendRedirect("http://localhost:3000/profile");
+        response.sendRedirect("http://localhost:3000/settings?token="+accessToken);
 
         System.out.println("callback " + accessToken);
         return accessToken;
-
-
     }
 
     @GetMapping("/get-token")
@@ -99,26 +91,25 @@ public class SpotifyController {
 
     // Pass in as http://localhost:8080/spotify/search?item=dojacat
     @GetMapping("/search")
-    public SearchResult search(String item) {
-        String type = "album,artist,playlist,track";
+    public SearchResult search(@RequestParam("searchTerm") String searchTerm, @RequestParam("searchType") String searchType, @RequestParam("spotifyToken") String spotifyToken) {
 
-       System.out.println("/search " + accessToken);
+        String item = searchTerm;
+        String type = searchType;
+        String accessToken = spotifyToken;
 
         final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
 
         final SearchItemRequest searchItemRequest = spotifyApi.searchItem(item, type).build();
 
-        SearchResult searchResult = null;
 
         try {
-            searchResult = searchItemRequest.execute();
-
+            SearchResult searchResult = searchItemRequest.execute();
             System.out.println("Total tracks: " + searchResult.getTracks().getTotal());
+            return searchResult;
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
+            return null;
         }
-
-        return searchResult;
 
     }
 
@@ -183,8 +174,34 @@ public class SpotifyController {
 
     }
 
+    @GetMapping("/get-playlist-tracks")
+    public Paging<PlaylistTrack> getPlaylistTracks(@RequestParam("spotifyToken") String spotifyToken, @RequestParam("playlistID") String playlistID) {
+        String accessToken = spotifyToken;
+        String playlistId = playlistID;
+        final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
+
+        final GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(playlistId).build();
+
+        Paging<PlaylistTrack> playlistTrackPaging = null;
+
+        try {
+            playlistTrackPaging = getPlaylistsItemsRequest.execute();
+
+            System.out.println("Total: " + playlistTrackPaging.getTotal());
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return playlistTrackPaging;
+    }
+
+
     @GetMapping("/get-current-user-image")
-    public Object getCurrentUser() {
+    public Object getCurrentUser(@RequestParam("spotifyToken") String spotifyToken) {
+        String accessToken = spotifyToken;
+
+        System.out.println(accessToken);
+
         final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
 
         final GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile()
