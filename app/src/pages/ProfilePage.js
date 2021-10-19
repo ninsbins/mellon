@@ -17,8 +17,11 @@ const ProfilePage = () => {
     const [recipePosts, setRecipePosts] = useState(null);
     const [profileUsername, setProfileUsername] = useState('');
     const [thisUsername, setThisUsername] = useState('');
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null); //json User object of user you're currently viewing
 
+    const [usersFirstName, setUsersFirstName] = useState(""); //for displaying details of other Users
+    const [usersLastName, setUsersLastName] = useState("");
+    const [usersBio, setUsersBio] = useState("");
 
     useEffect(() => {
         const url = window.location.pathname; //get the path(minus domain name)
@@ -27,12 +30,13 @@ const ProfilePage = () => {
         const thisUsername = authService.getCurrentUser().username;
         setProfileUsername(username);
         setThisUsername(thisUsername);
+        //console.log("username of Profile you're displaying currently: " + username)
 
         axiosConfig.get(`/post/myposts?username=${username}`)
             .then((res) => {
                 // console.log(res);
                 setPosts(res.data);
-                console.log(posts);
+                //console.log(posts);
 
                 const musicList = [];
                 const playlistList = [];
@@ -80,12 +84,21 @@ const ProfilePage = () => {
         }
     }
 
+
     const getUserInfo = async ({username}) => {
         try {
             console.log(username)
             const res = await axiosConfig.get(`/update/user?username=${username}`)
+            console.log("printing bio:  " + res.data.bio)
             setUser(res);
-            console.log(res);
+            //user.data.bio -> will cause issues with rendering/DOM(will still be null)
+
+            setUsersFirstName(res.data.firstName);
+            setUsersLastName(res.data.lastName);
+            setUsersBio(res.data.bio);
+            //const [usersFirstName, setUsersFirstName] = useState("");
+            //const [usersLastName, setUsersLastName] = useState("");
+            //const [usersBio, setUsersBio] = useState("");
         } catch (e) {
             console.log(e);
         }
@@ -351,12 +364,13 @@ const ProfilePage = () => {
 
     return (
         <div>
+
             <Header/>
             <Container fluid className={"content-body"}>
                 <div className={"profile-header"}>
                     <Row>
                         <Col sm={3}>
-                            <h2 className={"primary-text"}>User Profile</h2>
+                            <h2 className={"primary-text"}>User Profile </h2>
                         </Col>
                         <Col sm={9}>
 
@@ -460,6 +474,33 @@ const ProfilePage = () => {
                                             <Container className={"rounded-card"}>
                                                 {/*map card grid*/}
                                                 <h3 className={"secondary-text"}>Profile</h3>
+
+                                                <Row class={"justify-content-space-between"}>
+                                                    <Col>
+                                                        First name
+                                                    </Col>
+                                                    <Col>
+                                                        {usersFirstName}
+                                                    </Col>
+                                                </Row>
+
+                                                <Row class={"justify-content-space-between"}>
+                                                    <Col>
+                                                        Last name
+                                                    </Col>
+                                                    <Col>
+                                                        {usersLastName}
+                                                    </Col>
+                                                </Row>
+
+                                                <p> </p>
+                                                <div className="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
+
+                                                <p><em>Bio</em></p>
+                                                <p>
+
+                                                    {usersBio}
+                                                </p>
 
                                                 <Button
                                                     variant="default"

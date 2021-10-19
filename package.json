@@ -1,1 +1,12 @@
-{"proxy":{"/api/*":{"target":"https://[::1]:8080"}},"dependencies":{"@material-ui/icons":"^4.11.2"}}
+{
+  "proxy": {
+    "/api/*": {
+      "target": "https://[::1]:8080"
+    }
+  },
+  "dependencies": {
+    "@material-ui/icons": "^4.11.2",
+    "stream-chat": "^4.2.0",
+    "stream-chat-react": "^6.10.0"
+  }
+}

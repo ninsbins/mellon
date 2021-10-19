@@ -2,6 +2,7 @@ package net.guides.springboot2.springboot2webappjsp.controllers;
 import net.guides.springboot2.springboot2webappjsp.domain.User;
 import net.guides.springboot2.springboot2webappjsp.jwt.JwtUtils;
 import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
+import net.guides.springboot2.springboot2webappjsp.services.PostService;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -85,4 +86,6 @@ public class UserControllerTesting {
 
         return ResponseEntity.ok(user);
     }
+
+
 }

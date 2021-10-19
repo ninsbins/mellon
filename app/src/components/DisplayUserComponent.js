@@ -6,6 +6,7 @@ import axios from "axios";
 import UserServiceTesting from "../services/UserServiceTesting";
 import authHeader from "../services/authHeader";
 import Moria from "../DoorsOfMoria.png";
+import axiosConfig from "../services/axiosConfig";
 
 //When the user clicks on the hyperlink/title of Post in Feed
 const DisplayUserComponent = () => {
@@ -13,7 +14,8 @@ const DisplayUserComponent = () => {
     let location = useLocation();
     let history = useHistory();
     const [username, setUserName] = useState("");
-    const [allUserDetails, setUserDetails] = useState(null); //store the api json response
+    const [allUserDetails, setUserDetails] = useState(null); //store the User api json response
+    const [posts, setPosts] = useState(null); //store all the User's posts :)
 
     useEffect(() => {
         const url = window.location.pathname; //get the path(minus domain name)
@@ -21,6 +23,12 @@ const DisplayUserComponent = () => {
         const username = url.split("/").pop();
         console.log("USERNAME: " + username); // e.g., "ronald"
         setUserName(username); //set the state variable
+
+        //Get all Posts!!
+        //getAllPosts();
+        //axiosConfig.get(`post/all-user-posts/{username}`)
+        //need to make a post array
+
 
         //Option 1: Fetch user details via Service class
         /*
@@ -38,6 +46,11 @@ const DisplayUserComponent = () => {
         }).catch(err => console.log(err));
 
     }, [location])
+
+    function getAllPosts() {
+        console.log("geting all posts of User: " + username);
+
+    }
 
 
     //Display the User details
@@ -90,21 +103,43 @@ const DisplayUserComponent = () => {
                                         {allUserDetails === null ? '' :  allUserDetails.email}
                                     </Col>
                                 </Row>
-
                                 <p> </p>
 
                                 <p><strong> Bio </strong></p>
                                 <p>
                                     {allUserDetails === null ? '' :  allUserDetails.bio}
                                 </p>
-
                             </Col>
-
                         </Container>
                     </Col>
                     <Col/>
                 </Row>
             </Container>
+
+
+            <Container fluid className={"content-body"}>
+                <Row className={"justify-content-center"}>
+
+                    <h2 className={"primary-text"}> Recent Posts </h2>
+
+
+                    <Col xs={6}>
+                        <Container className={"rounded-card"}>
+                            <Col>
+                                <Row class={"justify-content-space-between"}>
+                                    <Col>
+                                        <strong> All Categories </strong>
+                                    </Col>
+                                    <Col>
+                                        {username}
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Container>
+                    </Col>
+                </Row>
+            </Container>
+
 
         </div>
     );

@@ -48,8 +48,19 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getPostId(@PathVariable Integer id,@RequestHeader (name="Authorization") String token) {
+    public ResponseEntity<Post> getPostId(@PathVariable Integer id, @RequestHeader (name="Authorization") String token) {
         Post post = postService.getPostById(id);
         return ResponseEntity.ok(post);
+    }
+
+    //For getting all posts by a User's username
+    //e.g., in Postman -> http://localhost:8080/post/all-user-posts/jess
+    @GetMapping("/all-user-posts/{username}")
+    public ResponseEntity<List<Post>> getAllUsersPosts(@PathVariable String username, @RequestHeader (name="Authorization") String token) {
+        System.out.println("Getting all the User's Posts by their USERNAME.");
+
+        List<Post> postList = postService.getPostsOfUser(username);
+        System.out.println("No. of Post items: " + postList.size());
+        return ResponseEntity.ok(postList);
     }
 }
