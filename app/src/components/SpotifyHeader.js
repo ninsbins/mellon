@@ -44,7 +44,7 @@ function SpotifyHeader() {
                         borderBottomLeftRadius: "20px"}}
                     //onClick={connectToSpotify}
                     >
-                    Share this Album!
+                    Share to Feed!
 
                 </Button>
 

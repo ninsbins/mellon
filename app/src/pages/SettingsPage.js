@@ -7,6 +7,7 @@ import React, {useEffect, useState} from "react";
 import authService from "../services/authService";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
+import Player from "../components/Player";
 
 
 const SettingsPage = () => {

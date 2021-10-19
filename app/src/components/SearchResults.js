@@ -20,7 +20,6 @@ const SearchResults = () => {
         // console.log(arr);
         let data = JSON.parse(JSON.stringify(arr)).arr;
         // console.log(data.arr);
-
         switch(searchFilter) {
             //type prop will help the item card know which page to redirect to
             case "0":
@@ -39,7 +38,10 @@ const SearchResults = () => {
                 return (
                     <ItemCard
                         type={"1"}
-                        d={arr}
+                        d={data}
+                        id={data.id}
+                        title={data.name}
+                        image={data.images[0].url}
                     />
                 );
             case "2":

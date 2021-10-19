@@ -11,6 +11,7 @@ import com.wrapper.spotify.requests.authorization.authorization_code.Authorizati
 import com.wrapper.spotify.requests.data.albums.GetAlbumsTracksRequest;
 import com.wrapper.spotify.requests.data.browse.GetRecommendationsRequest;
 import com.wrapper.spotify.requests.data.personalization.simplified.GetUsersTopArtistsRequest;
+import com.wrapper.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
 import com.wrapper.spotify.requests.data.search.SearchItemRequest;
 import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 import org.apache.hc.core5.http.ParseException;
@@ -172,6 +173,28 @@ public class SpotifyController {
         return trackSimplifiedPaging;
 
     }
+
+    @GetMapping("/get-playlist-tracks")
+    public Paging<PlaylistTrack> getPlaylistTracks(@RequestParam("spotifyToken") String spotifyToken, @RequestParam("playlistID") String playlistID) {
+        String accessToken = spotifyToken;
+        String playlistId = playlistID;
+        final SpotifyApi spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
+
+        final GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(playlistId).build();
+
+        Paging<PlaylistTrack> playlistTrackPaging = null;
+
+        try {
+            playlistTrackPaging = getPlaylistsItemsRequest.execute();
+
+            System.out.println("Total: " + playlistTrackPaging.getTotal());
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return playlistTrackPaging;
+    }
+
 
     @GetMapping("/get-current-user-image")
     public Object getCurrentUser(@RequestParam("spotifyToken") String spotifyToken) {
