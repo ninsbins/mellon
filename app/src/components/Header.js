@@ -69,7 +69,13 @@ const Header = (props) => {
     const musicSearch = async (input) => {
         if (input) {
             axiosConfig
-                .get(`/spotify/search?item=${input}`, {headers: authHeader()})
+                .get(`/spotify/search`, {
+                    params : {
+                        searchTerm: input,
+                        searchType: "album,track",
+                        spotifyToken: localStorage.getItem("spotifyToken")
+                    }
+                })
                 .then((res) => {
                     if (res.status === 200) {
                         console.log(res.data.albums.items);

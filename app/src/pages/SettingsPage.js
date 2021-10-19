@@ -12,8 +12,9 @@ import axios from "axios";
 const SettingsPage = () => {
     let history = useHistory();
 
-    const [spotifyToken, setSpotifyToken] = useState(null);
     const [userID, setUserID] = useState("");
+    const [connectedToSpotify, setConnectedToSpotify] = useState(false);
+
 
     useEffect(() => {
         const jsObject = authService.getCurrentUser();
@@ -21,6 +22,17 @@ const SettingsPage = () => {
         //console.log("ID of current logged in User: " + jsObject.id);
         setUserID(jsObject.id);
         console.log("Double checking User's ID: " + userID);
+        if(localStorage.getItem("spotifyToken")) {
+            setConnectedToSpotify(true);
+            const url = window.location.href;
+
+            if((url.split("=")).length > 1) {
+                const token = url.split("=").pop();
+                localStorage.setItem("spotifyToken", token);
+                console.log(localStorage.getItem("spotifyToken"));
+            }
+
+        }
     })
 
     function changePassword() {
@@ -34,28 +46,16 @@ const SettingsPage = () => {
         history.push("/update-user/" + userID);
     }
 
-    const setToken = async () => {
-        axiosConfig
-            .get(`/spotify/get-token`)
-            .then(response => {
-                console.log(response.data);
-                setSpotifyToken(response.data);
-
-            })
-    }
-
 
     const connectToSpotify = async () => {
         //do something
-        axiosConfig
+        await axiosConfig
             .get(`/spotify/login`)
             .then(response => {
                 console.log(response);
                 window.location.replace(response.data);
+                localStorage.setItem("spotifyToken", "temp");
             });
-
-        setToken();
-
     }
 
     const handleLogout = async () => {
@@ -129,7 +129,7 @@ const SettingsPage = () => {
                                         <h2 className={"primary-text"}>Account Connections
                                         </h2>
                                         <h2>
-                                            {spotifyToken ? (<Button
+                                            {!connectedToSpotify ? (<Button
                                                     variant="default"
                                                     style={{
                                                         marginTop: "20px",

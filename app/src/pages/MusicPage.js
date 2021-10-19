@@ -112,7 +112,7 @@ const MusicPage = (props) => {
 
 
             <div>
-                <Player accessToken={accessToken} trackUri={playingTrack} />
+                <Player trackUri={playingTrack} />
             </div>
 
 

@@ -14,7 +14,11 @@ function SpotifyHeader() {
     useEffect(async () => {
 
         await axiosConfig
-            .get(`/spotify/get-current-user-image`)
+            .get(`/spotify/get-current-user-image`, {
+                params : {
+                    spotifyToken: localStorage.getItem("spotifyToken")
+                }
+            })
             .then(response => {
                 if(response.status === 200) {
                     console.log(response.data[1]);
