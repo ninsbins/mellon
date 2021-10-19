@@ -1,28 +1,45 @@
 import React, {useEffect, useState} from "react";
-import {Button, Col, Container, Dropdown, FormControl, Image, Row} from "react-bootstrap";
+import {Button, Col, Container, Dropdown, DropdownButton, FormControl, Image, Row} from "react-bootstrap";
 import {InputGroup} from "reactstrap";
 import {Link} from "react-router-dom";
 
 import "../styles/Post.css"
+import axiosConfig from "../services/axiosConfig";
 
 
 const Post = (props) => {
-    const [comment, setComment] = useState("");
 
-    const postComment = async () => {
-        setComment("");
-    }
+    const [comments, setComments] = useState(null);
 
     const convertDate = (date) => {
-        const format = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+        const format = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric'
+        };
         return new Date(date).toLocaleString("en-US", format);
     }
 
     const handleSelect = async (eventKey) => {
         console.log(eventKey);
-    //    handle delete post
+        //    handle delete post
 
     }
+
+    useEffect(async () => {
+        // console.log(props);
+        await axiosConfig.get(`/post/${props.id}/comments`)
+            .then((res) => {
+                // console.log(res.data);
+                setComments(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, []);
 
     //component to display on news feed
     return (
@@ -48,24 +65,23 @@ const Post = (props) => {
                     </Row>
 
                 </Col>
-                <Col className={"flex"}> </Col>
-                <Col>
-                    <Dropdown onSelect={handleSelect}>
-                        <Dropdown.Toggle>
-                            {/*<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"*/}
-                            {/*     className="bi bi-three-dots" viewBox="0 0 16 16">*/}
-                            {/*    <path*/}
-                            {/*        d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>*/}
-                            {/*</svg>*/}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item>
-                                {/*check if the post belongs to the user*/}
-                                Delete
-                            </Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Col>
+                {/*<Col sm={{span: 1, offset: 1}} style={{marginRight: "10px"}}>*/}
+                {/*    <Dropdown onSelect={handleSelect}>*/}
+                {/*        <Dropdown.Toggle variant="secondary">*/}
+                {/*            /!*<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"*!/*/}
+                {/*            /!*     className="bi bi-three-dots" viewBox="0 0 16 16">*!/*/}
+                {/*            /!*    <path*!/*/}
+                {/*            /!*        d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>*!/*/}
+                {/*            /!*</svg>*!/*/}
+                {/*        </Dropdown.Toggle>*/}
+                {/*        <Dropdown.Menu>*/}
+                {/*            <Dropdown.Item>*/}
+                {/*                /!*check if the post belongs to the user*!/*/}
+                {/*                Delete*/}
+                {/*            </Dropdown.Item>*/}
+                {/*        </Dropdown.Menu>*/}
+                {/*    </Dropdown>*/}
+                {/*</Col>*/}
             </Row>
 
             <h3><Link className={"secondary-text"} to={`/post/${props.id}`}>{props.title}</Link></h3>
@@ -73,16 +89,30 @@ const Post = (props) => {
             <Row className={"justify-content-center"}>
                 <Image height="400px" src={props.image}/>
             </Row>
-            <p style={{paddingTop: "15px", paddingBottom: "15px"}}>{props.content}</p>
-            <InputGroup>
-                <FormControl
-                    onChange={(e) => setComment(e.target.value)}
-                    value={comment}
-                    placeholder={"Write a comment..."}/>
-                <Button variant={"outline-secondary"} id={"comment-button"} onClick={postComment}>
-                    Comment
-                </Button>
-            </InputGroup>
+            <p style={{paddingTop: "15px"}}>{props.content}</p>
+            <Row style={{paddingLeft: "15px", paddingRight: "15px"}}>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                         style={{paddingRight: "5px"}}
+                         fill="currentColor"
+                         className="bi bi-chat-left-text" viewBox="0 0 16 16">
+                        <path
+                            d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        <path
+                            d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                    {comments ? (comments.length > 0 ? comments.length : "0") : "..."}
+                </div>
+            </Row>
+            {/*<InputGroup>*/}
+            {/*    <FormControl*/}
+            {/*        onChange={(e) => setComment(e.target.value)}*/}
+            {/*        value={comment}*/}
+            {/*        placeholder={"Write a comment..."}/>*/}
+            {/*    <Button variant={"outline-secondary"} id={"comment-button"} onClick={postComment}>*/}
+            {/*        Comment*/}
+            {/*    </Button>*/}
+            {/*</InputGroup>*/}
         </Container>
     );
 }

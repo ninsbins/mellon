@@ -84,12 +84,16 @@ const ProfilePage = () => {
         }
     }
 
+    const followUser = () => {
+
+    }
+
     const getUserInfo = async ({username}) => {
         try {
             console.log(username)
             const res = await axiosConfig.get(`/update/user?username=${username}`)
-            setUser(res);
-            console.log(res);
+            setUser(res.data);
+            console.log(res.data);
         } catch (e) {
             console.log(e);
         }
@@ -127,8 +131,12 @@ const ProfilePage = () => {
                                     <div className={"profile-pic"}
                                          style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
                                     />
-                                    <h2 className={"primary-text"}>{profileUsername}</h2>
-
+                                    <Col>
+                                        <h2 className={"primary-text"}>
+                                            {user.firstName ? (user.lastName ? (user.firstName + " " + user.lastName) : user.firstName) : ""}
+                                        </h2>
+                                        <h2 className={"primary-text"}>@{profileUsername}</h2>
+                                    </Col>
                                 </Row>
                             </Col>
                             <Col sm={2}>
@@ -141,13 +149,21 @@ const ProfilePage = () => {
                                 {/*        </svg></Link>*/}
                                 {/*</Button>*/}
                                 <Button
-                                    variant="default"
                                     style={{
                                         background: "#1ed760",
                                         borderRadius: "20px",
+                                        margin: "5px",
                                     }}
                                     onClick={chatWithUser}>
                                     Message
+                                </Button>
+                                <Button
+                                    style={{
+                                        borderRadius: "20px",
+                                        margin: "5px",
+                                    }}
+                                    onClick={followUser}>
+                                    Follow
                                 </Button>
                             </Col>
                         </Row>)
