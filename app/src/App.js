@@ -13,6 +13,7 @@ import CreatePost from "./pages/CreatePost";
 import RecipePage from "./pages/RecipePage";
 import MoviePage from "./pages/MoviePage";
 import MusicPage from "./pages/MusicPage";
+import ChatPage from "./pages/ChatPage";
 import UpdateUserComponent from "./components/UpdateUserComponent";
 import UpdateUserPassword from "./components/UpdateUserPassword";
 import DisplayUserComponent from "./components/DisplayUserComponent";
@@ -38,7 +39,7 @@ class App extends Component {
                         <Route path={'/settings'}>
                             <SettingsPage/>
                         </Route>
-                        <Route path={'/profile'}>
+                        <Route path={'/profile/:id'}>
                             <ProfilePage/>
                         </Route>
                         <Route path={'/search'}>
@@ -63,12 +64,13 @@ class App extends Component {
                             <MusicPage/>
                         </Route>
 
+                        <Route path = "/chat">
+                            <ChatPage/>
+                        </Route>
+
                         {/* Testing User update for now */}
                         <Route path = "/update-user/:id" component= {UpdateUserComponent} ></Route>
                         <Route path = "/update-password/:id" component= {UpdateUserPassword} ></Route>
-
-                        {/* For displaying selected User in the Feed */}
-                        <Route path = "/profile-info/:username" component= {DisplayUserComponent} ></Route>
 
                         <Route path={'/'}>
                             <HomePage/>
