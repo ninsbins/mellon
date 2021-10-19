@@ -28,17 +28,19 @@ public class FollowController {
     FollowService followService;
 
     @PostMapping("/followuser")
-    public ResponseEntity<?> followUser(@RequestBody String toFollowUsername, @RequestHeader(name="Authorization") String token) throws Exception {
+    public ResponseEntity<?> followUser(@RequestParam("userToFollow") String userToFollow, @RequestHeader(name="Authorization") String token) throws Exception {
         String thisUsername=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
         User thisUser = userRepository.findByUsername(thisUsername).get();
-        User followUser = userRepository.findByUsername(toFollowUsername).get();
+        User followUser = userRepository.findByUsername(userToFollow).get();
+        System.out.println(thisUsername);
+        System.out.println(followUser);
 
         Follow savedFollow = followService.saveFollow(thisUser, followUser);
         return ResponseEntity.ok(savedFollow);
     }
 
     @GetMapping("/getfollowedby")
-    public List<User> getFollows(@RequestBody String username) throws Exception {
+    public List<User> getFollows(@RequestParam("username") String username) throws Exception {
         User thisUser = userRepository.findByUsername(username).get();
         List<Follow> followList = followService.getUserAsFollowed(thisUser);
         List<User> returnList = new ArrayList<User>();
@@ -51,7 +53,7 @@ public class FollowController {
     }
 
     @GetMapping("/getfollowing")
-    public List<User> getFollowing(@RequestBody String username) throws Exception {
+    public List<User> getFollowing(@RequestParam("username") String username) throws Exception {
         User thisUser = userRepository.findByUsername(username).get();
         List<Follow> followingList = followService.getUserAsFollower(thisUser);
         List<User> returnList = new ArrayList<User>();
@@ -62,6 +64,25 @@ public class FollowController {
         }
         return returnList;
     }
+
+    @GetMapping("/isfollowinguser")
+    public boolean isFollowUser(@RequestParam("isFollowingUser") String isFollowingUser, @RequestHeader(name="Authorization") String token) throws Exception {
+        String thisUsername=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+        User thisUser = userRepository.findByUsername(thisUsername).get();
+        User otherUser = userRepository.findByUsername(isFollowingUser).get();
+
+        if (followService.isFollowingUser(thisUser, otherUser)) {
+            System.out.println("is following");
+            return true;
+        } else {
+            System.out.println("is not following");
+            return false;
+        }
+
+
+    }
+
+
 
 
 
