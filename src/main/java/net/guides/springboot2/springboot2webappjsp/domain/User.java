@@ -36,6 +36,7 @@ public class User {
 	private String lastName;
 	private String bio;
 	private String spotifyToken;
+	private String image;
 
 	@OneToMany(mappedBy = "user")
 	private Set<Post> posts;
@@ -119,5 +120,13 @@ public class User {
 
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }
