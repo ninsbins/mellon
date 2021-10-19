@@ -14,12 +14,9 @@ import "../styles/Home.css"
 
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import SearchResults from "./SearchResults";
 import axiosConfig from "../services/axiosConfig";
 import authHeader from '../services/authHeader';
 import authService from "../services/authService";
-import HomePage from "../pages/HomePage";
-import {Home} from "@material-ui/icons";
 
 const Header = (props) => {
     const [show, setShow] = useState(false);
@@ -261,7 +258,11 @@ const Header = (props) => {
                                         About
                                     </Link>
                                 </Nav.Link>
-
+                                <Nav.Link>
+                                    <Link to={"/chat"} className={"nav-links"}>
+                                        Messages
+                                    </Link>
+                                </Nav.Link>
                                 <Nav.Link>
                                     <Link to={"/settings"} className={"nav-links"}>
                                         Settings

@@ -18,5 +18,17 @@
 .comment-box {
     border-radius: 20px;
     background-color: #cce5ff;
-    padding: 5px;
+    padding: 10px;
+    display: inline-block;
+}
+
+.profile-pic-sm {
+    height: 40px;
+    width: 40px;
+    margin-left: 15px;
+    margin-right: 8px;
+    border: 1px solid purple;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
 }

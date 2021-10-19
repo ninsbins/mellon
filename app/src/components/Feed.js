@@ -30,8 +30,8 @@ const Feed = () => {
         //    pull all posts from backend
         axiosConfig.get(`/post/posts`)
             .then((res) => {
-                    // console.log(res)
-                    setPosts(res.data)
+                    // console.log(res.data);
+                    setPosts(res.data);
                 }
             ).catch((err) => {
             console.log(err)
