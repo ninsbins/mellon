@@ -4,12 +4,14 @@ import PostCard from "../components/PostCard";
 import React, {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
 import authService from "../services/authService";
-import {Link, useParams} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 
+import "../styles/Profile.css"
 
 const ProfilePage = () => {
 
     const {id} = useParams();
+    let history = useHistory();
 
     const [posts, setPosts] = useState(null);
     const [musicPosts, setMusicPosts] = useState(null);
@@ -21,15 +23,16 @@ const ProfilePage = () => {
     const [user, setUser] = useState(null);
 
 
-    useEffect(() => {
-        const url = window.location.pathname; //get the path(minus domain name)
-        //console.log(url);
-        const username = url.split("/").pop();
+    useEffect(async () => {
+        // const url = window.location.pathname; //get the path(minus domain name)
+        // //console.log(url);
+        // const username = url.split("/").pop();
+        const username = id;
         const thisUsername = authService.getCurrentUser().username;
         setProfileUsername(username);
         setThisUsername(thisUsername);
 
-        axiosConfig.get(`/post/myposts?username=${username}`)
+        await axiosConfig.get(`/post/myposts?username=${username}`)
             .then((res) => {
                 // console.log(res);
                 setPosts(res.data);
@@ -69,7 +72,7 @@ const ProfilePage = () => {
 
         getUserInfo({username});
 
-    }, []);
+    }, [id]);
 
     const chatWithUser = () => {
         try {
@@ -92,34 +95,43 @@ const ProfilePage = () => {
         }
     }
 
+    const goToSettings = () => {
+        history.push({
+            pathname: `/settings`,
+        })
+    }
+
     return (
         <div>
             <Header/>
             <Container fluid className={"content-body"}>
-                <div className={"profile-header"}>
+                <Container fluid className={"profile-header"}>
                     {
                         profileUsername === thisUsername ? (<Row>
-                            <Col sm={3}>
-                                <h2 className={"primary-text"}>Your profile</h2>
+                            <Col sm={10}>
+                                <Row className={"justify-content-start"} style={{paddingLeft: "40px"}}>
+                                    <div className={"profile-pic"}
+                                         style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
+                                    />
+                                    <h2 className={"primary-text"}>Your profile</h2>
+                                </Row>
                             </Col>
-                            <Col sm={9}>
-                                {/*<Button variant={"outline-primary"}>*/}
-                                {/*    <Link to={"/settings"}>*/}
-                                {/*        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"*/}
-                                {/*             className="bi bi-gear-fill" viewBox="0 0 16 16">*/}
-                                {/*            <path*/}
-                                {/*                d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>*/}
-                                {/*        </svg></Link>*/}
-                                {/*</Button>*/}
-                                <Link className={"secondary-text"} to={`/settings`}>
+                            <Col sm={2}>
+                                <Button onClick={goToSettings}>
                                     Edit Profile
-                                </Link>
+                                </Button>
                             </Col>
                         </Row>) : (<Row>
-                            <Col sm={3}>
-                                <h2 className={"primary-text"}>{profileUsername} profile</h2>
+                            <Col sm={10}>
+                                <Row>
+                                    <div className={"profile-pic"}
+                                         style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
+                                    />
+                                    <h2 className={"primary-text"}>{profileUsername}</h2>
+
+                                </Row>
                             </Col>
-                            <Col sm={9}>
+                            <Col sm={2}>
                                 {/*<Button variant={"outline-primary"}>*/}
                                 {/*    <Link to={"/settings"}>*/}
                                 {/*        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"*/}
@@ -131,35 +143,21 @@ const ProfilePage = () => {
                                 <Button
                                     variant="default"
                                     style={{
-                                        marginTop: "20px",
                                         background: "#1ed760",
                                         borderRadius: "20px",
                                     }}
                                     onClick={chatWithUser}>
-                                    Chat with {profileUsername}!
+                                    Message
                                 </Button>
                             </Col>
                         </Row>)
                     }
-                </div>
+                </Container>
                 <div>
                     <Tab.Container defaultActiveKey={"recent"}>
                         <Row className={"justify-content-center"}>
                             <Col className={"justify-content-end"}>
                                 <Nav variant={"pills"} className={"flex-column"}>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey={"profile"}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 style={{marginRight: "15px"}}
-                                                 fill="currentColor" className="bi bi-clock" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
-                                                <path
-                                                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
-                                            </svg>
-                                            Profile
-                                        </Nav.Link>
-                                    </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link eventKey={"recent"}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -232,39 +230,32 @@ const ProfilePage = () => {
                                     </Nav.Item>
                                 </Nav>
                             </Col>
-                            <Col sm={9}>
+                            <Col sm={10}>
                                 <Container fluid className={"rounded-card"}>
                                     <Tab.Content style={{padding: "15px"}}>
-                                        <Tab.Pane eventKey={"profile"}>
-                                            {/*map card grid*/}
-                                            <h3 className={"secondary-text"}>Profile</h3>
-                                            <Link className={"secondary-text"} to={`/settings`}>
-                                                Edit Profile Settings
-                                            </Link>
-                                        </Tab.Pane>
                                         <Tab.Pane eventKey={"recent"}>
-                                                {/*map card grid*/}
-                                                <h3 className={"secondary-text"}>Recent</h3>
+                                            {/*map card grid*/}
+                                            <h3 className={"secondary-text"}>Recent</h3>
 
-                                                {posts ?
-                                                    <Row xs={2} sm={3} md={4} className="grid">
-                                                        {(posts.slice(0, 4).map((post) => (
-                                                            <Col>
-                                                                <PostCard
-                                                                    title={post.itemTitle}
-                                                                    image={post.imageUrl}
-                                                                    id={post.id}
-                                                                />
+                                            {posts ?
+                                                <Row xs={2} sm={3} md={4} className="grid">
+                                                    {(posts.slice(0, 4).map((post) => (
+                                                        <Col>
+                                                            <PostCard
+                                                                title={post.itemTitle}
+                                                                image={post.imageUrl}
+                                                                id={post.id}
+                                                            />
 
-                                                            </Col>
-                                                        )))}
-                                                    </Row>
-                                                    : (
-                                                        <Row className={"justify-content-center"}>You have no posts
-                                                            yet.
-                                                            Start exploring, and make posts to see them here!</Row>
-                                                    )
-                                                }
+                                                        </Col>
+                                                    )))}
+                                                </Row>
+                                                : (
+                                                    <Row className={"justify-content-center"}>You have no posts
+                                                        yet.
+                                                        Start exploring, and make posts to see them here!</Row>
+                                                )
+                                            }
                                         </Tab.Pane>
                                         <Tab.Pane eventKey={"music"}>
                                             {/*map card grid*/}
