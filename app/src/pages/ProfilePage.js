@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import {Button, Col, Container, Image, Nav, Row, Tab} from "react-bootstrap";
+import {Button, Col, Container, Image, Modal, Nav, Row, Tab} from "react-bootstrap";
 import PostCard from "../components/PostCard";
 import React, {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
@@ -13,27 +13,51 @@ const ProfilePage = () => {
     const {id} = useParams();
     let history = useHistory();
 
+    //current profile variables
     const [posts, setPosts] = useState(null);
     const [musicPosts, setMusicPosts] = useState(null);
     const [playlistPosts, setPlaylistPosts] = useState(null);
     const [moviePosts, setMoviePosts] = useState(null);
     const [recipePosts, setRecipePosts] = useState(null);
     const [profileUsername, setProfileUsername] = useState('');
-    const [thisUsername, setThisUsername] = useState('');
     const [user, setUser] = useState(null);
+
+    //user variables
+    const [thisUsername, setThisUsername] = useState('');
+
+    //modal modal variables
+    const [show, setShow] = useState(false);
+    const [showing, setShowing] = useState(null);
+
+    //following
+    const [followingList, setFollowingList] = useState(null);
+    const [followerList, setFollowerList] = useState(null);
+
 
     useEffect(async () => {
         // const url = window.location.pathname; //get the path(minus domain name)
         // //console.log(url);
         // const username = url.split("/").pop();
+
+        //username of the current profile
         const username = id;
-        const thisUsername = authService.getCurrentUser().username;
         setProfileUsername(username);
+
+        //username of the current user
+        const thisUsername = authService.getCurrentUser().username;
         setThisUsername(thisUsername);
+
+        // reset all following and modal stuff
+        setShow(false);
+        setShowing(null);
+        setFollowerList(null);
+        setFollowingList(null);
+
+        await getUserInfo({username});
 
         await axiosConfig.get(`/post/myposts?username=${username}`)
             .then((res) => {
-                // console.log(res);
+                // console.log(res.data);
                 setPosts(res.data);
                 //console.log(posts);
 
@@ -43,17 +67,17 @@ const ProfilePage = () => {
                 const recipeList = [];
 
                 (res.data).map((post) => {
-                    switch (post.itemType) {
-                        case "Music":
+                    switch (post.itemType.toLowerCase()) {
+                        case "music":
                             musicList.push(post);
                             break;
-                        case "Playlist":
+                        case "playlist":
                             playlistList.push(post);
                             break;
-                        case "Movie":
+                        case "movie":
                             movieList.push(post);
                             break;
-                        case "Recipe":
+                        case "recipe":
                             recipeList.push(post);
                             break;
                     }
@@ -68,8 +92,30 @@ const ProfilePage = () => {
                 console.log(err);
             })
 
+        await axiosConfig.get(`/follow/following?username=${username}`)
+            .then((res) => {
+                console.log(res.data);
+                if (res.data) {
+                    setFollowingList(res.data)
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
 
-        getUserInfo({username});
+        await axiosConfig.get(`/follow/followers?username=${username}`)
+            .then((res) => {
+                console.log(res.data);
+                if (res.data) {
+                    setFollowerList(res.data);
+
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        // console.log(user);
 
     }, [id]);
 
@@ -83,19 +129,16 @@ const ProfilePage = () => {
         }
     }
 
-    const followUser = () => {
-
-    }
-
     const getUserInfo = async ({username}) => {
-        try {
-            console.log(username)
-            const res = await axiosConfig.get(`/update/user?username=${username}`)
-            setUser(res.data);
-            console.log(res.data);
-        } catch (e) {
-            console.log(e);
-        }
+
+        await axiosConfig.get(`/update/user?username=${username}`)
+            .then((res) => {
+                // console.log(res);
+                setUser(res.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+
     }
 
     const goToSettings = () => {
@@ -103,6 +146,53 @@ const ProfilePage = () => {
             pathname: `/settings`,
         })
     }
+
+
+    const followUser = async () => {
+        console.log(user.username);
+        await axiosConfig.post(`/follow/followuser?userToFollow=${user.username}`)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    const getFollowing = async () => {
+        setShowing('following');
+        setShow(true);
+
+        await axiosConfig.get(`/follow/following?username=${user.username}`)
+            .then((res) => {
+                console.log(res.data);
+                if (res.data) {
+                    setFollowingList(res.data)
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    const getFollowers = async () => {
+        setShowing('followers');
+        setShow(true);
+
+        await axiosConfig.get(`/follow/followers?username=${user.username}`)
+            .then((res) => {
+                console.log(res.data);
+                if (res.data) {
+                    setFollowerList(res.data);
+
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    let handleClose = () => setShow(false);
 
     return (
         <div>
@@ -116,7 +206,18 @@ const ProfilePage = () => {
                                     <div className={"profile-pic"}
                                          style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
                                     />
-                                    <h2 className={"primary-text"}>Your profile</h2>
+                                    <Col>
+                                        <h2 className={"primary-text"}>Your profile</h2>
+
+                                        <Row>
+                                            <div onClick={getFollowing} style={{textDecoration: "underline", padding: "25px 15px"}}>
+                                                {followingList ? followingList.length : ""} Following
+                                            </div>
+                                            <div onClick={getFollowers} style={{textDecoration: "underline", padding: "20px 10px"}}>
+                                                {followerList ? followerList.length : ""} Followers
+                                            </div>
+                                        </Row>
+                                    </Col>
                                 </Row>
                             </Col>
                             <Col sm={2}>
@@ -132,9 +233,20 @@ const ProfilePage = () => {
                                     />
                                     <Col>
                                         <h2 className={"primary-text"}>
-                                            {user.firstName ? (user.lastName ? (user.firstName + " " + user.lastName) : user.firstName) : ""}
+                                            {/*{(user.firstName) ?*/}
+                                            {/*    (user.lastName ? (user.firstName + " " + user.lastName)*/}
+                                            {/*        : user.firstName)*/}
+                                            {/*    : ""}*/}
                                         </h2>
                                         <h2 className={"primary-text"}>@{profileUsername}</h2>
+                                        <Row>
+                                            <div onClick={getFollowing} style={{textDecoration: "underline", padding: "25px 15px"}}>
+                                                {followingList ? followingList.length : ""} Following
+                                            </div>
+                                            <div onClick={getFollowers} style={{textDecoration: "underline", padding: "25px 15px"}}>
+                                                {followerList ? followerList.length : ""} Followers
+                                            </div>
+                                        </Row>
                                     </Col>
                                 </Row>
                             </Col>
@@ -194,7 +306,7 @@ const ProfilePage = () => {
                                                  viewBox="0 0 16 16">
                                                 <path
                                                     d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13c0-1.104 1.12-2 2.5-2s2.5.896 2.5 2zm9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2z"/>
-                                                <path fill-rule="evenodd" d="M14 11V2h1v9h-1zM6 3v10H5V3h1z"/>
+                                                <path d="M14 11V2h1v9h-1zM6 3v10H5V3h1z"/>
                                                 <path
                                                     d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4V2.905z"/>
                                             </svg>
@@ -209,10 +321,10 @@ const ProfilePage = () => {
                                                  viewBox="0 0 16 16">
                                                 <path
                                                     d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2z"/>
-                                                <path fill-rule="evenodd" d="M12 3v10h-1V3h1z"/>
+                                                <path d="M12 3v10h-1V3h1z"/>
                                                 <path
                                                     d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1V2.82z"/>
-                                                <path fill-rule="evenodd"
+                                                <path
                                                       d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
                                             </svg>
                                             Playlists
@@ -265,10 +377,13 @@ const ProfilePage = () => {
                                                         </Col>
                                                     )))}
                                                 </Row>
-                                                : (
-                                                    <Row className={"justify-content-center"}>You have no posts
-                                                        yet.
-                                                        Start exploring, and make posts to see them here!</Row>
+                                                : (profileUsername === thisUsername ?
+                                                        <Row className={"justify-content-center"}>You have no posts yet.
+                                                            Start exploring, and make posts to see them here!</Row> :
+                                                        <Row
+                                                            className={"justify-content-center"}>{profileUsername} has
+                                                            no posts yet.}</Row>
+                                                    // <div></div>
                                                 )
                                             }
                                         </Tab.Pane>
@@ -289,9 +404,12 @@ const ProfilePage = () => {
                                                         ))
                                                     )}
                                                 </Row>
-                                                : (
-                                                    <Row className={"justify-content-center"}>You have no music
-                                                        posts.</Row>
+                                                : (profileUsername === thisUsername ?
+                                                        <Row className={"justify-content-center"}>You have no music
+                                                            posts yet.
+                                                            Start exploring, and make posts to see them here!</Row> :
+                                                        <Row className={"justify-content-center"}>{profileUsername} has
+                                                            no music posts yet.</Row>
                                                 )
                                             }
                                         </Tab.Pane>
@@ -312,10 +430,13 @@ const ProfilePage = () => {
                                                         ))
                                                     )}
                                                 </Row>
-                                                : (
-                                                    <Row className={"justify-content-center"}>You have no playlist
-                                                        posts.</Row>
-
+                                                : (profileUsername === thisUsername ?
+                                                        <Row className={"justify-content-center"}>You have no playlist
+                                                            posts yet.
+                                                            Start exploring, and make posts to see them here!</Row> :
+                                                        <Row
+                                                            className={"justify-content-center"}>{profileUsername} has
+                                                            no playlist posts yet.</Row>
                                                 )
                                             }
                                         </Tab.Pane>
@@ -334,9 +455,13 @@ const ProfilePage = () => {
                                                         </Col>
                                                     )))}
                                                 </Row>)
-                                                : (
-                                                    <Row className={"justify-content-center"}>You have no movie
-                                                        posts.</Row>
+                                                : (profileUsername === thisUsername ?
+                                                        <Row className={"justify-content-center"}>You have no movie
+                                                            posts yet.
+                                                            Start exploring, and make posts to see them here!</Row> :
+                                                        <Row
+                                                            className={"justify-content-center"}>{profileUsername} has
+                                                            no movie posts yet.</Row>
                                                 )
                                             }
                                         </Tab.Pane>
@@ -354,9 +479,12 @@ const ProfilePage = () => {
                                                             />
                                                         </Col>
                                                     )))}
-                                                </Row> : (
-                                                    <Row className={"justify-content-center"}>You have no recipe
-                                                        posts.</Row>
+                                                </Row> : (profileUsername === thisUsername ?
+                                                        <Row className={"justify-content-center"}>You have no recipe
+                                                            posts yet.
+                                                            Start exploring, and make posts to see them here!</Row> :
+                                                        <Row className={"justify-content-center"}>{profileUsername} has
+                                                            no recipe posts yet.</Row>
                                                 )
                                             }
                                         </Tab.Pane>
@@ -368,6 +496,54 @@ const ProfilePage = () => {
                 </div>
             </Container>
 
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Body>
+                    {showing === 'followers' ? (
+                            <div>
+                                <Row className={"justify-content-center"}>
+                                    <h2 className={"primary-text"}>Followers</h2>
+                                </Row>
+                                {followerList && followerList.length > 0 ?
+                                    (followerList.map((follower) => {
+                                        return <Row style={{margin: "10px"}}>
+                                            <Link to={`/profile/${follower.username}`}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                     style={{marginRight: "15px"}} fill="currentColor"
+                                                     className="bi bi-person-circle" viewBox="0 0 16 16">
+                                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                    <path fill-rule="evenodd"
+                                                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                                </svg>
+                                                {follower.username}</Link>
+                                        </Row>
+                                    }))
+                                    : (<p>{profileUsername} doesn't have any followers</p>)}
+                            </div>) :
+                        (<div>
+                            <Row className={"justify-content-center"}>
+                                <h2 className={"primary-text"}>Following</h2>
+                            </Row>
+                            {followingList && followingList.length > 0 ?
+                                (followingList.map((following) => {
+                                    return <Row style={{margin: "10px"}}>
+                                        <Link to={`/profile/${following.username}`}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                 style={{marginRight: "15px"}} fill="currentColor"
+                                                 className="bi bi-person-circle" viewBox="0 0 16 16">
+                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                <path fill-rule="evenodd"
+                                                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                            </svg>
+                                            {following.username}</Link>
+                                    </Row>
+                                }))
+                                : (<p>{profileUsername} isn't following anyone</p>)}
+                        </div>)
+                    }
+
+
+                </Modal.Body>
+            </Modal>
         </div>
     );
 }

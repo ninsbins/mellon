@@ -7,15 +7,14 @@ import {
     Navbar,
     Row
 } from "react-bootstrap";
-import {Link, Route, Switch, useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 import "../styles/Header.css"
 import "../styles/Home.css"
 
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import axiosConfig from "../services/axiosConfig";
-import authHeader from '../services/authHeader';
 import authService from "../services/authService";
 
 const Header = (props) => {
@@ -77,16 +76,29 @@ const Header = (props) => {
                 .then((res) => {
                     if (res.status === 200) {
                         console.log(res);
-                        console.log(res.data.playlists.items);
-                        setSearchResults(res.data.playlists.items)
-                        history.push({
-                            pathname: `/search`,
-                            state: {
-                                searchTerm: searchTerm,
-                                searchFilter: searchFilter,
-                                searchResults: res.data.playlists.items
-                            }
-                        });
+
+                        if(res.data) {
+                            console.log(res.data.playlists.items);
+                            setSearchResults(res.data.playlists.items)
+                            history.push({
+                                pathname: `/search`,
+                                state: {
+                                    searchTerm: searchTerm,
+                                    searchFilter: searchFilter,
+                                    searchResults: res.data.playlists.items
+                                }
+                            });
+                        } else {
+                            history.push({
+                                pathname: `/search`,
+                                state: {
+                                    searchTerm: searchTerm,
+                                    searchFilter: searchFilter,
+                                    searchResults: null
+                                }
+                            });
+                        }
+
                     }
                 }).catch((err) => {
                 console.log(err)
@@ -109,16 +121,28 @@ const Header = (props) => {
                 .then((res) => {
                     if (res.status === 200) {
                         console.log(res);
-                        console.log(res.data.albums.items);
-                        setSearchResults(res.data.albums.items)
-                        history.push({
-                            pathname: `/search`,
-                            state: {
-                                searchTerm: searchTerm,
-                                searchFilter: searchFilter,
-                                searchResults: res.data.albums.items
-                            }
-                        });
+                        if (res.data) {
+                            console.log(res.data.albums.items);
+                            setSearchResults(res.data.albums.items)
+                            history.push({
+                                pathname: `/search`,
+                                state: {
+                                    searchTerm: searchTerm,
+                                    searchFilter: searchFilter,
+                                    searchResults: res.data.albums.items
+                                }
+                            });
+                        } else {
+                            history.push({
+                                pathname: `/search`,
+                                state: {
+                                    searchTerm: searchTerm,
+                                    searchFilter: searchFilter,
+                                    searchResults: null
+                                }
+                            });
+                        }
+
                     }
                 }).catch((err) => {
                 console.log(err)

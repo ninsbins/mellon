@@ -1,12 +1,10 @@
 package net.guides.springboot2.springboot2webappjsp.controllers;
 
 import net.guides.springboot2.springboot2webappjsp.domain.Follow;
-import net.guides.springboot2.springboot2webappjsp.domain.Post;
 import net.guides.springboot2.springboot2webappjsp.domain.User;
 import net.guides.springboot2.springboot2webappjsp.jwt.JwtUtils;
 import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
 import net.guides.springboot2.springboot2webappjsp.services.FollowService;
-import net.guides.springboot2.springboot2webappjsp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,19 +26,24 @@ public class FollowController {
     FollowService followService;
 
     @PostMapping("/followuser")
-    public ResponseEntity<?> followUser(@RequestBody String toFollowUsername, @RequestHeader(name="Authorization") String token) throws Exception {
+    public ResponseEntity<?> followUser(@RequestParam("userToFollow") String userToFollow, @RequestHeader(name="Authorization") String token) throws Exception {
         String thisUsername=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
         User thisUser = userRepository.findByUsername(thisUsername).get();
-        User followUser = userRepository.findByUsername(toFollowUsername).get();
+        User followUser = userRepository.findByUsername(userToFollow).get();
+        System.out.println(thisUsername);
+        System.out.println(followUser);
 
         Follow savedFollow = followService.saveFollow(thisUser, followUser);
         return ResponseEntity.ok(savedFollow);
     }
 
-    @GetMapping("/getfollowedby")
-    public List<User> getFollows(@RequestBody String username) throws Exception {
+    @GetMapping("/followers")
+    public List<User> getFollows(String username) throws Exception {
+        System.out.println("USERNAME: " + username);
+
         User thisUser = userRepository.findByUsername(username).get();
         List<Follow> followList = followService.getUserAsFollowed(thisUser);
+
         List<User> returnList = new ArrayList<User>();
         for (Follow item: followList) {
             User newUser = item.getFollower();
@@ -50,14 +53,18 @@ public class FollowController {
         return returnList;
     }
 
-    @GetMapping("/getfollowing")
-    public List<User> getFollowing(@RequestBody String username) throws Exception {
+    @GetMapping("/following")
+    public List<User> getFollowing(String username) throws Exception {
+        System.out.println("USERNAME: " + username);
+
         User thisUser = userRepository.findByUsername(username).get();
         List<Follow> followingList = followService.getUserAsFollower(thisUser);
         List<User> returnList = new ArrayList<User>();
 
         for (Follow item: followingList) {
             User newUser = item.getFollowed();
+            System.out.println(newUser);
+
             returnList.add(newUser);
         }
         return returnList;

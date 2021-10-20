@@ -17,7 +17,6 @@ import ChatPage from "./pages/ChatPage";
 import PlaylistPage from "./pages/PlaylistPage";
 import UpdateUserComponent from "./components/UpdateUserComponent";
 import UpdateUserPassword from "./components/UpdateUserPassword";
-import DisplayUserComponent from "./components/DisplayUserComponent";
 import SearchResults from "./components/SearchResults";
 
 class App extends Component {
@@ -74,8 +73,8 @@ class App extends Component {
                         </Route>
 
                         {/* Testing User update for now */}
-                        <Route path = "/update-user/:id" component= {UpdateUserComponent} ></Route>
-                        <Route path = "/update-password/:id" component= {UpdateUserPassword} ></Route>
+                        <Route path = "/update-user/:id" component= {UpdateUserComponent} />
+                        <Route path = "/update-password/:id" component= {UpdateUserPassword} />
 
                         <Route path={'/'}>
                             <HomePage/>
