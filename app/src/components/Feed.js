@@ -6,6 +6,16 @@ import axiosConfig from "../services/axiosConfig";
 const Feed = () => {
 
     const [posts, setPosts] = useState(null);
+    const [view, setView] = useState("feed");
+
+    const setFeedView = () => {
+        setView("feed")
+    }
+
+    const setFollowingView = () => {
+        setView("following")
+        console.log(view);
+    }
 
     let fake_posts = [{
         "id": 2,
@@ -28,14 +38,28 @@ const Feed = () => {
 
     useEffect(() => {
         //    pull all posts from backend
-        axiosConfig.get(`/post/posts`)
-            .then((res) => {
-                    // console.log(res)
-                    setPosts(res.data)
-                }
-            ).catch((err) => {
-            console.log(err)
-        })
+
+        if (view ==="feed") {
+            axiosConfig.get(`/post/posts`)
+                .then((res) => {
+                        // console.log(res)
+                        setPosts(res.data)
+                    }
+                ).catch((err) => {
+                console.log(err)
+            })
+        }
+
+        else if (view ==="following") {
+            axiosConfig.get(`/post/followingposts`)
+                .then((res) => {
+                        // console.log(res)
+                        setPosts(res.data)
+                    }
+                ).catch((err) => {
+                console.log(err)
+            })
+        }
     }, []);
 
     return (
@@ -43,7 +67,11 @@ const Feed = () => {
             <Row className={"justify-content-center"}>
                 <Col>
                     <Row className={"justify-content-end"}>
-                        <h2 className={"primary-text"}>Your Feed</h2>
+                        <h2 className={"primary-text"} onClick={setFeedView}>Feed</h2>
+                    </Row>
+
+                    <Row className={"justify-content-end"}>
+                        <h2 className={"primary-text"} onClick={setFollowingView}>Follow</h2>
                     </Row>
 
                 </Col>

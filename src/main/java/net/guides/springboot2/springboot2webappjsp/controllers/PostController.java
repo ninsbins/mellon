@@ -1,13 +1,17 @@
 package net.guides.springboot2.springboot2webappjsp.controllers;
 
+import net.guides.springboot2.springboot2webappjsp.domain.Follow;
 import net.guides.springboot2.springboot2webappjsp.domain.Post;
+import net.guides.springboot2.springboot2webappjsp.domain.User;
 import net.guides.springboot2.springboot2webappjsp.jwt.JwtUtils;
 import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
+import net.guides.springboot2.springboot2webappjsp.services.FollowService;
 import net.guides.springboot2.springboot2webappjsp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,6 +23,9 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private FollowService followService;
 
     @Autowired
     private JwtUtils jwtUtils;
@@ -45,6 +52,31 @@ public class PostController {
     public ResponseEntity<List<Post>> getAllPosts(){
         List<Post> postList = postService.getAllPost();
         return ResponseEntity.ok(postList);
+    }
+
+    @GetMapping("/followingposts")
+    public ResponseEntity<List<Post>> getFollowPosts(@RequestHeader (name="Authorization") String token) {
+        String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+        User thisUser = userRepository.findByUsername(username).get();
+
+        List<Follow> followingList = followService.getUserAsFollower(thisUser);
+        List<User> followUserList = new ArrayList<User>();
+
+        for (Follow item: followingList) {
+            User newUser = item.getFollowed();
+            followUserList.add(newUser);
+        }
+
+        List<Post> followingPost = new ArrayList<Post>();
+
+        for (User user: followUserList) {
+            List<Post> postList = postService.getPostsOfUser(user.getUsername());
+            followingPost.addAll(postList);
+        }
+
+        return ResponseEntity.ok(followingPost);
+
+
     }
 
     @GetMapping("/{id}")

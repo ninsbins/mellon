@@ -96,9 +96,6 @@ const ProfilePage = () => {
             setUsersFirstName(res.data.firstName);
             setUsersLastName(res.data.lastName);
             setUsersBio(res.data.bio);
-            //const [usersFirstName, setUsersFirstName] = useState("");
-            //const [usersLastName, setUsersLastName] = useState("");
-            //const [usersBio, setUsersBio] = useState("");
         } catch (e) {
             console.log(e);
         }
