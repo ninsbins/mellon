@@ -27,6 +27,11 @@ public class Springboot2WebappJspApplication {
 				registry.addMapping("/follow/followeruser").allowedOrigins("*");
 				registry.addMapping("/follow/getfollowedby").allowedOrigins("*");
 				registry.addMapping("/follow/getfollowing").allowedOrigins("*");
+
+				registry.addMapping("/user/upload").allowedOrigins("*");
+				registry.addMapping("/user/upload").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/user/getprofilepicture").allowedOrigins("*");
+				registry.addMapping("/user/getprofilepicture").allowedOrigins("http://localhost:3000");
 			}
 		};
 	}

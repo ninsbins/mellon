@@ -1,12 +1,14 @@
 package net.guides.springboot2.springboot2webappjsp.controllers;
 
 import net.guides.springboot2.springboot2webappjsp.domain.User;
+import net.guides.springboot2.springboot2webappjsp.domain.UserProfilePicture;
+import net.guides.springboot2.springboot2webappjsp.jwt.JwtUtils;
 import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
+import net.guides.springboot2.springboot2webappjsp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
@@ -17,6 +19,13 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(Map<String, String> payload) throws IOException {
@@ -66,5 +75,20 @@ public class UserController {
         userRepository.save(thisUser);
         return ResponseEntity.ok(thisUser);
     }
+
+    @PostMapping("/upload")
+    public UserProfilePicture uploadProfilePicture(@RequestParam("file") MultipartFile file, String username) throws Exception, IOException{
+        User user = userRepository.findByUsername(username).get();
+        return userService.store(file, user);
+
+    }
+
+   @GetMapping("/getprofilepicture")
+    public UserProfilePicture getProfilePicture(@RequestHeader (name="Authorization") String token) throws Exception {
+       String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+       User user = userRepository.findByUsername(username).get();
+
+       return userService.getByUser(user);
+   }
 
 }

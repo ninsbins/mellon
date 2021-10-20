@@ -5,8 +5,11 @@ import React, {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
 import authService from "../services/authService";
 import {Link, useHistory, useParams} from "react-router-dom";
+import { useRef } from "react";
+import ImageUploader from 'react-images-upload';
 
 import "../styles/Profile.css"
+import uploadFileService from "../services/uploadFileService";
 
 const ProfilePage = () => {
 
@@ -28,10 +31,15 @@ const ProfilePage = () => {
     //modal modal variables
     const [show, setShow] = useState(false);
     const [showing, setShowing] = useState(null);
+    const [profilepicture, setProfilePicture] = useState('');
 
     //following
     const [followingList, setFollowingList] = useState(null);
     const [followerList, setFollowerList] = useState(null);
+
+    //photo upload tings
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [picture, setPicture] = useState(null);
 
 
     useEffect(async () => {
@@ -52,6 +60,19 @@ const ProfilePage = () => {
         setShowing(null);
         setFollowerList(null);
         setFollowingList(null);
+
+        //profile picture upload
+        await axiosConfig
+            .get(`/user/getprofilepicture`)
+            .then((response) => {
+                console.log(response)
+                setPicture(response.data.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+
 
         await getUserInfo({username});
 
@@ -175,6 +196,30 @@ const ProfilePage = () => {
             });
     }
 
+    const updatePicture = () => {
+        console.log("updating profile picture");
+        setProfilePicture("true");
+        setShow(true);
+    }
+
+    const fileSelectedHandler = event => {
+        setSelectedFile(event.target.files[0]);
+        console.log(selectedFile)
+    }
+
+    const fileUploadHandler = async () => {
+        console.log(selectedFile)
+        let formData = new FormData();
+
+        formData.append("file", selectedFile);
+
+        await axiosConfig
+            .post(`/user/upload?username=${user.username}`, formData)
+            .then((response) => {
+                console.log(response);
+            })
+    }
+
     const getFollowers = async () => {
         setShowing('followers');
         setShow(true);
@@ -192,7 +237,10 @@ const ProfilePage = () => {
             });
     }
 
-    let handleClose = () => setShow(false);
+    let handleClose = () => {
+        setShow(false);
+        setProfilePicture("false");
+    }
 
     return (
         <div>
@@ -205,6 +253,7 @@ const ProfilePage = () => {
                                 <Row className={"justify-content-start"} style={{paddingLeft: "40px"}}>
                                     <div className={"profile-pic"}
                                          style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
+                                         onClick={updatePicture}
                                     />
                                     <Col>
                                         <h2 className={"primary-text"}>Your profile</h2>
@@ -230,6 +279,7 @@ const ProfilePage = () => {
                                 <Row>
                                     <div className={"profile-pic"}
                                          style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
+                                         onClick={updatePicture}
                                     />
                                     <Col>
                                         <h2 className={"primary-text"}>
@@ -498,52 +548,90 @@ const ProfilePage = () => {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Body>
-                    {showing === 'followers' ? (
-                            <div>
-                                <Row className={"justify-content-center"}>
-                                    <h2 className={"primary-text"}>Followers</h2>
-                                </Row>
-                                {followerList && followerList.length > 0 ?
-                                    (followerList.map((follower) => {
-                                        return <Row style={{margin: "10px"}}>
-                                            <Link to={`/profile/${follower.username}`}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                     style={{marginRight: "15px"}} fill="currentColor"
-                                                     className="bi bi-person-circle" viewBox="0 0 16 16">
-                                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                                    <path fill-rule="evenodd"
-                                                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                                </svg>
-                                                {follower.username}</Link>
-                                        </Row>
-                                    }))
-                                    : (<p>{profileUsername} doesn't have any followers</p>)}
-                            </div>) :
-                        (<div>
+                    {profilepicture === 'true' ? (
+                        <div className={"profile-header"}>
                             <Row className={"justify-content-center"}>
-                                <h2 className={"primary-text"}>Following</h2>
+                                <h2 className={"primary-text"}>Profile Picture</h2>
                             </Row>
-                            {followingList && followingList.length > 0 ?
-                                (followingList.map((following) => {
-                                    return <Row style={{margin: "10px"}}>
-                                        <Link to={`/profile/${following.username}`}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                 style={{marginRight: "15px"}} fill="currentColor"
-                                                 className="bi bi-person-circle" viewBox="0 0 16 16">
-                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                                <path fill-rule="evenodd"
-                                                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                            </svg>
-                                            {following.username}</Link>
+
+                            <div style={{display: 'flex', justifyContent: 'center', padding: '30px'}}>
+                                <div>
+                                    <div className={"profile-pic__large"}
+                                         style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
+                                         onClick={updatePicture}
+                                    />
+                                </div>
+                            </div>
+
+
+                            <div>
+                                {profileUsername === thisUsername ? (
+                                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                                        <div className="m-3">
+                                            <input type={"file"} name={"file"} onChange={fileSelectedHandler} />
+                                            <button onClick={fileUploadHandler}> Upload </button>
+                                        </div>
+                                    </div>
+
+                                ) : (
+                                    <div style={{display: 'flex', justifyContent: 'center'}}>
+
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ) : (
+                        <div>
+                            {showing === 'followers' ? (
+                                    <div>
+                                        <Row className={"justify-content-center"}>
+                                            <h2 className={"primary-text"}>Followers</h2>
+                                        </Row>
+                                        {followerList && followerList.length > 0 ?
+                                            (followerList.map((follower) => {
+                                                return <Row style={{margin: "10px"}}>
+                                                    <Link to={`/profile/${follower.username}`}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                             style={{marginRight: "15px"}} fill="currentColor"
+                                                             className="bi bi-person-circle" viewBox="0 0 16 16">
+                                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                            <path fill-rule="evenodd"
+                                                                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                                        </svg>
+                                                        {follower.username}</Link>
+                                                </Row>
+                                            }))
+                                            : (<p>{profileUsername} doesn't have any followers</p>)}
+                                    </div>) :
+                                (<div>
+                                    <Row className={"justify-content-center"}>
+                                        <h2 className={"primary-text"}>Following</h2>
                                     </Row>
-                                }))
-                                : (<p>{profileUsername} isn't following anyone</p>)}
-                        </div>)
-                    }
+                                    {followingList && followingList.length > 0 ?
+                                        (followingList.map((following) => {
+                                            return <Row style={{margin: "10px"}}>
+                                                <Link to={`/profile/${following.username}`}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                         style={{marginRight: "15px"}} fill="currentColor"
+                                                         className="bi bi-person-circle" viewBox="0 0 16 16">
+                                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                        <path fill-rule="evenodd"
+                                                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                                    </svg>
+                                                    {following.username}</Link>
+                                            </Row>
+                                        }))
+                                        : (<p>{profileUsername} isn't following anyone</p>)}
+                                </div>)
+                            }
+                        </div>
+                    )}
 
 
                 </Modal.Body>
             </Modal>
+
+
         </div>
     );
 }
