@@ -10,7 +10,6 @@ import {
 import {Link, useHistory} from "react-router-dom";
 
 import "../styles/Header.css"
-import "../styles/Home.css"
 
 import React, {useState} from "react";
 import axios from "axios";

@@ -1,101 +1,84 @@
-import {Col, Container, Image, Row} from "react-bootstrap";
+import {Button, Col, Container, Image, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import Post from "./Post";
 import axiosConfig from "../services/axiosConfig";
+import FeedStream from "./FeedStream";
 
 const Feed = () => {
 
     const [posts, setPosts] = useState(null);
-    const [view, setView] = useState("feed");
-
-    const setFeedView = () => {
-        setView("feed")
-    }
-
-    const setFollowingView = () => {
-        setView("following")
-        console.log(view);
-    }
-
-    let fake_posts = [{
-        "id": 2,
-        "content": 'team edward',
-        "created_date": '2021-10-11 11:00:00',
-        "image_url": 'test',
-        "item_type": 'movie',
-        "item_title": 'twilight',
-        "username": 'toast'
-    },
-        {
-            "id": 2,
-            "content": 'oodles noodles',
-            "created_date": '2021-10-11 11:00:00',
-            "image_url": 'test',
-            "item_type": 'recipe',
-            "item_title": 'noodle recipe',
-            "username": 'toast'
-        }];
+    const [feedView, setFeedView] = useState('feed');
 
     useEffect(() => {
         //    pull all posts from backend
 
-        if (view ==="feed") {
-            axiosConfig.get(`/post/posts`)
-                .then((res) => {
-                        // console.log(res)
-                        setPosts(res.data)
-                    }
-                ).catch((err) => {
-                console.log(err)
-            })
-        }
+        axiosConfig.get(`/post/posts`)
+            .then((res) => {
+                    // console.log(res)
+                    setPosts(res.data)
+                }
+            ).catch((err) => {
+            console.log(err)
+        })
 
-        else if (view ==="following") {
-            axiosConfig.get(`/post/followingposts`)
-                .then((res) => {
-                        // console.log(res)
-                        setPosts(res.data)
-                    }
-                ).catch((err) => {
-                console.log(err)
-            })
-        }
     }, []);
 
+
+    const getFeedPosts = () => {
+        setFeedView('feed');
+        axiosConfig.get(`/post/posts`)
+            .then((res) => {
+                    // console.log(res)
+                    setPosts(res.data)
+                }
+            ).catch((err) => {
+            console.log(err)
+        });
+    };
+
+    const getFollowingPosts = () => {
+        setFeedView('following');
+        axiosConfig.get(`/post/followingposts`)
+            .then((res) => {
+                    // console.log(res)
+                    setPosts(res.data)
+                }
+            ).catch((err) => {
+            console.log(err)
+        });
+    };
+
     return (
-        <Container fluid className={"content-body"}>
-            <Row className={"justify-content-center"}>
-                <Col>
-                    <Row className={"justify-content-end"}>
-                        <h2 className={"primary-text"} onClick={setFeedView}>Feed</h2>
-                    </Row>
+        <>
+            <Container fluid className={"content-body"}>
+                <Row className={"justify-content-center"}>
 
-                    <Row className={"justify-content-end"}>
-                        <h2 className={"primary-text"} onClick={setFollowingView}>Follow</h2>
-                    </Row>
+                    <Col>
+                        <Container style={{maxWidth: "300px", paddingBottom: "20px"}}>
+                            <Row className={"justify-content-between"}>
+                                {feedView === 'feed' ? (
+                                    <>
+                                        <a className={"primary-text"} style={{textDecoration: "underline"}}
+                                           onClick={getFeedPosts}>Feed</a>
+                                        <a className={"primary-text"} onClick={getFollowingPosts}>Following</a></>
+                                ) : (<>
+                                    <a className={"primary-text"} onClick={getFeedPosts}>Feed</a>
+                                    <a className={"primary-text"} style={{textDecoration: "underline"}}
+                                       onClick={getFollowingPosts}>Following</a>
+                                </>)}
+                            </Row>
+                        </Container>
+                        <Container fluid className={"feed-stream"}>
+                            {posts ? <FeedStream posts={posts}/> :
+                                <Row className={"justify-content-center"}>
+                                    <Image src={`https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif`}
+                                           width={40}/>
+                                </Row>}
+                        </Container>
+                    </Col>
+                </Row>
+            </Container>
+        </>
 
-                </Col>
-                <Col sm={5}>
-                    {posts != null ? posts.map((post) => (
-                        <Post
-                            id={post.id}
-                            date={post.createdDate}
-                            title={post.itemTitle}
-                            content={post.content}
-                            image={post.imageUrl}
-                            type={post.itemType}
-                            poster={post.user.username}
-                        />
-                    )) : <Row className={"justify-content-center"}>
-                        <Image src={`https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif`}
-                               width={40}/>
-                    </Row>}
-                </Col>
-                <Col/>
-
-            </Row>
-
-        </Container>
     )
 }
 

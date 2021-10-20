@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import {Button, Col, Container, FormControl, Image, Row} from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
 import {InputGroup} from "reactstrap";
 
@@ -11,8 +11,8 @@ function CommentBubble(props) {
     return (
         <Row style={{padding: "8px"}}>
             <Col xs={1}>
-                <div>
-                    <Link to={`/profile/${props.info.user.username}`}> <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                <Link to={`/profile/${props.info.user.username}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
                          height="30"
                          style={{marginRight: "15px"}} fill="currentColor"
                          className="bi bi-person-circle" viewBox="0 0 16 16">
@@ -20,15 +20,12 @@ function CommentBubble(props) {
                         <path fill-rule="evenodd"
                               d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                     </svg>
-                    </Link>
-                </div>
-                <div>
-                    <Link to={`/profile/${props.info.user.username}`}> {props.info.user.username} </Link>
-                </div>
+                    {props.info.user.username}
+                </Link>
             </Col>
             <Col>
                 <Container className={"comment-box"}>
-                        {props.info.content}
+                    {props.info.content}
                 </Container>
             </Col>
         </Row>
@@ -135,7 +132,7 @@ const PostPage = () => {
                                             <path fill-rule="evenodd"
                                                   d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                                         </svg>
-                                        {postInfo.user.username}
+                                        <Link className={"secondary-text"} to={`/profile/${postInfo.user.username}`}>{postInfo.user.username}</Link>
                                     </h2>
                                     <h3 className={"secondary-text"}>{postInfo.itemTitle}</h3>
 

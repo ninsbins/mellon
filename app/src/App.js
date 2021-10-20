@@ -18,6 +18,7 @@ import PlaylistPage from "./pages/PlaylistPage";
 import UpdateUserComponent from "./components/UpdateUserComponent";
 import UpdateUserPassword from "./components/UpdateUserPassword";
 import SearchResults from "./components/SearchResults";
+import BookPage from "./pages/BookPage";
 
 class App extends Component {
 
@@ -63,9 +64,11 @@ class App extends Component {
                         <Route path = "/item/music">
                             <MusicPage/>
                         </Route>
-
                         <Route path = "/item/playlist">
                             <PlaylistPage/>
+                        </Route>
+                        <Route path = "/item/book">
+                            <BookPage/>
                         </Route>
 
                         <Route path = "/chat">

@@ -55,6 +55,16 @@ const ItemCard = (props) => {
                     }
                 });
                 break;
+
+            case "4":
+                console.log('redirect to book page');
+                history.push({
+                    pathname: '/item/book',
+                    state: {
+                        data: props.d
+                    }
+                });
+                break;
         }
 
     }

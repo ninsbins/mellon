@@ -5,7 +5,6 @@ import React from "react";
 import { Navbar } from "react-bootstrap";
 
 import "../styles/Header.css"
-import "../styles/Home.css"
 
 export default function Player({trackUri }) {
     const [play, setPlay] = useState(false)

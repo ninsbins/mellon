@@ -20,7 +20,7 @@ const SearchResults = () => {
         // console.log(arr);
         let data = JSON.parse(JSON.stringify(arr)).arr;
         // console.log(data.arr);
-        switch(searchFilter) {
+        switch (searchFilter) {
             //type prop will help the item card know which page to redirect to
             case "0":
                 //music search
@@ -67,17 +67,15 @@ const SearchResults = () => {
 
             case "4":
                 //book search
-            const volume = data.volumeInfo;
-            console.log(volume.imageLinks);
-            /*if (volume.hasOwnProperty('thumbnail')) {
-                console.log(volume.thumbnail);
-            }*/
+                const volume = data.volumeInfo;
+                console.log(volume);
+
                 return (<ItemCard
                     type={"4"}
-                    d={data}
-                    id={data.id}
+                    d={volume}
+                    id={volume.id}
                     title={volume.title}
-                    image={"Test"}
+                    image={volume.imageLinks.thumbnail}
                 />);
             default:
                 //default catchall case

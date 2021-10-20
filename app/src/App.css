@@ -24,7 +24,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #471a66;
 }
 
 @keyframes App-logo-spin {
@@ -60,6 +60,10 @@ body {
   padding-bottom: 50px;
 }
 
+.feed-stream {
+  width: 100%;
+}
+
 .rounded-card {
   border-radius: 20px;
   background-color: white;
@@ -70,4 +74,13 @@ body {
   background-color: #efefef;
   height: 100vh;
   color: black;
+}
+
+a {
+  color: #471a66;
+}
+
+a:hover {
+  color: #471a66;
+  cursor: pointer;
 }

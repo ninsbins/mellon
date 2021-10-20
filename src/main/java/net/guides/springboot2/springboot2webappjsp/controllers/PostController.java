@@ -67,6 +67,10 @@ public class PostController {
             followUserList.add(newUser);
         }
 
+        followUserList.add(thisUser);
+
+        System.out.println(followUserList);
+
         List<Post> followingPost = new ArrayList<Post>();
 
         for (User user: followUserList) {
