@@ -70,6 +70,25 @@ public class FollowController {
         return returnList;
     }
 
+    @GetMapping("/isfollowinguser")
+    public boolean isFollowUser(@RequestParam("isFollowingUser") String isFollowingUser, @RequestHeader(name="Authorization") String token) throws Exception {
+        String thisUsername=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+        User thisUser = userRepository.findByUsername(thisUsername).get();
+        User otherUser = userRepository.findByUsername(isFollowingUser).get();
+
+        if (followService.isFollowingUser(thisUser, otherUser)) {
+            System.out.println("is following");
+            return true;
+        } else {
+            System.out.println("is not following");
+            return false;
+        }
+
+
+    }
+
+
+
 
 
 }

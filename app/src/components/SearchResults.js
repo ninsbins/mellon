@@ -63,7 +63,22 @@ const SearchResults = () => {
                     id={data.idMeal}
                     title={data.strMeal}
                     image={data.strMealThumb}
-                />)
+                />);
+
+            case "4":
+                //book search
+            const volume = data.volumeInfo;
+            console.log(volume.imageLinks);
+            /*if (volume.hasOwnProperty('thumbnail')) {
+                console.log(volume.thumbnail);
+            }*/
+                return (<ItemCard
+                    type={"4"}
+                    d={data}
+                    id={data.id}
+                    title={volume.title}
+                    image={"Test"}
+                />);
             default:
                 //default catchall case
                 return (<div/>)

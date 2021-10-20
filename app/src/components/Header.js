@@ -28,7 +28,7 @@ const Header = (props) => {
     let history = useHistory();
 
     //dictionary of content types in application
-    const contentTypes = ['Music', 'Playlists', 'Movies', 'Recipes'];
+    const contentTypes = ['Music', 'Playlists', 'Movies', 'Recipes', 'Book'];
 
     function userLoggedIn() {
         // console.log(authService.getCurrentUser());
@@ -56,6 +56,10 @@ const Header = (props) => {
             case "3":
                 // recipe search
                 await recipeSearch(term);
+                break;
+            case "4":
+                // book search
+                await bookSearch(term);
                 break;
         }
         setSearchTerm(null);
@@ -152,6 +156,28 @@ const Header = (props) => {
         }
     }
 
+    const bookSearch = async (input) => {
+        console.log("input = " + input);
+
+        if (input) {
+            await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${input}&key=AIzaSyBDB8LzZItJQaEn8s24GSsXLIvGHx2edoE`)
+                .then ((res) => {
+                    if (res.status === 200) {
+                        console.log(res);
+                        setSearchResults(res.data.items)
+
+                        history.push({
+                            pathname: `/search`,
+                            state: {
+                                searchTerm: searchTerm,
+                                searchFilter: searchFilter,
+                                searchResults: res.data.items
+                            }
+                        });
+                    }
+                }).catch(err => console.log(err));
+        }
+    }
     const movieSearch = async (input) => {
         console.log("input = " + input);
         if (input) {
