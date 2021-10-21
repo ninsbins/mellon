@@ -55,6 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers("/spotify/callback/**").permitAll()
                 .antMatchers("/spotify/callback/").permitAll()
+                .antMatchers("/user/setupuser").permitAll()
+                .antMatchers("/user/upload").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

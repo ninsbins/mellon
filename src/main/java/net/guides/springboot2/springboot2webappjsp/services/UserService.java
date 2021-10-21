@@ -7,6 +7,7 @@ import net.guides.springboot2.springboot2webappjsp.repositories.CommentRepositor
 import net.guides.springboot2.springboot2webappjsp.repositories.PostRepository;
 import net.guides.springboot2.springboot2webappjsp.repositories.ProfilePictureRepository;
 import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,17 +26,20 @@ public class UserService {
     public UserProfilePicture store(MultipartFile file, User user) throws Exception {
         String fileName = file.getOriginalFilename();
         String type = file.getContentType();
+        //byte[] image = Base64.encodeBase64(file.getBytes());
+        byte[] image = file.getBytes();
 
         if(!profilePictureRepository.existsByUser(user)) {
-            UserProfilePicture profilePicture = new UserProfilePicture(fileName, user, file.getBytes(), type);
+
+            UserProfilePicture profilePicture = new UserProfilePicture(fileName, user, image, type);
             return profilePictureRepository.save(profilePicture);
         }
 
         UserProfilePicture userProfilePicture = profilePictureRepository.findByUser(user);
-        userProfilePicture.setData(file.getBytes());
+        userProfilePicture.setData(image);
         userProfilePicture.setType(type);
 
-        return userProfilePicture;
+        return profilePictureRepository.save(userProfilePicture);
     }
 
     public UserProfilePicture getByUser(User user) {

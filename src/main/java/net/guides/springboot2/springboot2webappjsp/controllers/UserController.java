@@ -84,11 +84,77 @@ public class UserController {
     }
 
    @GetMapping("/getprofilepicture")
-    public UserProfilePicture getProfilePicture(@RequestHeader (name="Authorization") String token) throws Exception {
-       String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+    public UserProfilePicture getProfilePicture(@RequestParam("username") String username) throws Exception {
        User user = userRepository.findByUsername(username).get();
 
        return userService.getByUser(user);
    }
+
+   @GetMapping("/getuser")
+    public User getUserDetails(@RequestHeader (name="Authorization") String token) {
+       String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+       User thisUser = userRepository.findByUsername(username).get();
+       return thisUser;
+   }
+
+   @PostMapping("/setupuser")
+    public ResponseEntity<?> setUpUser(@RequestParam("username") String username, @RequestParam("name") String name, @RequestParam("bio") String bio) {
+        System.out.println("i love beans");
+       User thisUser = userRepository.findByUsername(username).get();
+       thisUser.setFirstName(name);
+       thisUser.setBio(bio);
+
+
+       return ResponseEntity.ok(userRepository.save(thisUser));
+   }
+
+
+    @PostMapping("/changeusername")
+    public User changeUsername(String newUsername, @RequestHeader (name="Authorization") String token) {
+        String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+        User thisUser = userRepository.findByUsername(username).get();
+
+        if(!userRepository.existsByUsername(newUsername)) {
+            thisUser.setUsername(newUsername);
+            return userRepository.save(thisUser);
+        }
+
+        return null;
+    }
+
+    @PostMapping("/changeemail")
+    public User changeEmail(String newEmail, @RequestHeader (name="Authorization") String token) {
+        String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+        User thisUser = userRepository.findByUsername(username).get();
+
+        if(!userRepository.existsByEmail(newEmail)) {
+            thisUser.setEmail(newEmail);
+            return userRepository.save(thisUser);
+        }
+
+        return null;
+    }
+
+    @PostMapping("/changename")
+    public User changeName(@RequestParam("newName") String newName, @RequestHeader (name="Authorization") String token) {
+        System.out.println(newName);
+        String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+        User thisUser = userRepository.findByUsername(username).get();
+
+        thisUser.setFirstName(newName);
+        return userRepository.save(thisUser);
+
+    }
+
+    @PostMapping("/changebio")
+    public User changeBio(@RequestParam("newBio") String newBio, @RequestHeader (name="Authorization") String token) {
+        String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+        User thisUser = userRepository.findByUsername(username).get();
+
+
+        thisUser.setBio(newBio);
+        return userRepository.save(thisUser);
+
+    }
 
 }

@@ -32,6 +32,15 @@ public class Springboot2WebappJspApplication {
 				registry.addMapping("/user/upload").allowedOrigins("http://localhost:3000");
 				registry.addMapping("/user/getprofilepicture").allowedOrigins("*");
 				registry.addMapping("/user/getprofilepicture").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/user/setupuser").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/user/changeusername").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/user/changeemail").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/user/changename").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/user/changepassword").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/user/changeusername").allowedOrigins("*");
+				registry.addMapping("/user/changeemail").allowedOrigins("*");
+				registry.addMapping("/user/changename").allowedOrigins("*");
+				registry.addMapping("/user/changepassword").allowedOrigins("*");
 			}
 		};
 	}

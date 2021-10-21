@@ -71,14 +71,16 @@ public class PostController {
 
         System.out.println(followUserList);
 
-        List<Post> followingPost = new ArrayList<Post>();
+        List<Post> postList = postService.getAllPost();
 
-        for (User user: followUserList) {
-            List<Post> postList = postService.getPostsOfUser(user.getUsername());
-            followingPost.addAll(postList);
+        List<Post> returnPostList = new ArrayList<Post>();
+
+        for (Post post : postList) {
+            if (followUserList.contains(post.getUser())) {
+                returnPostList.add(post);
+            }
         }
-
-        return ResponseEntity.ok(followingPost);
+        return ResponseEntity.ok(postList);
 
 
     }

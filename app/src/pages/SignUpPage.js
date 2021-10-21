@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import React, {useState} from "react";
 import authService from "../services/authService";
 
@@ -12,6 +12,9 @@ const SignUpPage = () => {
 
     const [validated, setValidated] = useState(false);
     const [errors, setErrors] = useState({});
+
+    let history = useHistory();
+
 
     /* const handleSubmit = () => {
          //    send user creation to database
@@ -80,11 +83,16 @@ const SignUpPage = () => {
                     response => {
                         console.log(response);
                         if (response.status==200) {
-                            authService.login(username, password)
-                                .then(() => {
-                                    //history.push("/profile")
-                                    window.location.replace(`http://localhost:3000/profile`);
-                                });
+                            console.log(response);
+                            history.push({
+                                pathname: `/setup`,
+                                state: {
+                                    username: username,
+                                    password: password,
+                                    email: email
+                                }
+                            });
+
                         }
                     },
                     error => {

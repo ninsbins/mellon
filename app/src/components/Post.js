@@ -10,6 +10,7 @@ import axiosConfig from "../services/axiosConfig";
 const Post = (props) => {
 
     const [comments, setComments] = useState(null);
+    const [picture, setPicture] = useState(null);
 
     const convertDate = (date) => {
         const format = {
@@ -39,17 +40,36 @@ const Post = (props) => {
             .catch((err) => {
                 console.log(err);
             })
+        await axiosConfig
+            .get(`/user/getprofilepicture?username=${props.poster}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data.data)
+                    const userProfileImageBase64 = response.data.data
+                    setPicture(`data:image/jpg;base64, ${userProfileImageBase64}`)
+                } else {
+                    setPicture('');
+                }
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, []);
 
+    const goToProfile = () => {
+
+    }
     //component to display on news feed
     return (
         <Container className={"rounded-card post-box"}>
             <Row className={"flex justify-space-between align-content-center"}>
                 <Col>
                     <Row className={""}>
-                        <div className={"profile-pic-sm"}
-                             style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
-                        />
+                        <div className="fill" style={{width: "40px", height:"40px", marginLeft:"15px", marginRight:"8px"}}>
+                            <img id={"small-img"} src={picture} alt={"no image"} width={"20px"}/>
+                        </div>
+                        
                         <h2 className={"primary-text"}>
                             {/*<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"*/}
                             {/*     style={{marginRight: "15px"}} fill="currentColor"*/}

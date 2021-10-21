@@ -32,3 +32,31 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+.profile-pic-sm .fill {
+    flex-shrink: 100;
+    min-width: 100%;
+    min-height: 100%
+}
+
+.fill {
+    height: 20px;
+    width: 20px;
+    margin-left: 15px;
+    margin-right: 8px;
+    border: 1px solid purple;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.fill img {
+    flex-shrink: 100;
+    min-width: 100%;
+    min-height: 100%
+}
+
+#small-img {
+    flex-shrink: 100;
+    min-width: 100%;
+    min-height: 100%
+}

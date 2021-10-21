@@ -46,7 +46,7 @@ const ProfilePage = () => {
 
     //photo upload tings
     const [selectedFile, setSelectedFile] = useState(null);
-    const [picture, setPicture] = useState(null);
+    const [picture, setPicture] = useState(`url(${process.env.PUBLIC_URL}/assets/logo.png`);
 
 
     useEffect(async () => {
@@ -74,10 +74,11 @@ const ProfilePage = () => {
 
         //profile picture upload
         await axiosConfig
-            .get(`/user/getprofilepicture`)
+            .get(`/user/getprofilepicture?username=${username}`)
             .then((response) => {
-                console.log(response)
-                setPicture(response.data.data)
+                console.log(response.data.data)
+                const userProfileImageBase64 = response.data.data
+                setPicture(`data:image/jpg;base64, ${userProfileImageBase64}`)
             })
             .catch((err) => {
                 console.log(err);
@@ -241,6 +242,9 @@ const ProfilePage = () => {
             .post(`/user/upload?username=${user.username}`, formData)
             .then((response) => {
                 console.log(response);
+                console.log(response.data.data)
+                const userProfileImageBase64 = response.data.data
+                setPicture(`data:image/jpg;base64, ${userProfileImageBase64}`)
             })
     }
 
@@ -275,13 +279,15 @@ const ProfilePage = () => {
                             profileUsername === thisUsername ? (<Row>
                                 <Col sm={10}>
                                     <Row className={"justify-content-start"} style={{paddingLeft: "40px"}}>
-                                        <div className={"profile-pic"}
-                                             style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
-                                             onClick={updatePicture}
-                                        />
+                                                <div className="fill">
+                                                    <img src={picture} alt={"no image"} width="400px" onClick={updatePicture} class={"rounded-circle"}/>
+                                                </div>
+
+
+
                                         <Col>
                                             <h2 className={"primary-text"}>Your profile</h2>
-
+                                            <p>{usersBio}</p>
                                             <Row>
                                                 <a onClick={getFollowing}
                                                      style={{textDecoration: "underline", padding: "25px 15px"}}>
@@ -292,6 +298,7 @@ const ProfilePage = () => {
                                                     {followerList ? followerList.length : ""} Followers
                                                 </a>
                                             </Row>
+
                                         </Col>
                                     </Row>
                                 </Col>
@@ -303,10 +310,10 @@ const ProfilePage = () => {
                             </Row>) : (<Row>
                                 <Col sm={10}>
                                     <Row>
-                                        <div className={"profile-pic"}
-                                             style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
-                                             onClick={updatePicture}
-                                        />
+                                        <div className="fill">
+                                            <img src={picture} alt={"no image"} width="400px" onClick={updatePicture}
+                                                 className={"rounded-circle"}/>
+                                        </div>
                                         <Col>
                                             <h2 className={"primary-text"}>
                                                 {(usersFirstName) ?
@@ -592,14 +599,11 @@ const ProfilePage = () => {
                                 <h2 className={"primary-text"}>Profile Picture</h2>
                             </Row>
 
-                            <div style={{display: 'flex', justifyContent: 'center', padding: '30px'}}>
-                                <div>
-                                    <div className={"profile-pic__large"}
-                                         style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
-                                         onClick={updatePicture}
-                                    />
-                                </div>
-                            </div>
+                            <Row className={"justify-content-center"}>
+                                {
+                                    <img src={picture} alt={"no image"} width="400px"/>
+                                }
+                            </Row>
 
 
                             <div>
