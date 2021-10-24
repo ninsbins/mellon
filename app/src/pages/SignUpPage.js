@@ -15,28 +15,6 @@ const SignUpPage = () => {
 
     let history = useHistory();
 
-
-    /* const handleSubmit = () => {
-         //    send user creation to database
-         console.log("handlesubmit-signup");
-         authService.register(username, email, password)
-             .then(
-                 response => {
-                     console.log(response);
-                 },
-                 error => {
-                     const resMessage =
-                         (error.response &&
-                             error.response.data &&
-                             error.response.data.message) ||
-                         error.message ||
-                         error.toString();
-
-                     console.log(resMessage);
-                 }
-             );
-     }*/
-
     const formValidation = () => {
         const newErr = {};
 
@@ -82,7 +60,7 @@ const SignUpPage = () => {
                 .then(
                     response => {
                         console.log(response);
-                        if (response.status==200) {
+                        if (response.status === 200) {
                             console.log(response);
                             history.push({
                                 pathname: `/setup`,

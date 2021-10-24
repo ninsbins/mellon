@@ -22,9 +22,25 @@ public class FollowService {
     public Follow saveFollow(User follower, User followed)throws Exception {
         if (follower.getUsername() == followed.getUsername()) {
             throw new Exception();
+            // check whether the logged in user is already following the current user
+
+        } if (isFollowingUser(follower, followed)) {
+            // user is already following, so unfollow
+            // get following list
+            List<Follow> followingList = followRepository.findByFollower(follower);
+            // get entry to delete
+            for (Follow item : followingList) {
+                if (item.getFollowed() == followed) {
+                    followRepository.delete(item);
+                }
+            }
+        } else {
+            // follow user
+            Follow follow = new Follow(follower, followed);
+            return followRepository.save(follow);
         }
-        Follow follow = new Follow(follower, followed);
-        return followRepository.save(follow);
+
+        return null;
 
     }
 

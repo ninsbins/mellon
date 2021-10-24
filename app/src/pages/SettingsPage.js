@@ -1,13 +1,11 @@
 import Header from "../components/Header";
-import {Button, Col, Container, Form, FormControl, Image, Modal, Nav, Row, Tab} from "react-bootstrap";
+import {Button, Col, Container, FormControl, Image, Modal, Nav, Row, Tab} from "react-bootstrap";
 //import './SpotifyButton.css'
 
 import axiosConfig from "../services/axiosConfig";
 import React, {useEffect, useState} from "react";
 import authService from "../services/authService";
-import {Link, useHistory} from "react-router-dom";
-import axios from "axios";
-import Player from "../components/Player";
+import {useHistory} from "react-router-dom";
 
 
 const SettingsPage = () => {

@@ -26,8 +26,8 @@ public class FollowController {
     FollowService followService;
 
     @PostMapping("/followuser")
-    public ResponseEntity<?> followUser(@RequestParam("userToFollow") String userToFollow, @RequestHeader(name="Authorization") String token) throws Exception {
-        String thisUsername=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+    public ResponseEntity<?> followUser(@RequestParam("userToFollow") String userToFollow, @RequestHeader(name = "Authorization") String token) throws Exception {
+        String thisUsername = jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
         User thisUser = userRepository.findByUsername(thisUsername).get();
         User followUser = userRepository.findByUsername(userToFollow).get();
         System.out.println(thisUsername);
@@ -45,7 +45,7 @@ public class FollowController {
         List<Follow> followList = followService.getUserAsFollowed(thisUser);
 
         List<User> returnList = new ArrayList<User>();
-        for (Follow item: followList) {
+        for (Follow item : followList) {
             User newUser = item.getFollower();
             returnList.add(newUser);
         }
@@ -61,7 +61,7 @@ public class FollowController {
         List<Follow> followingList = followService.getUserAsFollower(thisUser);
         List<User> returnList = new ArrayList<User>();
 
-        for (Follow item: followingList) {
+        for (Follow item : followingList) {
             User newUser = item.getFollowed();
             System.out.println(newUser);
 
@@ -71,8 +71,8 @@ public class FollowController {
     }
 
     @GetMapping("/isfollowinguser")
-    public boolean isFollowUser(@RequestParam("isFollowingUser") String isFollowingUser, @RequestHeader(name="Authorization") String token) throws Exception {
-        String thisUsername=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+    public boolean isFollowUser(@RequestParam("isFollowingUser") String isFollowingUser, @RequestHeader(name = "Authorization") String token) throws Exception {
+        String thisUsername = jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
         User thisUser = userRepository.findByUsername(thisUsername).get();
         User otherUser = userRepository.findByUsername(isFollowingUser).get();
 
@@ -86,9 +86,6 @@ public class FollowController {
 
 
     }
-
-
-
 
 
 }

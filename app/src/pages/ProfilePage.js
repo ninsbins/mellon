@@ -38,7 +38,7 @@ const ProfilePage = () => {
     //modal modal variables
     const [show, setShow] = useState(false);
     const [showing, setShowing] = useState(null);
-    const [profilepicture, setProfilePicture] = useState('');
+    const [profilePicture, setProfilePicture] = useState('');
 
     //following
     const [followingList, setFollowingList] = useState(null);
@@ -46,7 +46,7 @@ const ProfilePage = () => {
 
     //photo upload tings
     const [selectedFile, setSelectedFile] = useState(null);
-    const [picture, setPicture] = useState(`url(${process.env.PUBLIC_URL}/assets/logo.png`);
+    const [picture, setPicture] = useState(null);
 
 
     useEffect(async () => {
@@ -69,16 +69,19 @@ const ProfilePage = () => {
         setFollowerList(null);
         setFollowingList(null);
 
-        await getUserInfo({profileUsername});
-        await getIsFollowing();
+        await getUserInfo({username});
+        await getIsFollowing(username);
 
         //profile picture upload
         await axiosConfig
             .get(`/user/getprofilepicture?username=${username}`)
             .then((response) => {
                 console.log(response.data.data)
-                const userProfileImageBase64 = response.data.data
-                setPicture(`data:image/jpg;base64, ${userProfileImageBase64}`)
+                if (response.data.data) {
+                    const userProfileImageBase64 = response.data.data
+                    setPicture(`data:image/jpg;base64, ${userProfileImageBase64}`)
+                }
+
             })
             .catch((err) => {
                 console.log(err);
@@ -192,10 +195,12 @@ const ProfilePage = () => {
             .catch((err) => {
                 console.log(err);
             });
+
+        await getIsFollowing(profileUsername);
     }
 
-    const getIsFollowing = async () => {
-        await axiosConfig.get(`/follow/isfollowinguser?isFollowingUser=${profileUsername}`)
+    const getIsFollowing = async (username) => {
+        await axiosConfig.get(`/follow/isfollowinguser?isFollowingUser=${username}`)
             .then((res) => {
                 console.log(res);
                 setIsFollowing(res.data);
@@ -279,22 +284,27 @@ const ProfilePage = () => {
                             profileUsername === thisUsername ? (<Row>
                                 <Col sm={10}>
                                     <Row className={"justify-content-start"} style={{paddingLeft: "40px"}}>
-                                                <div className="fill">
-                                                    <img src={picture} alt={"no image"} width="400px" onClick={updatePicture} class={"rounded-circle"}/>
-                                                </div>
-
-
+                                        {/*<div className={"profile-pic"}*/}
+                                        {/*     onClick={updatePicture}*/}
+                                        {/*     style={{backgroundImage: picture ? picture : `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}*/}
+                                        {/*/>*/}
+                                        <div className="fill">
+                                            <Image
+                                                src={picture ? picture : `url(${process.env.PUBLIC_URL}/assets/logo.png)`}
+                                                width="400px" onClick={updatePicture}
+                                                class={"rounded-circle"}/>
+                                        </div>
 
                                         <Col>
                                             <h2 className={"primary-text"}>Your profile</h2>
                                             <p>{usersBio}</p>
                                             <Row>
                                                 <a onClick={getFollowing}
-                                                     style={{textDecoration: "underline", padding: "25px 15px"}}>
+                                                   style={{textDecoration: "underline", padding: "25px 15px"}}>
                                                     {followingList ? followingList.length : ""} Following
                                                 </a>
                                                 <a onClick={getFollowers}
-                                                     style={{textDecoration: "underline", padding: "25px 15px"}}>
+                                                   style={{textDecoration: "underline", padding: "25px 15px"}}>
                                                     {followerList ? followerList.length : ""} Followers
                                                 </a>
                                             </Row>
@@ -310,9 +320,15 @@ const ProfilePage = () => {
                             </Row>) : (<Row>
                                 <Col sm={10}>
                                     <Row>
+                                        {/*<div className={"profile-pic"}*/}
+                                        {/*     onClick={updatePicture}*/}
+                                        {/*     style={{backgroundImage: picture ? picture : `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}*/}
+                                        {/*/>*/}
                                         <div className="fill">
-                                            <img src={picture} alt={"no image"} width="400px" onClick={updatePicture}
-                                                 className={"rounded-circle"}/>
+                                            <Image
+                                                src={picture ? picture : `url(${process.env.PUBLIC_URL}/assets/logo.png)`}
+                                                width="400px" onClick={updatePicture}
+                                                className={"rounded-circle"}/>
                                         </div>
                                         <Col>
                                             <h2 className={"primary-text"}>
@@ -325,11 +341,11 @@ const ProfilePage = () => {
                                             <p>{usersBio}</p>
                                             <Row>
                                                 <a onClick={getFollowing}
-                                                     style={{textDecoration: "underline", padding: "25px 15px"}}>
+                                                   style={{textDecoration: "underline", padding: "25px 15px"}}>
                                                     {followingList ? followingList.length : ""} Following
                                                 </a>
                                                 <a onClick={getFollowers}
-                                                     style={{textDecoration: "underline", padding: "25px 15px"}}>
+                                                   style={{textDecoration: "underline", padding: "25px 15px"}}>
                                                     {followerList ? followerList.length : ""} Followers
                                                 </a>
                                             </Row>
@@ -593,7 +609,7 @@ const ProfilePage = () => {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Body>
-                    {profilepicture === 'true' ? (
+                    {profilePicture === 'true' ? (
                         <div className={"profile-header"}>
                             <Row className={"justify-content-center"}>
                                 <h2 className={"primary-text"}>Profile Picture</h2>
@@ -601,7 +617,8 @@ const ProfilePage = () => {
 
                             <Row className={"justify-content-center"}>
                                 {
-                                    <img src={picture} alt={"no image"} width="400px"/>
+                                    <Image src={picture ? picture : `url(${process.env.PUBLIC_URL}/assets/logo.png)`}
+                                           width="400px"/>
                                 }
                             </Row>
 

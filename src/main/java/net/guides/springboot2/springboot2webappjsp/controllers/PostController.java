@@ -91,6 +91,25 @@ public class PostController {
         return ResponseEntity.ok(post);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Integer> deletePostById(@PathVariable Integer id, @RequestHeader (name="Authorization") String token) {
+        // check if authorised to delete
+        Post post = postService.getPostById(id);
+        //get poster
+
+        String username=jwtUtils.getUserNameFromJwtToken(token.split(" ")[1]);
+        User thisUser = userRepository.findByUsername(username).get();
+
+        User poster = post.getUser();
+
+        //only delete if poster is the logged in user
+        if(poster == thisUser) {
+            postService.deletePost(id);
+        }
+
+        return ResponseEntity.ok(id);
+    }
+
     //For getting all posts by a User's username
     //e.g., in Postman -> http://localhost:8080/post/all-user-posts/jess
     @GetMapping("/all-user-posts/{username}")

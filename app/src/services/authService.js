@@ -28,7 +28,7 @@ class authService {
             password
         }).then(response => {
             console.log(response)
-                if (response.status == 200) {
+                if (response.status === 200) {
                     return response;
                 }
                 return null;

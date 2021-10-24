@@ -68,7 +68,9 @@ const Feed = () => {
                             </Row>
                         </Container>
                         <Container fluid className={"feed-stream"}>
-                            {posts ? <FeedStream posts={posts}/> :
+                            {posts ? posts.length > 0 ? <FeedStream posts={posts}/> : <Row className={"justify-content-center"}>
+                                    No posts to see. Try following some people to see their posts here!
+                                </Row> :
                                 <Row className={"justify-content-center"}>
                                     <Image src={`https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif`}
                                            width={40}/>
