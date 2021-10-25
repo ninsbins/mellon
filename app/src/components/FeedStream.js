@@ -8,6 +8,7 @@ const FeedStream = (props) => {
             <Col sm={5}>
                 {props.posts.map((post) => (
                     <Post
+                        user={props.user}
                         id={post.id}
                         date={post.createdDate}
                         title={post.itemTitle}

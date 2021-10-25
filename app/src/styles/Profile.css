@@ -57,6 +57,7 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+
 .fill img {
     flex-shrink: 100;
     min-width: 100%;

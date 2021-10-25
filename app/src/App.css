@@ -95,8 +95,10 @@ a:hover {
   cursor: pointer;
 }
 
+.purple-btn {
+  color: #471a66;
 
-
+}
 
 .btn > btn-outline-secondary {
   color: red;

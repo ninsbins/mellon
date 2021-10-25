@@ -283,17 +283,18 @@ const ProfilePage = () => {
                         {
                             profileUsername === thisUsername ? (<Row>
                                 <Col sm={10}>
-                                    <Row className={"justify-content-start"} style={{paddingLeft: "40px"}}>
-                                        {/*<div className={"profile-pic"}*/}
-                                        {/*     onClick={updatePicture}*/}
-                                        {/*     style={{backgroundImage: picture ? picture : `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}*/}
-                                        {/*/>*/}
-                                        <div className="fill">
-                                            <Image
-                                                src={picture ? picture : `url(${process.env.PUBLIC_URL}/assets/logo.png)`}
-                                                width="400px" onClick={updatePicture}
-                                                class={"rounded-circle"}/>
-                                        </div>
+                                    <Row className={"justify-content-start"}>
+                                        {picture ?
+                                            <div className="fill">
+                                                <img src={picture} alt={"Profile Picture"} width="400px"
+                                                     onClick={updatePicture}
+                                                     className={"rounded-circle"}/>
+                                            </div> :
+                                            <div className={"fill"}
+                                                 onClick={updatePicture}
+                                                 style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
+                                            />}
+
 
                                         <Col>
                                             <h2 className={"primary-text"}>Your profile</h2>
@@ -313,23 +314,23 @@ const ProfilePage = () => {
                                     </Row>
                                 </Col>
                                 <Col sm={2}>
-                                    <Button onClick={goToSettings}>
+                                    <Button variant="primary" className={"purple-btn"} onClick={goToSettings}>
                                         Edit Profile
                                     </Button>
                                 </Col>
                             </Row>) : (<Row>
                                 <Col sm={10}>
-                                    <Row>
-                                        {/*<div className={"profile-pic"}*/}
-                                        {/*     onClick={updatePicture}*/}
-                                        {/*     style={{backgroundImage: picture ? picture : `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}*/}
-                                        {/*/>*/}
-                                        <div className="fill">
-                                            <Image
-                                                src={picture ? picture : `url(${process.env.PUBLIC_URL}/assets/logo.png)`}
-                                                width="400px" onClick={updatePicture}
-                                                className={"rounded-circle"}/>
-                                        </div>
+                                    <Row className={"justify-content-start"}>
+                                        {picture ?
+                                            <div className="fill">
+                                                <img src={picture} alt={"Profile Picture"} width="400px"
+                                                     onClick={updatePicture}
+                                                     className={"rounded-circle"}/>
+                                            </div> :
+                                            <div className={"fill"}
+                                                 onClick={updatePicture}
+                                                 style={{backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`,}}
+                                            />}
                                         <Col>
                                             <h2 className={"primary-text"}>
                                                 {(usersFirstName) ?
@@ -353,14 +354,6 @@ const ProfilePage = () => {
                                     </Row>
                                 </Col>
                                 <Col sm={2}>
-                                    {/*<Button variant={"outline-primary"}>*/}
-                                    {/*    <Link to={"/settings"}>*/}
-                                    {/*        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"*/}
-                                    {/*             className="bi bi-gear-fill" viewBox="0 0 16 16">*/}
-                                    {/*            <path*/}
-                                    {/*                d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>*/}
-                                    {/*        </svg></Link>*/}
-                                    {/*</Button>*/}
                                     <Button
                                         style={{
                                             background: "#1ed760",
@@ -647,17 +640,25 @@ const ProfilePage = () => {
                                         </Row>
                                         {followerList && followerList.length > 0 ?
                                             (followerList.map((follower) => {
-                                                return <Row style={{margin: "10px"}}>
-                                                    <Link to={`/profile/${follower.username}`}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                             style={{marginRight: "15px"}} fill="currentColor"
-                                                             className="bi bi-person-circle" viewBox="0 0 16 16">
-                                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                                            <path fill-rule="evenodd"
-                                                                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                                        </svg>
-                                                        {follower.username}</Link>
-                                                </Row>
+                                                return <Link to={`/profile/${follower.username}`}>
+                                                    <Row style={{margin: "10px"}} className={"align-content-center"}>
+                                                        {/*{props.pic ?*/}
+                                                        {/*    <div className="fill-sm"*/}
+                                                        {/*         style={{margin: "0"}}*/}
+                                                        {/*    >*/}
+                                                        {/*        <img id={"small-img"} src={props.pic} alt={"Profile Picture"}*/}
+                                                        {/*             className={"rounded-circle"}/>*/}
+                                                        {/*    </div> :*/}
+
+                                                        <div className={"fill-sm"}
+                                                             style={{
+                                                                 marginRight: "10px",
+                                                                 backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`
+                                                             }}
+                                                        />
+                                                        <div style={{paddingTop: "8px"}}>{follower.username}</div>
+                                                    </Row>
+                                                </Link>
                                             }))
                                             : (<p>{profileUsername} doesn't have any followers</p>)}
                                     </div>) :
@@ -667,17 +668,28 @@ const ProfilePage = () => {
                                     </Row>
                                     {followingList && followingList.length > 0 ?
                                         (followingList.map((following) => {
-                                            return <Row style={{margin: "10px"}}>
+                                            return (
+
                                                 <Link to={`/profile/${following.username}`}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                         style={{marginRight: "15px"}} fill="currentColor"
-                                                         className="bi bi-person-circle" viewBox="0 0 16 16">
-                                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                                        <path fill-rule="evenodd"
-                                                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                                    </svg>
-                                                    {following.username}</Link>
-                                            </Row>
+                                                    <Row style={{margin: "10px"}} className={"align-content-center"}>
+                                                        {/*{props.pic ?*/}
+                                                        {/*    <div className="fill-sm"*/}
+                                                        {/*         style={{margin: "0"}}*/}
+                                                        {/*    >*/}
+                                                        {/*        <img id={"small-img"} src={props.pic} alt={"Profile Picture"}*/}
+                                                        {/*             className={"rounded-circle"}/>*/}
+                                                        {/*    </div> :*/}
+
+                                                        <div className={"fill-sm"}
+                                                             style={{
+                                                                 marginRight: "10px",
+                                                                 backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`
+                                                             }}
+                                                        />
+                                                        <div style={{paddingTop: "8px"}}>{following.username}</div>
+                                                    </Row>
+                                                </Link>
+                                            )
                                         }))
                                         : (<p>{profileUsername} isn't following anyone</p>)}
                                 </div>)

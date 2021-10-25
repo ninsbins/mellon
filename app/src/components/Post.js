@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {Button, Col, Container, Dropdown, DropdownButton, FormControl, Image, Row} from "react-bootstrap";
-import {InputGroup} from "reactstrap";
-import {Link} from "react-router-dom";
+import {Button, Col, Container, Dropdown, Image, Row} from "react-bootstrap";
+import {Link, useHistory} from "react-router-dom";
 
 import "../styles/Post.css"
 import axiosConfig from "../services/axiosConfig";
+import authService from "../services/authService";
 
 
 const Post = (props) => {
+    const history = useHistory();
 
     const [comments, setComments] = useState(null);
     const [picture, setPicture] = useState(null);
@@ -24,14 +25,9 @@ const Post = (props) => {
         return new Date(date).toLocaleString("en-US", format);
     }
 
-    const handleSelect = async (eventKey) => {
-        console.log(eventKey);
-        //    handle delete post
-
-    }
-
     useEffect(async () => {
         // console.log(props);
+
         await axiosConfig.get(`/post/${props.id}/comments`)
             .then((res) => {
                 // console.log(res.data);
@@ -40,70 +36,77 @@ const Post = (props) => {
             .catch((err) => {
                 console.log(err);
             })
+
         await axiosConfig
             .get(`/user/getprofilepicture?username=${props.poster}`)
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data.data)
-                    const userProfileImageBase64 = response.data.data
-                    setPicture(`data:image/jpg;base64, ${userProfileImageBase64}`)
-                } else {
-                    setPicture('');
+                    // console.log(response.data.data)
+                    if (response.data.data) {
+                        const userProfileImageBase64 = response.data.data
+                        setPicture(`data:image/jpg;base64, ${userProfileImageBase64}`)
+                    }
                 }
-
             })
             .catch((err) => {
                 console.log(err);
             });
     }, []);
 
-    const goToProfile = () => {
+    const handleSelect = async (eventKey) => {
+        console.log(eventKey);
+        //    handle delete post
 
     }
-    //component to display on news feed
+
+    function goToProfile() {
+        history.push({
+                pathname: `/profile/${props.poster}`,
+                state: {
+                    profilePic: picture
+                }
+            }
+        );
+    }
+
+//component to display on news feed
     return (
         <Container className={"rounded-card post-box"}>
             <Row className={"flex justify-space-between align-content-center"}>
                 <Col>
-                    <Row className={""}>
-
-                        {picture ? <div className="fill" style={{
-                            width: "40px",
-                            height: "40px",
-                            marginLeft: "15px",
-                            marginRight: "8px"
-                        }}>
-                            <img id={"small-img"} src={picture} alt={"no image"} width={"20px"}/>
-                        </div> : <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                      style={{marginRight: "15px"}} fill="currentColor"
-                                      className="bi bi-person-circle" viewBox="0 0 16 16">
-                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                            <path fill-rule="evenodd"
-                                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                        </svg>}
-
-                        <Link className={"secondary-text"} to={`/profile/${props.poster}`}>
-                            <h2 className={"primary-text"}>{props.poster}</h2></Link>
+                    <Row className={"align-content-center"}>
+                        {picture ?
+                            <div className="fill-sm"
+                            >
+                                <img id={"small-img"} src={picture} alt={"Profile Picture"} width={"20px"}
+                                     className={"rounded-circle"}/>
+                            </div> :
+                            <div className={"fill-sm"}
+                                 style={{
+                                     backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`
+                                 }}
+                            />}
+                        <a className={"primary-text"} onClick={goToProfile}>
+                            {props.poster}
+                        </a>
                     </Row>
 
                 </Col>
-                {/*<Col sm={{span: 1, offset: 1}} style={{marginRight: "10px"}}>*/}
-                {/*    <Dropdown onSelect={handleSelect}>*/}
-                {/*        <Dropdown.Toggle variant="secondary">*/}
-                {/*            /!*<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"*!/*/}
-                {/*            /!*     className="bi bi-three-dots" viewBox="0 0 16 16">*!/*/}
-                {/*            /!*    <path*!/*/}
-                {/*            /!*        d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>*!/*/}
-                {/*            /!*</svg>*!/*/}
-                {/*        </Dropdown.Toggle>*/}
-                {/*        <Dropdown.Menu>*/}
-                {/*            <Dropdown.Item>*/}
-                {/*                /!*check if the post belongs to the user*!/*/}
-                {/*                Delete*/}
-                {/*            </Dropdown.Item>*/}
-                {/*        </Dropdown.Menu>*/}
-                {/*    </Dropdown>*/}
-                {/*</Col>*/}
+                {props.poster === props.user ?
+                    <Col sm={{span: 1, offset: 1}} style={{marginRight: "10px"}}>
+                        <Dropdown onSelect={handleSelect}>
+                            <Dropdown.Toggle variant="secondary">
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item>
+                                    {/*check if the post belongs to the user*/}
+                                    Delete
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Col> : <div></div>
+                }
+
             </Row>
 
             <h3><Link className={"secondary-text"} to={`/post/${props.id}`}>{props.title}</Link></h3>

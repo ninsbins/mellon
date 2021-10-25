@@ -1,9 +1,11 @@
 import Header from "../components/Header";
 import {Button, Col, Container, FormControl, Image, Row} from "react-bootstrap";
-import {Link, useParams} from "react-router-dom";
+import {Link, useHistory, useLocation, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
 import {InputGroup} from "reactstrap";
+
+import "../styles/Post.css"
 
 function CommentBubble(props) {
     // console.log(props);
@@ -12,14 +14,19 @@ function CommentBubble(props) {
         <Row style={{padding: "8px"}}>
             <Col xs={1}>
                 <Link to={`/profile/${props.info.user.username}`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                         height="30"
-                         style={{marginRight: "15px"}} fill="currentColor"
-                         className="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path fill-rule="evenodd"
-                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                    </svg>
+                    {props.pic ?
+                        <div className="fill-sm"
+                             style={{margin: "0"}}
+                        >
+                            <img id={"small-img"} src={props.pic} alt={"Profile Picture"}
+                                 className={"rounded-circle"}/>
+                        </div> :
+                        <div className={"fill-sm"}
+                             style={{
+                                 margin: "0",
+                                 backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`
+                             }}
+                        />}
                     {props.info.user.username}
                 </Link>
             </Col>
@@ -37,6 +44,9 @@ CommentBubble.propTypes = {};
 const PostPage = () => {
     // these are posts made by users that are stored on our database
     const {id} = useParams();
+    const location = useLocation();
+    const history = useHistory();
+
     const [postInfo, setPostInfo] = useState(null);
     const [postComments, setPostComments] = useState(null);
 
@@ -45,10 +55,13 @@ const PostPage = () => {
     let date = (new Date()).toJSON();
 
     useEffect(async () => {
+
+        console.log(location);
+
         //get post with id from backend
         await axiosConfig.get(`/post/${id}`)
             .then((res) => {
-                // console.log(res.data.user);
+                console.log(res.data);
                 setPostInfo(res.data);
             })
             .catch((err) => {
@@ -124,16 +137,22 @@ const PostPage = () => {
                         <Container className={"rounded-card"}>
                             {postInfo ? (
                                 <Col>
-                                    <h2 className={"primary-text"}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                             style={{marginRight: "15px"}} fill="currentColor"
-                                             className="bi bi-person-circle" viewBox="0 0 16 16">
-                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                            <path fill-rule="evenodd"
-                                                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                        </svg>
-                                        <Link className={"secondary-text"} to={`/profile/${postInfo.user.username}`}>{postInfo.user.username}</Link>
-                                    </h2>
+                                    <Row className={"align-content-center"}>
+                                        <Link className={"secondary-text"} to={`/profile/${postInfo.user.username}`}>
+                                            {location.state ?
+                                                <div className="fill-sm">
+                                                    <img id={"small-img"} src={location.state.profilePic}
+                                                         alt={"Profile Picture"} width={"20px"}
+                                                         className={"rounded-circle"}/>
+                                                </div> :
+                                                <div className={"fill-sm"}
+                                                     style={{
+                                                         backgroundImage: `url(${process.env.PUBLIC_URL}/assets/logo.png`
+                                                     }}
+                                                />}</Link>
+                                        <Link className={"secondary-text"} to={`/profile/${postInfo.user.username}`}>
+                                            <h2 className={"primary-text"} style={{marginTop: "8px"}}>{postInfo.user.username}</h2></Link>
+                                    </Row>
                                     <h3 className={"secondary-text"}>{postInfo.itemTitle}</h3>
 
                                     <p className={"timestamp"}>{convertDate(postInfo.createdDate)}</p>
@@ -145,6 +164,7 @@ const PostPage = () => {
                                         {/*render comments*/}
                                         {postComments && postComments.length > 0 ? postComments.map((c) => (
                                             <CommentBubble
+                                                pic={location.state ? location.state.profilePic : null}
                                                 info={c}
                                             />
                                             // <div>{comment.content}</div>

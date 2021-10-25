@@ -35,7 +35,8 @@ public class FollowService {
                 }
             }
         } else {
-            // follow user
+            // if user isn't trying to follow themselves and aren't following the user
+            // create follow object and save follow
             Follow follow = new Follow(follower, followed);
             return followRepository.save(follow);
         }

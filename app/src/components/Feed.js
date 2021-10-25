@@ -2,14 +2,18 @@ import {Button, Col, Container, Image, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import axiosConfig from "../services/axiosConfig";
 import FeedStream from "./FeedStream";
+import authService from "../services/authService";
 
 const Feed = () => {
 
     const [posts, setPosts] = useState(null);
     const [feedView, setFeedView] = useState('feed');
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         //    pull all posts from backend
+        const currentUser = authService.getCurrentUser().username;
+        setUser(currentUser);
 
         axiosConfig.get(`/post/posts`)
             .then((res) => {
@@ -68,7 +72,9 @@ const Feed = () => {
                             </Row>
                         </Container>
                         <Container fluid className={"feed-stream"}>
-                            {posts ? posts.length > 0 ? <FeedStream posts={posts}/> : <Row className={"justify-content-center"}>
+                            {posts ? posts.length > 0 ? <FeedStream posts={posts}
+                                                                    user={user}/> :
+                                <Row className={"justify-content-center"}>
                                     No posts to see. Try following some people to see their posts here!
                                 </Row> :
                                 <Row className={"justify-content-center"}>
