@@ -19,10 +19,10 @@ const SignUpPage = () => {
         const newErr = {};
 
         //username required
-        if ( !username || username === '' ) newErr.username = 'Please enter a username!';
+        if (!username || username === '') newErr.username = 'Please enter a username!';
 
         //email required and valid email address
-        if ( !email || email === '' ) newErr.email = 'Please enter an email!';
+        if (!email || email === '') newErr.email = 'Please enter an email!';
         else {
             const expression = /\S+@\S+/;
             let validEmail = expression.test(String(email).toLowerCase());
@@ -30,10 +30,10 @@ const SignUpPage = () => {
         }
         console.log(repeatPassword)
         //password required, and repeat password must match
-        if ( !password || password === '' ) newErr.password = 'Please enter a password!';
-        if ( !repeatPassword || repeatPassword === '' ) newErr.repeatPassword = 'Please re-enter your password!';
+        if (!password || password === '') newErr.password = 'Please enter a password!';
+        if (!repeatPassword || repeatPassword === '') newErr.repeatPassword = 'Please re-enter your password!';
         else {
-            if ( password !== repeatPassword ) newErr.repeatPassword = "Your passwords don't match!";
+            if (password !== repeatPassword) newErr.repeatPassword = "Your passwords don't match!";
         }
 
         return newErr;
@@ -49,11 +49,10 @@ const SignUpPage = () => {
         const hasError = formValidation();
         console.log(hasError);
 
-        if (Object.keys(hasError).length > 0 ) {
+        if (Object.keys(hasError).length > 0) {
             setErrors(hasError);
         } else {
             console.log(username);
-            setValidated(true);
 
             authService
                 .register(username, email, password)
@@ -61,6 +60,8 @@ const SignUpPage = () => {
                     response => {
                         console.log(response);
                         if (response.status === 200) {
+                            setValidated(true);
+
                             console.log(response);
                             history.push({
                                 pathname: `/setup`,
@@ -72,17 +73,21 @@ const SignUpPage = () => {
                             });
 
                         }
-                    },
-                    error => {
-                        const resMessage =
-                            (error.response &&
-                                error.response.data &&
-                                error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        console.log(resMessage);
                     }
-                );
+                ).catch((error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+
+                //show backend validation
+                const newErr = {};
+                newErr.username = "This username is already taken!";
+                setErrors(newErr);
+                console.log(resMessage);
+            });
         }
 
     }
@@ -112,7 +117,7 @@ const SignUpPage = () => {
                                                     label={"Username"}
                                                 >Username</Form.Label>
                                                 <Form.Control
-                                                    isInvalid={!! errors.username}
+                                                    isInvalid={!!errors.username}
                                                     type={"text"}
                                                     placeholder={"Enter a username"}
                                                     onChange={(e) => (setUsername(e.target.value))}
@@ -128,7 +133,7 @@ const SignUpPage = () => {
                                                     label={"Email"}
                                                 >Email</Form.Label>
                                                 <Form.Control
-                                                    isInvalid={!! errors.email}
+                                                    isInvalid={!!errors.email}
                                                     type={"email"}
                                                     placeholder={"Enter your Email"}
                                                     onChange={(e) => (setEmail(e.target.value))}
@@ -144,7 +149,7 @@ const SignUpPage = () => {
                                                     label={"Password"}
                                                 >Password</Form.Label>
                                                 <Form.Control
-                                                    isInvalid={!! errors.password}
+                                                    isInvalid={!!errors.password}
                                                     type={"password"}
                                                     placeholder={"Enter a password"}
                                                     onChange={(e) => (setPassword(e.target.value))}
@@ -159,7 +164,7 @@ const SignUpPage = () => {
                                                     label={"Re-enter Password"}
                                                 >Re-enter Password</Form.Label>
                                                 <Form.Control
-                                                    isInvalid={!! errors.repeatPassword}
+                                                    isInvalid={!!errors.repeatPassword}
                                                     type={"password"}
                                                     placeholder={"Re-enter your password"}
                                                     onChange={(e) => (setRepeatPassword(e.target.value))}

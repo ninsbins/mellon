@@ -180,7 +180,7 @@ const SettingsPage = () => {
                             <Nav variant={"pills"} className={"flex-column"}>
 
                                 <Nav.Item>
-                                    <Nav.Link eventKey={"generalsettings"}>
+                                    <Nav.Link eventKey={"settings"}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              style={{marginRight: "15px"}}
                                              fill="currentColor" className="bi bi-gear" viewBox="0 0 16 16">
@@ -228,7 +228,7 @@ const SettingsPage = () => {
                         <Col sm={6}>
                             <Tab.Content>
 
-                                <Tab.Pane eventKey={"generalsettings"}>
+                                <Tab.Pane eventKey={"settings"}>
                                     <Container className={"rounded-card"}>
 
                                         <Row className={"justify-content-center"}>
