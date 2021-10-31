@@ -77,7 +77,7 @@ const BookPage = () => {
                                         <Image width="300px" src={info.imageLinks.thumbnail}/>
                                     </Col>
                                     <Col>
-                                        <Row>{getRating(info.averageRating)}</Row>
+                                        <Row  style={{paddingBottom: "20px"}}>{getRating(info.averageRating)}</Row>
                                         <Row class={"justify-content-space-between"}>
                                             <Col>
                                                 <Row><strong>Year</strong></Row>
@@ -90,9 +90,13 @@ const BookPage = () => {
                                                 <Row>{info.categories}</Row>
                                             </Col>
                                         </Row>
-                                        <Row>
-                                            <a href={info.infoLink}>More info</a>
-                                            <a href={info.previewLink}>Preview</a>
+                                        <Row className={"justify-space-between"} style={{paddingTop: "20px"}}>
+                                            <Col>
+                                                <a href={info.infoLink}>More info</a>
+                                            </Col>
+                                            <Col>
+                                                <a href={info.previewLink}>Preview</a>
+                                            </Col>
                                         </Row>
 
                                         {/*<Row class={"justify-content-space-between"}>*/}
@@ -118,11 +122,11 @@ const BookPage = () => {
 
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row style={{padding: "20px"}}>
                                     <p><strong>Description</strong></p>
                                     <p>{info.description}</p>
                                 </Row>
-                                <Row className={"justify-content-center"} style={{marginTop: "40px"}}>
+                                <Row className={"justify-content-center"} style={{marginTop: "20px"}}>
                                     <Button onClick={handleClick}>
                                         Share
                                     </Button>

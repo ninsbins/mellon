@@ -34,7 +34,7 @@ public class PostService {
     }
 
     public List<Post> getPostsOfUser(String username){
-        List<Post> postList= postRepository.findPostByUserOrderById(userRepository.findByUsername(username).get());
+        List<Post> postList= postRepository.findPostByUserOrderByIdDesc(userRepository.findByUsername(username).get());
         return postList;
     }
 

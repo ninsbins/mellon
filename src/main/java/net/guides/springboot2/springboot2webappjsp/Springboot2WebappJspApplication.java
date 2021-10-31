@@ -19,6 +19,8 @@ public class Springboot2WebappJspApplication {
 				registry.addMapping("/api/auth").allowedOrigins("http://localhost:3000/signup");
 				registry.addMapping("/api/auth/login").allowedOrigins("http://localhost:3000/login");
 				registry.addMapping("/post/posts").allowedOrigins("http://localhost:3000/");
+				registry.addMapping("/post").allowedOrigins("http://localhost:3000/");
+				registry.addMapping("/post").allowedOrigins("*");
 				registry.addMapping("/spotify/login").allowedOrigins("*");
 				registry.addMapping("/spotify/callback").allowedOrigins("*");
 				registry.addMapping("/spotify/get-token").allowedOrigins("http://localhost:3000/profile");

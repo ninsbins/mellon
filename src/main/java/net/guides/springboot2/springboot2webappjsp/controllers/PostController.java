@@ -80,7 +80,7 @@ public class PostController {
                 returnPostList.add(post);
             }
         }
-        return ResponseEntity.ok(postList);
+        return ResponseEntity.ok(returnPostList);
 
 
     }

@@ -9,6 +9,7 @@ const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    const [error, setError] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -16,22 +17,22 @@ const LoginPage = () => {
         authService
             .login(username, password)
             .then(() => {
-                    //history.push("/profile")
-                    window.location.replace(`http://localhost:3000/profile`);
-                },
-                error => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-                    console.log(resMessage);
+                setError(false);
+                //history.push("/profile")
+                window.location.replace(`http://localhost:3000/profile`);
+            }).catch((err) => {
+                setError(true);
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+            }
+        )
+    };
 
-                });
-
-
-    }
 
     return (
         <div>
@@ -46,7 +47,8 @@ const LoginPage = () => {
                             backgroundSize: "contain",
                             backgroundRepeat: "no-repeat"
                         }}>
-                            <Row className={"justify-content-center"} style={{paddingTop: "200px", paddingLeft: "40px"}}>
+                            <Row className={"justify-content-center"}
+                                 style={{paddingTop: "200px", paddingLeft: "40px"}}>
                                 <Form onSubmit={handleSubmit} style={{color: "white"}}>
                                     <Col>
                                         <Form.Group>
@@ -73,6 +75,9 @@ const LoginPage = () => {
                                                 onChange={(e) => (setPassword(e.target.value))}
                                             />
                                         </Form.Group>
+                                        <Row>
+                                            <p style={{color: "#FF7F7F"}}>{error ? "Your username or password is incorrect." : ""}</p>
+                                        </Row>
                                         <Row className={"justify-content-center"}>
                                             <Button type={"submit"}>Login</Button>
                                         </Row>

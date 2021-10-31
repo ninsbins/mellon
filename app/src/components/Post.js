@@ -4,8 +4,6 @@ import {Link, useHistory} from "react-router-dom";
 
 import "../styles/Post.css"
 import axiosConfig from "../services/axiosConfig";
-import authService from "../services/authService";
-
 
 const Post = (props) => {
     const history = useHistory();
@@ -56,7 +54,14 @@ const Post = (props) => {
     const handleSelect = async (eventKey) => {
         console.log(eventKey);
         //    handle delete post
-
+        await axiosConfig.delete(`/post/${props.id}`)
+            .then(
+                (res) => {
+                    console.log(res);
+                }
+            ).catch((err) => {
+                console.log(err)
+            });
     }
 
     function goToProfile() {
@@ -95,11 +100,15 @@ const Post = (props) => {
                 {props.poster === props.user ?
                     <Col sm={{span: 1, offset: 1}} style={{marginRight: "10px"}}>
                         <Dropdown onSelect={handleSelect}>
-                            <Dropdown.Toggle variant="secondary">
+                            <Dropdown.Toggle variant="link">
+                                {/*<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"*/}
+                                {/*     className="bi bi-three-dots-vertical" viewBox="0 0 16 16">*/}
+                                {/*    <path*/}
+                                {/*        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>*/}
+                                {/*</svg>*/}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item>
-                                    {/*check if the post belongs to the user*/}
                                     Delete
                                 </Dropdown.Item>
                             </Dropdown.Menu>

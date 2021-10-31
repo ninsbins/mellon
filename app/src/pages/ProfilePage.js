@@ -90,7 +90,7 @@ const ProfilePage = () => {
 
         await getUserInfo({username});
 
-        await axiosConfig.get(`/post/myposts?username=${username}`)
+        await axiosConfig.get(`/post/all-user-posts/${username}`)
             .then((res) => {
                 // console.log(res.data);
                 setPosts(res.data);
@@ -103,7 +103,13 @@ const ProfilePage = () => {
 
                 (res.data).map((post) => {
                     switch (post.itemType.toLowerCase()) {
-                        case "music":
+                        // case "music":
+                        //     musicList.push(post);
+                        //     break;
+                        case "song":
+                            musicList.push(post);
+                            break;
+                        case "album":
                             musicList.push(post);
                             break;
                         case "playlist":
