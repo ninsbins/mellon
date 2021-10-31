@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.guides.springboot2.springboot2webappjsp.controllers.UserControllerTesting;
 import net.guides.springboot2.springboot2webappjsp.domain.User;
 import net.guides.springboot2.springboot2webappjsp.repositories.UserRepository;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
@@ -29,8 +31,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -122,7 +123,40 @@ public class UserControllerTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("norma@gmail.com"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.bio").value("You just got Litt up!"));
 
+
         verify(repo, times(5)).findById(anyInt()); //check method called 5 times
+
+    }
+
+    @Test
+    public void updateUserDetailsSuccess() throws Exception {
+
+        //Harvey - bio updating
+        user1.setId(100);
+        user1.setBio("Mike is better than me :) ");
+
+        User user1_updated = new User("HarveySpecter", "theBestCloser88@gmail.com", "hs123456");
+        user1_updated.setFirstName("Harvey");
+        user1_updated.setLastName("Specter");
+        user1_updated.setBio("no he is not.");
+
+        Mockito.when(repo.findById(user1.getId())).thenReturn(java.util.Optional.ofNullable(user1)); //return Harvey
+        Mockito.when(repo.save(any())).thenReturn(user1_updated);
+
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/update/users/100")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(this.mapper.writeValueAsString(user1_updated)); //put updatedUser into request body
+
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("theBestCloser88@gmail.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Harvey"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("Specter"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.bio").value("no he is not."));
+
+        verify(repo, times(1)).findById(100); //check method called
+        verify(repo, times(1)).save(any()); //check method called
 
     }
 

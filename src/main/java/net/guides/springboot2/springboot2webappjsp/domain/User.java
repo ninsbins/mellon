@@ -1,6 +1,7 @@
 package net.guides.springboot2.springboot2webappjsp.domain;
 
 
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
